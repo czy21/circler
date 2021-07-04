@@ -1,0 +1,18 @@
+# Idea #
+.idea
+*.iml
+*.log
+
+# Build #
+build/
+venv/
+
+# Web #
+node_modules/
+dist/
+
+# Output #
+___output/
+
+# Shell #
+__pycache__/
