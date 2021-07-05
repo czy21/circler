@@ -1,0 +1,30 @@
+@import "~antd/lib/style/themes/default.less";
+@import '~antd/dist/antd.less';
+
+
+.collapse {
+  font-size: 18px;
+  line-height: 64px;
+  padding: 0 24px;
+  cursor: pointer;
+  transition: color 0.3s;
+
+  &:hover {
+    color: @primary-color;
+  }
+}
+
+.container {
+  height: 100vh;
+
+  .header {
+    background: @white;
+    padding: 0
+  }
+
+  .content {
+    margin: 8px;
+    padding: 12px;
+    background: @white;
+  }
+}
