@@ -1,7 +1,7 @@
 package main
 
 import (
-	"czy-erp.com/src/controller"
+	"github.com/czyhome/circler/src/controller"
 	"github.com/gin-gonic/gin"
 )
 
