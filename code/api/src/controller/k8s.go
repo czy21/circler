@@ -1,11 +1,13 @@
 package controller
 
 import (
+	"github.com/czyhome/circler/src/config"
 	"github.com/gin-gonic/gin"
+	"golang.org/x/net/context"
 )
 
 func PodList(c *gin.Context) {
-	//pods, err := config.K8sClient.CoreV1().Pods("").List(context.TODO(),)
+	pods, err := config.K8sClient.CoreV1().Pods("").List(context.TODO(),)
 
 }
 
