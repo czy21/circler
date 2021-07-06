@@ -28,6 +28,7 @@ build/
 
 # Output #
 ___output/
+___temp/
 
 # Shell #
 __pycache__/

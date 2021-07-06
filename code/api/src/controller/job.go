@@ -53,5 +53,4 @@ func InitUserRouter(r *gin.Engine) {
 		uRouter.GET("list", JobList)
 		//uRouter.POST("search", UserSearch)
 	}
-
 }
