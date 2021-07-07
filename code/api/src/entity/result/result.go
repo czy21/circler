@@ -9,15 +9,10 @@ type Result struct {
 	Context *gin.Context
 }
 
-var ret = make(map[string]interface{})
+var ret interface{}
 
 func (r Result) Data(data interface{}) Result {
-	ret["data"] = data
-	return r
-}
-
-func (r Result) Token(token interface{}) Result {
-	ret["token"] = token
+	ret = data
 	return r
 }
 

@@ -43,8 +43,8 @@ class Sider extends React.Component<{ collapsed?: boolean }, any> {
 
     render() {
         return (
-            <AntdSider trigger={null} collapsible collapsed={this.props.collapsed}>
-                <Menu theme="dark" defaultSelectedKeys={["0"]}>
+            <AntdSider theme="light" trigger={null} collapsible collapsed={this.props.collapsed}>
+                <Menu theme="light" mode="inline" defaultSelectedKeys={["0"]}>
                     {recuriveMenu(menus)}
                 </Menu>
             </AntdSider>
