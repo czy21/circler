@@ -1,37 +1,53 @@
 import React from "react";
-import {Button, Table} from "antd";
+import {Table} from "antd";
 import api from "@/api"
 
 const columns = [
     {
-        title: '姓名',
+        title: '名称',
         dataIndex: 'name',
         key: 'name',
     },
     {
-        title: '年龄',
-        dataIndex: 'age',
-        key: 'age',
+        title: '状态',
+        dataIndex: 'phase',
+        key: 'phase',
     },
     {
-        title: '住址',
-        dataIndex: 'address',
-        key: 'address',
+        title: '访问模式',
+        dataIndex: 'accessMode',
+        key: 'accessMode',
+    },
+    {
+        title: '创建时间',
+        dataIndex: 'createTime',
+        key: 'createTime',
     },
 ];
 
-let load = () => {
-    // console.log(process.env)
-    api.post("user/search", {}).then(data => {
-        console.log(data)
-    })
-}
-
 export default class Index extends React.Component<any, any> {
+    constructor(props: any) {
+        super(props);
+        this.state = {}
+    }
 
+    componentDidMount() {
+        api.post("k8s/volume/list", {}).then((data: any) => {
+            this.setState({
+                "data": data.items.map((t: any) => {
+                    return {
+                        name: t.metadata.name,
+                        phase: t.status.phase,
+                        accessMode: t.status.accessModes.join(","),
+                        createTime: t.metadata.creationTimestamp
+                    }
+                })
+            })
+        })
+    }
 
     render() {
-        // return <Table dataSource={this.state.list} columns={columns}/>;
-        return <Button onClick={load}>加载</Button>
+        return <Table columns={columns} dataSource={this.state.data}/>
+
     }
 }
