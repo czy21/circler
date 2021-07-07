@@ -1,10 +1,6 @@
 import axios from 'axios'
 
 
-//配置API接口地址
-const root = '/api';
-
-
 enum Method {
     GET = "GET",
     POST = "POST",
@@ -13,7 +9,7 @@ enum Method {
 }
 
 const service = axios.create({
-    baseURL: root,
+    baseURL: '/api',
     timeout: 5000,
 });
 service.interceptors.request.use(request => {

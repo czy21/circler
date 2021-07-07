@@ -2,7 +2,7 @@ import React from "react";
 import {MenuFoldOutlined, MenuUnfoldOutlined} from '@ant-design/icons';
 import {Layout} from "antd";
 import {connect} from "react-redux";
-import toggleAction from '../redux/action/Toggle'
+import {Action as HomeAction} from '@/redux/reducer/Home'
 
 const AntdHeader = Layout.Header;
 
@@ -19,7 +19,7 @@ export const mapStateToProps = (state: any) => {
 const mapDispatchToProps = (dispatch: any) => {
     return {
         toggle: () => {
-            dispatch(toggleAction)
+            dispatch(HomeAction.Collapse())
         }
     }
 };

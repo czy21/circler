@@ -1,28 +1,15 @@
-import A from "../page/A";
-import B from "../page/B";
-import {ContactsOutlined, SettingOutlined} from '@ant-design/icons';
-import React from "react"
+import Volume from "@v/volume"
+import ConfigMap from "@v/configmap"
+import {RouteConfig} from "react-router-config";
 
-export interface RouteModel {
-    name: string,
-    path: string
-    icon: React.ReactNode
-    component?: React.ComponentType<any>
-    children?: Array<RouteModel>
-}
-
-const routes: RouteModel[] = [
+const routes: RouteConfig[] = [
     {
-        name: "FlatA",
-        path: "/system",
-        icon: <SettingOutlined/>,
-        component: A,
+        path: "/volume",
+        component: Volume,
     },
     {
-        name: "FlatB",
-        path: "/b",
-        icon: <ContactsOutlined/>,
-        component: B,
-    }
+        path: "/configmap",
+        component: ConfigMap,
+    },
 ];
 export default routes

@@ -1,8 +1,8 @@
 import React from "react";
 import {Layout, Menu,} from "antd";
 import {connect} from "react-redux";
-import {mapStateToProps} from './Header'
-import routes, {RouteModel} from '../route'
+import {mapStateToProps} from '@/layout/Header'
+import menus from "@/menu";
 import {Link} from "react-router-dom";
 
 const AntdSider = Layout.Sider;
@@ -10,8 +10,8 @@ const AntdSider = Layout.Sider;
 const {SubMenu} = Menu;
 
 
-function recuriveMenu(routes: RouteModel[]) {
-    return routes.map((item, index) => {
+function recuriveMenu(routes: any) {
+    return routes.map((item:any, index:any) => {
         if (item.children) {
             return (
                 <SubMenu
@@ -45,7 +45,7 @@ class Sider extends React.Component<{ collapsed?: boolean }, any> {
         return (
             <AntdSider trigger={null} collapsible collapsed={this.props.collapsed}>
                 <Menu theme="dark" defaultSelectedKeys={["0"]}>
-                    {recuriveMenu(routes)}
+                    {recuriveMenu(menus)}
                 </Menu>
             </AntdSider>
         )
