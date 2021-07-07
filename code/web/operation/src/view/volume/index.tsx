@@ -1,6 +1,7 @@
 import React from "react";
 import {Table} from "antd";
 import api from "@/api"
+import moment from "moment";
 
 const columns = [
     {
@@ -39,7 +40,7 @@ export default class Index extends React.Component<any, any> {
                         name: t.metadata.name,
                         phase: t.status.phase,
                         accessMode: t.status.accessModes.join(","),
-                        createTime: t.metadata.creationTimestamp
+                        createTime: moment(t.metadata.creationTimestamp).format("yyyy-MM-DD HH:mm:ss")
                     }
                 })
             })
