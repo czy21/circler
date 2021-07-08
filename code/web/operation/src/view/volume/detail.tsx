@@ -12,6 +12,6 @@ export default class Index extends React.Component<any, any> {
     }
 
     render() {
-        return <div></div>
+        return <div>volume detail</div>
     }
 }

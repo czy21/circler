@@ -1,13 +1,13 @@
 import React from "react";
-import {Pagination, Space, Table} from "antd";
+import {Space, Table} from "antd";
 import api from "@/api"
 import moment from "moment";
-import {render} from "react-dom";
-import Detail from "./detail"
+import {useHistory} from "react-router-dom"
 
-function detail(record: any) {
-    api.post("k8s/volume/detail", {"name": record.name}).then((data: any) => {
-
+function detail() {
+    api.post("k8s/volume/detail", {"name": ""}).then((data: any) => {
+        // let history = useHistory();
+        // history.push("/volume/detail")
     })
 }
 
@@ -16,7 +16,10 @@ const columns = [
         key: 'name',
         title: '名称',
         render: (text: any, record: any) => {
-            return (<Space><a onClick={() => detail(record)}>{record.name}</a></Space>)
+            return (
+                <Space>
+                    <a onClick={() => detail}>{record.name}</a>
+                </Space>)
         },
         fixed: "left"
     },
@@ -69,16 +72,17 @@ export default class Index extends React.Component<any, any> {
     }
 
     render() {
-        return <div><Table key={"volume"} columns={columns.map((t: any) => {
-            let p = {
-                ...t,
-                dataIndex: t.key,
-            }
-            if (t.key !== "operation") {
-                p.width = t.width ?? 150
-            }
-            return p
-        })} dataSource={this.state.data} pagination={{total: this.state.total, pageSize: 10, showTotal: (t: number) => `总数: ${t}`}}/>
+        return <div>
+            <Table key={"volume"} columns={columns.map((t: any) => {
+                let p = {
+                    ...t,
+                    dataIndex: t.key,
+                }
+                if (t.key !== "operation") {
+                    p.width = t.width ?? 150
+                }
+                return p
+            })} dataSource={this.state.data} pagination={{total: this.state.total, pageSize: 10, showTotal: (t: number) => `总数: ${t}`}}/>
         </div>
     }
 }
