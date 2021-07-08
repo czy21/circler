@@ -1,18 +1,16 @@
-package controller
+package jenkins
 
 import (
-	"context"
 	"fmt"
 	"github.com/bndr/gojenkins"
+	"github.com/czyhome/circler/src/config"
 	"github.com/czyhome/circler/src/entity/result"
 	"github.com/gin-gonic/gin"
 )
 
 func JobList(c *gin.Context) {
-	ctx := context.Background()
-	jenkins, _ := gojenkins.CreateJenkins(nil, "http://192.168.2.21:8082/", "admin", "Czy20210314.").Init(ctx)
 
-	jobs, err := jenkins.GetAllJobs(ctx)
+	jobs, err := config.JenkinsClient.GetAllJobs(*config.GlobalContext)
 	if err != nil {
 		panic(err)
 	}
@@ -25,20 +23,20 @@ func JobList(c *gin.Context) {
 		Build()
 }
 
-func BuildJob(c *gin.Context)  {
-	ctx := context.Background()
-	jenkins, _ := gojenkins.CreateJenkins(nil, "http://192.168.2.21:8082/", "admin", "Czy20210314.").Init(ctx)
+func BuildJob(c *gin.Context) {
+	jenkins, _ := gojenkins.CreateJenkins(nil, "http://192.168.2.21:8082/", "admin", "Czy20210314.").Init(*config.GlobalContext)
 	params := make(map[string]string)
-	buildNumber, err := jenkins.BuildJob(ctx, "erp_dev", params)
+	buildNumber, err := jenkins.BuildJob(*config.GlobalContext, "erp_dev", params)
 	if err != nil {
 		panic(err)
 	}
 	fmt.Println(buildNumber)
 }
 
-func JobDetail(c *gin.Context)  {
+func JobDetail(c *gin.Context) {
 
 }
+
 //func UserSearch(c *gin.Context) {
 //	userInput := dto.User{}
 //	_ = c.ShouldBind(&userInput)

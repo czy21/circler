@@ -7,7 +7,6 @@ import (
 
 func main() {
 	router := gin.Default()
-	controller.InitUserRouter(router)
-	controller.InitK8sRouter(router)
+	controller.Init(router)
 	_ = router.Run(":8080")
 }

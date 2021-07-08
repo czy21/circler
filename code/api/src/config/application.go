@@ -1,7 +1,9 @@
 package config
 
 import (
+	"context"
 	"flag"
+	"github.com/bndr/gojenkins"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/tools/clientcmd"
 	"os"
@@ -9,6 +11,9 @@ import (
 )
 
 var K8sClient *kubernetes.Clientset
+var Namespace = "default"
+var GlobalContext *context.Context
+var JenkinsClient *gojenkins.Jenkins
 
 func init() {
 	var kubeconfig *string
@@ -23,5 +28,7 @@ func init() {
 		clientside, _ := kubernetes.NewForConfig(config)
 		K8sClient = clientside
 	}
-
+	GlobalContext := context.Background()
+	jenkins, _ := gojenkins.CreateJenkins(nil, "http://192.168.2.21:8082/", "admin", "Czy20210314.").Init(GlobalContext)
+	JenkinsClient = jenkins
 }

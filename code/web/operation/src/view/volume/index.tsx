@@ -1,28 +1,45 @@
 import React from "react";
-import {Table} from "antd";
+import {Space, Table} from "antd";
 import api from "@/api"
 import moment from "moment";
 
+function detail(record: any) {
+    api.post("k8s/volume/detail", {"name": record.name}).then((data: any) => {
+        console.log(data)
+    })
+}
+
 const columns = [
     {
-        title: '名称',
-        dataIndex: 'name',
         key: 'name',
+        title: '名称',
+        render: (text: any, record: any) => {
+            return (<Space><a onClick={() => detail(record)}>{record.name}</a></Space>)
+        },
+        fixed: "left"
     },
     {
-        title: '状态',
-        dataIndex: 'phase',
         key: 'phase',
+        title: '状态'
     },
     {
-        title: '访问模式',
-        dataIndex: 'accessMode',
         key: 'accessMode',
+        title: '访问模式',
     },
     {
-        title: '创建时间',
-        dataIndex: 'createTime',
         key: 'createTime',
+        title: '创建时间',
+    },
+    {
+        key: 'operation',
+        title: '操作',
+        render: (text: any, record: any) => (
+            <Space size="middle">
+                <a>...</a>
+            </Space>
+        ),
+        fixed: "right",
+        width: 100
     },
 ];
 
@@ -37,6 +54,7 @@ export default class Index extends React.Component<any, any> {
             this.setState({
                 "data": data.items.map((t: any) => {
                     return {
+                        id: t.metadata.uid,
                         name: t.metadata.name,
                         phase: t.status.phase,
                         accessMode: t.status.accessModes.join(","),
@@ -48,7 +66,15 @@ export default class Index extends React.Component<any, any> {
     }
 
     render() {
-        return <Table columns={columns} dataSource={this.state.data}/>
-
+        return <Table key={"volume"} columns={columns.map((t: any) => {
+            let p = {
+                ...t,
+                dataIndex: t.key,
+            }
+            if (t.key !== "operation") {
+                p.width = t.width ?? 150
+            }
+            return p
+        })} dataSource={this.state.data}/>
     }
 }
