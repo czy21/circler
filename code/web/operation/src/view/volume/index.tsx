@@ -2,10 +2,12 @@ import React from "react";
 import {Pagination, Space, Table} from "antd";
 import api from "@/api"
 import moment from "moment";
+import {render} from "react-dom";
+import Detail from "./detail"
 
 function detail(record: any) {
     api.post("k8s/volume/detail", {"name": record.name}).then((data: any) => {
-        console.log(data)
+
     })
 }
 
@@ -67,7 +69,6 @@ export default class Index extends React.Component<any, any> {
     }
 
     render() {
-        // console.log(this.state.data.length)
         return <div><Table key={"volume"} columns={columns.map((t: any) => {
             let p = {
                 ...t,
@@ -77,7 +78,7 @@ export default class Index extends React.Component<any, any> {
                 p.width = t.width ?? 150
             }
             return p
-        })} dataSource={this.state.data} pagination={{total: this.state.total, pageSize: 10,showTotal:(t:number)=>`${t}`}}  />
+        })} dataSource={this.state.data} pagination={{total: this.state.total, pageSize: 10, showTotal: (t: number) => `总数: ${t}`}}/>
         </div>
     }
 }
