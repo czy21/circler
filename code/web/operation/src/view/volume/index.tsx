@@ -1,5 +1,5 @@
 import React from "react";
-import {Space, Table} from "antd";
+import {Pagination, Space, Table} from "antd";
 import api from "@/api"
 import moment from "moment";
 
@@ -60,13 +60,15 @@ export default class Index extends React.Component<any, any> {
                         accessMode: t.status.accessModes.join(","),
                         createTime: moment(t.metadata.creationTimestamp).format("yyyy-MM-DD HH:mm:ss")
                     }
-                })
+                }),
+                "total": data.items.length
             })
         })
     }
 
     render() {
-        return <Table key={"volume"} columns={columns.map((t: any) => {
+        // console.log(this.state.data.length)
+        return <div><Table key={"volume"} columns={columns.map((t: any) => {
             let p = {
                 ...t,
                 dataIndex: t.key,
@@ -75,6 +77,7 @@ export default class Index extends React.Component<any, any> {
                 p.width = t.width ?? 150
             }
             return p
-        })} dataSource={this.state.data}/>
+        })} dataSource={this.state.data} pagination={{total: this.state.total, pageSize: 10,showTotal:(t:number)=>`${t}`}}  />
+        </div>
     }
 }

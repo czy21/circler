@@ -11,7 +11,7 @@ import (
 )
 
 var K8sClient *kubernetes.Clientset
-var Namespace = "default"
+var Namespace = ""
 var GlobalContext *context.Context
 var JenkinsClient *gojenkins.Jenkins
 
