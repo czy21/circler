@@ -18,7 +18,7 @@ let routes: RouteConfig[] = [
                 exact: true
             },
             {
-                path: `${PATH}/detail`,
+                path: `${PATH}/detail/:name`,
                 component: Detail,
                 exact: true
             }
