@@ -1,15 +1,28 @@
-import {renderRoutes} from "react-router-config";
-import routes from "@/route";
-import Index from '@v/volume/container'
-import {Redirect} from 'react-router-dom'
+import React from 'react'
+import {renderRoutes, RouteConfig} from "react-router-config";
+import Index from '@v/volume/container/index'
+import Detail from "@v/volume/container/detail";
+import Layout from "@v/volume/container/layout";
 
-routes = [
+
+const PATH = '/volume'
+
+let routes: RouteConfig[] = [
     {
-        path: "/",
-        component: ()=>{return (<div/>)},
-        // exact: true
+        path: PATH,
+        component: Layout,
+        routes: [
+            {
+                path: PATH,
+                component: Index,
+                exact: true
+            },
+            {
+                path: `${PATH}/detail`,
+                component: Detail,
+                exact: true
+            }
+        ]
     }
 ]
-
-const App = () => renderRoutes(routes)
-export default App
+export let App = () => renderRoutes(routes)

@@ -1,7 +1,7 @@
 import React from "react";
 
 
-export default class Index extends React.Component<any, any> {
+export default class Detail extends React.Component<any, any> {
     constructor(props: any) {
         super(props);
         this.state = {}
