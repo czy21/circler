@@ -2,7 +2,7 @@ import React from "react";
 import {Button, Col, Form, FormInstance, Input, Row, Space, Table} from "antd";
 import api from "@/api"
 import moment from "moment";
-import {DetailModel as DetailModel, SearchModel} from "@v/volume/data";
+import {DetailModel as DetailModel, SearchModel} from "@v/configmap/data";
 import {PlusOutlined, SearchOutlined} from "@ant-design/icons";
 
 
@@ -27,14 +27,6 @@ export default class List extends React.Component<any, any> {
             fixed: "left"
         },
         {
-            key: 'phase',
-            title: '状态'
-        },
-        {
-            key: 'accessMode',
-            title: '访问模式',
-        },
-        {
             key: 'createTime',
             title: '创建时间',
         },
@@ -52,13 +44,11 @@ export default class List extends React.Component<any, any> {
     ];
 
     search(query?: SearchModel) {
-        api.post("k8s/volume/list", query).then((data: any) => {
+        api.post("k8s/configmap/list", query).then((data: any) => {
             let d: DetailModel[] = data.items.map((t: any) => {
                 return {
                     id: t.metadata.uid,
                     name: t.metadata.name,
-                    phase: t.status.phase,
-                    accessMode: t.status.accessModes.join(","),
                     createTime: moment(t.metadata.creationTimestamp).format("yyyy-MM-DD HH:mm:ss")
                 }
             })
@@ -100,7 +90,7 @@ export default class List extends React.Component<any, any> {
                     </Col>
                 </Row>
             </Form>
-            <Table key={"volume"} columns={this.columns.map((t: any) => {
+            <Table key={"configmap"} columns={this.columns.map((t: any) => {
                 let p = {
                     ...t,
                     dataIndex: t.key,

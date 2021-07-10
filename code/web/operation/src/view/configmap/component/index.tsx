@@ -1,7 +1,6 @@
-import Layout from '@v/volume/component/layout'
-import List from '@v/volume/component/list'
-import Detail from "@v/volume/component/detail";
-
+import Layout from '@/layout/Layout'
+import List from '@v/configmap/component/list'
+import Detail from "@v/configmap/component/detail";
 
 export {
     Layout,

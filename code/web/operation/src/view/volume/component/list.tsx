@@ -1,9 +1,10 @@
 import React from "react";
-import {Button, Col, Form, Input, Row, Space, Table} from "antd";
+import {Button, Col, Form, FormInstance, Input, Row, Space, Table} from "antd";
 import api from "@/api"
 import moment from "moment";
-import {Detail as DetailModel} from "@v/volume/data";
+import {DetailModel as DetailModel, SearchModel} from "@v/volume/data";
 import {PlusOutlined, SearchOutlined} from "@ant-design/icons";
+
 
 export default class List extends React.Component<any, any> {
     constructor(props: any) {
@@ -50,9 +51,9 @@ export default class List extends React.Component<any, any> {
         },
     ];
 
-    componentDidMount() {
-        api.post("k8s/volume/list", {}).then((data: any) => {
-            let d: DetailModel = data.items.map((t: any) => {
+    search(query?: SearchModel) {
+        api.post("k8s/volume/list", query).then((data: any) => {
+            let d: DetailModel[] = data.items.map((t: any) => {
                 return {
                     id: t.metadata.uid,
                     name: t.metadata.name,
@@ -63,16 +64,22 @@ export default class List extends React.Component<any, any> {
             })
             this.setState({
                 "data": d,
-                "total": data.items.length
+                "total": d.length
             })
         })
     }
 
+    componentDidMount() {
+        this.search()
+    }
+
+    searchForm = React.createRef<FormInstance>();
+
     render() {
         return <div>
-
             <Form layout={"inline"}
                   style={{marginBottom: 20}}
+                  ref={this.searchForm}
             >
                 <Row style={{width: "100%"}}>
                     <Col span={20}>
@@ -82,9 +89,12 @@ export default class List extends React.Component<any, any> {
                     </Col>
                     <Col span={4}>
                         <Space>
-                            <Button type={"default"}>重置</Button>
-                            <Button type={"primary"}>查询</Button>
-                            <Button type={"primary"}><PlusOutlined/>新建</Button>
+                            <Button type={"default"} onClick={() => {
+                                this.searchForm.current?.resetFields()
+                                this.search(undefined)
+                            }}>重置</Button>
+                            <Button type={"primary"} onClick={() => this.search(this.searchForm.current?.getFieldsValue())}>查询</Button>
+                            <Button type={"primary"}><PlusOutlined/>创建</Button>
                         </Space>
 
                     </Col>

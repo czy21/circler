@@ -14,3 +14,14 @@ func ConfigMapList(c *gin.Context) {
 		Data(configmaps).
 		Build()
 }
+
+func ConfigMapDetail(c *gin.Context) {
+	err := c.Bind(&input)
+	if err != nil {
+		panic(err)
+	}
+	configmap, _ := config.K8sClient.CoreV1().ConfigMaps(config.Namespace).Get(context.TODO(), input.Name, metav1.GetOptions{})
+	result.Result{c}.
+		Data(configmap).
+		Build()
+}

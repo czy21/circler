@@ -2,7 +2,7 @@ import React from "react";
 import api from "@/api";
 import moment from "moment";
 import {Descriptions} from "antd";
-import {Detail as DetailModel} from "@v/volume/data";
+import {DetailModel as DetailModel} from "@v/volume/data";
 
 export default class Detail extends React.Component<any, any> {
     constructor(props: any) {
