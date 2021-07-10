@@ -2,9 +2,9 @@ import React from "react";
 import {Space, Table} from "antd";
 import api from "@/api"
 import moment from "moment";
-import {Detail as DetailModel} from "@v/volume/container/data";
+import {Detail as DetailModel} from "@v/volume/data";
 
-export default class Index extends React.Component<any, any> {
+export default class List extends React.Component<any, any> {
     constructor(props: any) {
         super(props);
         this.state = {}

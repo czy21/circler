@@ -1,8 +1,6 @@
 import React from 'react'
 import {renderRoutes, RouteConfig} from "react-router-config";
-import Index from '@v/volume/container/index'
-import Detail from "@v/volume/container/detail";
-import Layout from "@v/volume/container/layout";
+import {List, Detail, Layout} from '@v/volume/component'
 
 
 const PATH = '/volume'
@@ -14,7 +12,7 @@ let routes: RouteConfig[] = [
         routes: [
             {
                 path: PATH,
-                component: Index,
+                component: List,
                 exact: true
             },
             {
