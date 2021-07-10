@@ -62,6 +62,7 @@ export default class List extends React.Component<any, any> {
                     createTime: moment(t.metadata.creationTimestamp).format("yyyy-MM-DD HH:mm:ss")
                 }
             })
+            console.log()
             this.setState({
                 "data": d,
                 "total": d.length
@@ -91,6 +92,7 @@ export default class List extends React.Component<any, any> {
                         <Space>
                             <Button type={"default"} onClick={() => {
                                 this.searchForm.current?.resetFields()
+                                console.log(this.searchForm.current?.getFieldsValue())
                                 this.search(undefined)
                             }}>重置</Button>
                             <Button type={"primary"} onClick={() => this.search(this.searchForm.current?.getFieldsValue())}>查询</Button>

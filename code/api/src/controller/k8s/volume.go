@@ -12,10 +12,8 @@ import (
 	"strings"
 )
 
-var input dto.K8sInputModel
-var search dto.K8sSearchModel
-
 func VolumeList(c *gin.Context) {
+	search := dto.K8sSearchModel{}
 	err := c.Bind(&search)
 	if err != nil {
 		panic(err)
@@ -39,6 +37,7 @@ func VolumeList(c *gin.Context) {
 }
 
 func VolumeDetail(c *gin.Context) {
+	input := dto.K8sInputModel{}
 	err := c.Bind(&input)
 	if err != nil {
 		panic(err)
