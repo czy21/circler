@@ -2,6 +2,7 @@ import React from "react";
 import {Space, Table} from "antd";
 import api from "@/api"
 import moment from "moment";
+import {Detail as DetailModel} from "@v/volume/container/data";
 
 export default class Index extends React.Component<any, any> {
     constructor(props: any) {
@@ -50,16 +51,17 @@ export default class Index extends React.Component<any, any> {
 
     componentDidMount() {
         api.post("k8s/volume/list", {}).then((data: any) => {
+            let d: DetailModel = data.items.map((t: any) => {
+                return {
+                    id: t.metadata.uid,
+                    name: t.metadata.name,
+                    phase: t.status.phase,
+                    accessMode: t.status.accessModes.join(","),
+                    createTime: moment(t.metadata.creationTimestamp).format("yyyy-MM-DD HH:mm:ss")
+                }
+            })
             this.setState({
-                "data": data.items.map((t: any) => {
-                    return {
-                        id: t.metadata.uid,
-                        name: t.metadata.name,
-                        phase: t.status.phase,
-                        accessMode: t.status.accessModes.join(","),
-                        createTime: moment(t.metadata.creationTimestamp).format("yyyy-MM-DD HH:mm:ss")
-                    }
-                }),
+                "data": d,
                 "total": data.items.length
             })
         })
