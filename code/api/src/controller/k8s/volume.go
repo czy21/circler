@@ -31,7 +31,7 @@ func VolumeList(c *gin.Context) {
 	data := make(map[string]interface{})
 	data["items"] = items
 	data["metadata"] = pvs.ListMeta
-	result.Result{c}.
+	result.Result{Context: c}.
 		Data(data).
 		Build()
 }
@@ -43,7 +43,7 @@ func VolumeDetail(c *gin.Context) {
 		panic(err)
 	}
 	pv, _ := config.K8sClient.CoreV1().PersistentVolumeClaims(config.Namespace).Get(context.TODO(), input.Name, metav1.GetOptions{})
-	result.Result{c}.
+	result.Result{Context: c}.
 		Data(pv).
 		Build()
 }

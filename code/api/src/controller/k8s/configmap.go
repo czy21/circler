@@ -31,7 +31,7 @@ func ConfigMapList(c *gin.Context) {
 	data := make(map[string]interface{})
 	data["items"] = items
 	data["metadata"] = configmaps.ListMeta
-	result.Result{c}.
+	result.Result{Context: c}.
 		Data(data).
 		Build()
 }
@@ -43,7 +43,7 @@ func ConfigMapDetail(c *gin.Context) {
 		panic(err)
 	}
 	configmap, _ := config.K8sClient.CoreV1().ConfigMaps(config.Namespace).Get(context.TODO(), input.Name, metav1.GetOptions{})
-	result.Result{c}.
+	result.Result{Context: c}.
 		Data(configmap).
 		Build()
 }
