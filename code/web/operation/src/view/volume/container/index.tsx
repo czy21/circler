@@ -9,12 +9,6 @@ export default class Index extends React.Component<any, any> {
         this.state = {}
     }
 
-    detail(record: any) {
-        this.props.history.push(`${this.props.route.path}/detail/${record.name}`)
-        api.post("k8s/volume/detail", {"name": ""}).then((data: any) => {
-        })
-    }
-
     columns = [
         {
             key: 'name',
@@ -22,7 +16,9 @@ export default class Index extends React.Component<any, any> {
             render: (text: any, record: any) => {
                 return (
                     <Space>
-                        <a onClick={() => this.detail(record)}>{record.name}</a>
+                        <a onClick={() => {
+                            this.props.history.push(`${this.props.route.path}/${record.name}`)
+                        }}>{record.name}</a>
                     </Space>)
             },
             fixed: "left"
