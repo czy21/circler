@@ -6,6 +6,8 @@ import {DetailModel as DetailModel, SearchModel} from "@v/configmap/data";
 import {DashOutlined} from "@ant-design/icons";
 import {Table} from '@/component'
 
+const title = "配置"
+
 export default class List extends React.Component<any, any> {
     constructor(props: any) {
         super(props);
@@ -62,7 +64,7 @@ export default class List extends React.Component<any, any> {
 
     render() {
         return (
-            <Table onSearch={this.handleSearch} datasource={this.state.data} columns={this.columns}/>
+            <Table title={title} onSearch={this.handleSearch} datasource={this.state.data} columns={this.columns}/>
         )
     }
 }

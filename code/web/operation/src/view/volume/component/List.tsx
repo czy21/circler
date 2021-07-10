@@ -1,16 +1,22 @@
 import React from "react";
-import {Button, Space} from "antd";
+import {Button, Form as AntdForm, Input, Space} from "antd";
 import api from "@/api"
 import moment from "moment";
 import {DetailModel as DetailModel, SearchModel} from "@v/volume/data";
 import {DashOutlined} from "@ant-design/icons";
 import {Table} from '@/component'
+import {Create} from '@v/volume/component'
 
+const title: string = "存储卷"
 
 export default class List extends React.Component<any, any> {
     constructor(props: any) {
         super(props);
         this.state = {}
+    }
+
+    componentDidMount() {
+        this.handleSearch()
     }
 
     columns = [
@@ -68,14 +74,35 @@ export default class List extends React.Component<any, any> {
             })
         })
     }
-
-    componentDidMount() {
-        this.handleSearch()
+    handleCreateShow = () => {
+        this.setState({
+            createVisible: true
+        })
     }
+    handleCreateOk = () => {
+        this.setState({
+            createVisible: false
+        })
+    };
+
+    handleCreateCancel = () => {
+        this.setState({
+            createVisible: false
+        })
+    };
 
     render() {
         return (
-            <Table onSearch={this.handleSearch} datasource={this.state.data} columns={this.columns}/>
+            <div>
+                <Table title={title} onSearch={this.handleSearch} datasource={this.state.data} columns={this.columns} showCreateModal={this.handleCreateShow}/>
+                <Create title={title} visible={this.state.createVisible} onOk={this.handleCreateOk} onCancel={this.handleCreateCancel}>
+                    <AntdForm>
+                        <AntdForm.Item label={"名称"} name={"name"}>
+                            <Input/>
+                        </AntdForm.Item>
+                    </AntdForm>
+                </Create>
+            </div>
         )
     }
 }

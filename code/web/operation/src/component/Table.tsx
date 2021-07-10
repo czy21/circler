@@ -1,10 +1,19 @@
 import React, {useState} from "react";
-import {Button, Col, Form as AntdForm, Input, Row, Space, Table as AntdTable} from "antd";
+import {Button, Col, Form as AntdForm, Input, Modal, Row, Space, Table as AntdTable} from "antd";
 import {PlusOutlined, SearchOutlined} from "@ant-design/icons";
 
-const Table: React.FC<any> = (props: any) => {
-    const {onSearch, datasource, columns} = props
+interface TableFormProp {
+    title: string
+    datasource: any[]
+    columns: any[]
+    onSearch: (query?: any) => void;
+    showCreateModal?: () => void
+}
+
+const Table: React.FC<TableFormProp> = (props: TableFormProp) => {
+    const {onSearch, datasource, columns, title, showCreateModal} = props
     const [searchForm] = AntdForm.useForm();
+
     return (
         <div>
             <AntdForm layout={"inline"}
@@ -24,7 +33,7 @@ const Table: React.FC<any> = (props: any) => {
                                 onSearch()
                             }}>重置</Button>
                             <Button type={"primary"} onClick={() => onSearch(searchForm.getFieldsValue())}>查询</Button>
-                            <Button type={"primary"}><PlusOutlined/>创建</Button>
+                            <Button type={"primary"} onClick={showCreateModal}><PlusOutlined/>创建</Button>
                         </Space>
 
                     </Col>
@@ -39,7 +48,7 @@ const Table: React.FC<any> = (props: any) => {
                     p.width = t.width ?? 150
                 }
                 return p
-            })} rowKey={r => r.id} dataSource={datasource} pagination={{total: datasource?.length, pageSize: 10, showTotal: ((t: any, r: any) => `第 ${r[0]}-${r[1]} 条/总共 ${t} 条`)}}/>
+            })} rowKey={(r:any) => r.id} dataSource={datasource} pagination={{total: datasource?.length, pageSize: 10, showTotal: ((t: any, r: any) => `第 ${r[0]}-${r[1]} 条/总共 ${t} 条`)}}/>
         </div>
     )
 }
