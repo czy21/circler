@@ -1,8 +1,9 @@
 import React from "react";
-import {Space, Table} from "antd";
+import {Button, Col, Form, Input, Row, Space, Table} from "antd";
 import api from "@/api"
 import moment from "moment";
 import {Detail as DetailModel} from "@v/volume/data";
+import {PlusOutlined, SearchOutlined} from "@ant-design/icons";
 
 export default class List extends React.Component<any, any> {
     constructor(props: any) {
@@ -69,6 +70,26 @@ export default class List extends React.Component<any, any> {
 
     render() {
         return <div>
+
+            <Form layout={"inline"}
+                  style={{marginBottom: 20}}
+            >
+                <Row style={{width: "100%"}}>
+                    <Col span={20}>
+                        <Form.Item name="search">
+                            <Input prefix={<SearchOutlined/>}/>
+                        </Form.Item>
+                    </Col>
+                    <Col span={4}>
+                        <Space>
+                            <Button type={"default"}>重置</Button>
+                            <Button type={"primary"}>查询</Button>
+                            <Button type={"primary"}><PlusOutlined/>新建</Button>
+                        </Space>
+
+                    </Col>
+                </Row>
+            </Form>
             <Table key={"volume"} columns={this.columns.map((t: any) => {
                 let p = {
                     ...t,
