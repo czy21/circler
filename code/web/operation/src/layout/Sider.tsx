@@ -15,7 +15,7 @@ function recuriveMenu(routes: any) {
         if (item.children) {
             return (
                 <SubMenu
-                    key={index}
+                    key={item.name}
                     title={
                         <span>
                             {item.icon}
@@ -29,7 +29,7 @@ function recuriveMenu(routes: any) {
         }
         return (
             <Menu.Item
-                key={index}
+                key={item.name}
             >
                 {item.icon}
                 <span>{item.name}</span>

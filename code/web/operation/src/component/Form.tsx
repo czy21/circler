@@ -1,8 +1,7 @@
 import React from "react";
 
-export default class Form extends React.Component<any, any> {
+const Formt: React.FC<any> = (props: any) => {
 
-    render() {
-        return <div>form</div>;
-    }
+    return (<div></div>)
 }
+export default Formt;
