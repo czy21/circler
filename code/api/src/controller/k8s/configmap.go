@@ -13,7 +13,7 @@ import (
 )
 
 func ConfigMapList(c *gin.Context) {
-	search := dto.K8sSearchModel{}
+	search := dto.SearchModel{}
 	err := c.Bind(&search)
 	if err != nil {
 		panic(err)
@@ -37,7 +37,7 @@ func ConfigMapList(c *gin.Context) {
 }
 
 func ConfigMapDetail(c *gin.Context) {
-	input := dto.K8sInputModel{}
+	input := dto.InputModel{}
 	err := c.Bind(&input)
 	if err != nil {
 		panic(err)

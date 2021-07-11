@@ -13,6 +13,7 @@ func Init(r *gin.Engine) {
 		// volume
 		k8sRouter.POST("volume/list", k8s.VolumeList)
 		k8sRouter.POST("volume/detail", k8s.VolumeDetail)
+		k8sRouter.POST("volume/create", k8s.VolumeCreate)
 		// node
 		k8sRouter.POST("node/list", k8s.NodeList)
 		// service

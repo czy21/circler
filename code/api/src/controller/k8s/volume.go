@@ -8,12 +8,24 @@ import (
 	"github.com/gin-gonic/gin"
 	"golang.org/x/net/context"
 	v1 "k8s.io/api/core/v1"
+	"k8s.io/apimachinery/pkg/api/resource"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"strconv"
 	"strings"
 )
 
+type inputModel struct {
+	dto.InputModel
+	Capacity   int64  `json:"capacity"`
+	AccessMode string `json:"accessMode"`
+}
+
+type searchModel struct {
+	dto.SearchModel
+}
+
 func VolumeList(c *gin.Context) {
-	search := dto.K8sSearchModel{}
+	search := searchModel{}
 	err := c.Bind(&search)
 	if err != nil {
 		panic(err)
@@ -37,7 +49,7 @@ func VolumeList(c *gin.Context) {
 }
 
 func VolumeDetail(c *gin.Context) {
-	input := dto.K8sInputModel{}
+	input := inputModel{}
 	err := c.Bind(&input)
 	if err != nil {
 		panic(err)
@@ -45,5 +57,35 @@ func VolumeDetail(c *gin.Context) {
 	pv, _ := config.K8sClient.CoreV1().PersistentVolumeClaims(config.Namespace).Get(context.TODO(), input.Name, metav1.GetOptions{})
 	result.Result{Context: c}.
 		Data(pv).
+		Build()
+}
+
+func VolumeCreate(c *gin.Context) {
+	input := inputModel{}
+	err := c.Bind(&input)
+	if err != nil {
+		panic(err)
+	}
+	storage := "managed-nfs-storage"
+	pv := &v1.PersistentVolumeClaim{
+		ObjectMeta: metav1.ObjectMeta{
+			Name: input.Name,
+		},
+		Spec: v1.PersistentVolumeClaimSpec{
+			AccessModes: []v1.PersistentVolumeAccessMode{v1.PersistentVolumeAccessMode(input.AccessMode)},
+			Resources: v1.ResourceRequirements{
+				Requests: map[v1.ResourceName]resource.Quantity{
+					"storage": resource.MustParse(strconv.FormatInt(input.Capacity, 10) + "Gi"),
+				},
+			},
+			StorageClassName: &storage,
+		},
+	}
+	pvCreateResult, err := config.K8sClient.CoreV1().PersistentVolumeClaims(config.Namespace).Create(context.TODO(), pv, metav1.CreateOptions{})
+	if err != nil {
+		panic(err)
+	}
+	result.Result{Context: c}.
+		Data(pvCreateResult).
 		Build()
 }

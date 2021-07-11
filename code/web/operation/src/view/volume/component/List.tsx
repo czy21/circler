@@ -1,11 +1,17 @@
 import React from "react";
-import {Button, Form as AntdForm, Input, Space} from "antd";
+import {Button, Col, Dropdown, Form as AntdForm, FormInstance, Input, InputNumber, List as AntdList, Menu, Modal, Radio, Row, Slider, Space} from "antd";
 import api from "@/api"
 import moment from "moment";
 import {Detail as DetailModel, Search} from "@v/volume/data";
-import {DashOutlined} from "@ant-design/icons";
 import {Table} from '@/component'
 import Create from '@c/Create'
+import {CheckboxOptionType} from "antd/lib/checkbox/Group";
+import {DashOutlined} from "@ant-design/icons";
+import {UnControlled as CodeMirror} from 'react-codemirror2'
+import 'codemirror/lib/codemirror.css'
+import 'codemirror/lib/codemirror.js'
+import 'codemirror/theme/solarized.css'
+import 'codemirror/mode/clike/clike'
 
 const title: string = "存储卷"
 
@@ -13,10 +19,6 @@ export default class List extends React.Component<any, any> {
     constructor(props: any) {
         super(props);
         this.state = {}
-    }
-
-    componentDidMount() {
-        this.handleSearch()
     }
 
     columns = [
@@ -49,12 +51,51 @@ export default class List extends React.Component<any, any> {
             key: 'operation',
             title: '操作',
             render: (text: any, record: any) => (
-                <Button icon={<DashOutlined/>} type={"text"} style={{borderRadius: "16px"}}/>
+                <AntdList
+                    size="large"
+                    rowKey="id"
+                    dataSource={[record]}
+                    renderItem={(item: any, index: number) => {
+                        return (
+                            <AntdList.Item
+                                actions={[
+                                    <Dropdown
+                                        trigger={["click"]}
+                                        overlay={
+                                            <Menu onClick={({key}) => this.editAndDelete(key, item)}>
+                                                <Menu.Item key="edit">编辑</Menu.Item>
+                                                <Menu.Item key="editConfig">编辑配置文件</Menu.Item>
+                                                <Menu.Item key="delete">删除</Menu.Item>
+                                            </Menu>
+                                        }
+                                    >
+                                        <Button icon={<DashOutlined/>} type={"text"} style={{borderRadius: "16px"}}/>
+                                    </Dropdown>
+                                ]}>
+                            </AntdList.Item>
+                        )
+                    }}
+                />
+
             ),
             fixed: "right",
             width: 100
         },
     ];
+
+    createFormRef = React.createRef<FormInstance>();
+
+    componentDidMount() {
+        let accessModeOptions: CheckboxOptionType[] = [
+            {label: 'ReadWriteOnce 单个节点读写', value: 'ReadWriteOnce'},
+            {label: 'ReadOnlyMany  多节点只读', value: 'ReadOnlyMany'},
+            {label: 'ReadWriteMany 多节点读写', value: 'ReadWriteMany'},
+        ]
+        this.setState({
+            options: accessModeOptions
+        })
+        this.handleSearch()
+    }
 
     handleSearch = (query?: Search) => {
         api.post("k8s/volume/list", query).then((data: any) => {
@@ -67,7 +108,6 @@ export default class List extends React.Component<any, any> {
                     createTime: moment(t.metadata.creationTimestamp).format("yyyy-MM-DD HH:mm:ss")
                 }
             })
-            console.log()
             this.setState({
                 "data": d,
                 "total": d.length
@@ -75,32 +115,121 @@ export default class List extends React.Component<any, any> {
         })
     }
     handleCreateShow = () => {
+        this.createFormRef.current?.resetFields()
         this.setState({
-            createVisible: true
+            createVisible: true,
+            capacity: 128
         })
     }
     handleCreateOk = () => {
         this.setState({
             createVisible: false
         })
-    };
+        this.createFormRef.current?.setFieldsValue({
+            capacity: this.state.capacity
+        })
+        api.post("k8s/volume/create", this.createFormRef.current?.getFieldsValue()).then(() => {
 
+        })
+    };
     handleCreateCancel = () => {
         this.setState({
             createVisible: false
         })
+
     };
+
+    editAndDelete = (key: string | number, currentItem: any) => {
+        if (key === 'edit') {
+        } else if (key === 'editConfig') {
+            this.handleEditShow()
+            this.handleEditShow()
+        } else if (key === 'delete') {
+            Modal.confirm({
+                title: '删除任务',
+                content: '确定删除该任务吗？',
+                okText: '确认',
+                cancelText: '取消',
+                onOk: () => {
+                },
+            });
+        }
+    };
+    handleEditShow = () => {
+        this.setState({
+            editVisible: true
+        })
+    }
+    handleEditOk = () => {
+        this.setState({
+            editVisible: false
+        })
+    }
 
     render() {
         return (
             <div>
                 <Table title={title} onSearch={this.handleSearch} datasource={this.state.data} columns={this.columns} showCreateModal={this.handleCreateShow}/>
-                <Create title={title} visible={this.state.createVisible} onOk={this.handleCreateOk} onCancel={this.handleCreateCancel}>
-                    <AntdForm>
+                <Create title={`创建${title}`} visible={this.state.createVisible} onOk={this.handleCreateOk} onCancel={this.handleCreateCancel}>
+                    <AntdForm ref={this.createFormRef}>
                         <AntdForm.Item label={"名称"} name={"name"}>
                             <Input/>
                         </AntdForm.Item>
+                        <AntdForm.Item label={"访问模式"} name={"accessMode"}>
+                            <Radio.Group options={this.state.options} optionType={"button"} buttonStyle={"outline"}/>
+                        </AntdForm.Item>
+                        <AntdForm.Item label={"容量"} name={"capacity"}>
+                            <Row justify={"space-between"}>
+                                <Col span={20}>
+                                    <Slider defaultValue={this.state.capacity}
+                                            marks={{
+                                                128: "128Gi",
+                                                512: "512Gi",
+                                                1024: "1024Gi",
+                                                2048: "2048Gi",
+                                            }}
+                                            max={2048}
+                                            onChange={(val) => {
+                                                this.setState({
+                                                    capacity: val
+                                                })
+                                            }}
+                                            value={this.state.capacity}
+                                    />
+                                </Col>
+                                <Col style={{display: "flex", alignItems: "center"}}>
+                                    <InputNumber
+                                        step={10}
+                                        onChange={(val) => {
+                                            this.setState({
+                                                capacity: val
+                                            })
+                                        }}
+                                        value={this.state.capacity}
+                                    />
+                                </Col>
+                            </Row>
+                        </AntdForm.Item>
                     </AntdForm>
+                </Create>
+                <Create title={`编辑配置文件`}
+                        visible={this.state.editVisible}
+                        onOk={this.handleEditOk}
+                        onCancel={() => {
+                            this.setState({
+                                editVisible: false
+                            })
+                        }}
+                >
+                    <CodeMirror
+                        value={"react-codemirror"}
+                        options={{
+                            lineNumbers:true,
+                            mode:{name:"text/javascript"}
+                        }}
+                    >
+
+                    </CodeMirror>
                 </Create>
             </div>
         )

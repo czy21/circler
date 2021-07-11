@@ -1,10 +1,10 @@
 package dto
 
-type K8sInputModel struct {
+type InputModel struct {
 	Id   string `json:"id"`
 	Name string `json:"name"`
 }
 
-type K8sSearchModel struct {
+type SearchModel struct {
 	Search string `json:"search"`
 }
