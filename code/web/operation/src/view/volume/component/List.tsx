@@ -5,7 +5,7 @@ import moment from "moment";
 import {Detail as DetailModel, Search} from "@v/volume/data";
 import {DashOutlined} from "@ant-design/icons";
 import {Table} from '@/component'
-import Create from '@v/volume/component/Create'
+import Create from '@c/Create'
 
 const title: string = "存储卷"
 

@@ -1,5 +1,7 @@
-import Table from '@c/./Table'
+import Table from '@c/Table'
+import Create from '@c/Create'
 
 export {
-    Table
+    Table,
+    Create
 }
