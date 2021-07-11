@@ -2,7 +2,7 @@ import React from "react";
 import {Button} from "antd";
 import api from "@/api"
 import moment from "moment";
-import {DetailModel as DetailModel, SearchModel} from "@v/configmap/data";
+import {Detail as DetailModel, Search} from "@v/configmap/data";
 import {DashOutlined} from "@ant-design/icons";
 import {Table} from '@/component'
 
@@ -42,7 +42,7 @@ export default class List extends React.Component<any, any> {
         },
     ];
 
-    handleSearch = (query?: SearchModel) => {
+    handleSearch = (query?: Search) => {
         api.post("k8s/configmap/list", query).then((data: any) => {
             let d: DetailModel[] = data.items.map((t: any) => {
                 return {

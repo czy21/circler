@@ -1,8 +1,9 @@
-export interface DetailModel {
-    name: string
-    createTime: string
+import {BaseDetail} from "@/model/data";
+
+
+export interface Detail extends BaseDetail {
 }
 
-export interface SearchModel {
+export interface Search {
     search?: string
 }

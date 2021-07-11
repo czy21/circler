@@ -2,7 +2,7 @@ import React from "react";
 import {Button, Form as AntdForm, Input, Space} from "antd";
 import api from "@/api"
 import moment from "moment";
-import {DetailModel as DetailModel, SearchModel} from "@v/volume/data";
+import {Detail as DetailModel, Search} from "@v/volume/data";
 import {DashOutlined} from "@ant-design/icons";
 import {Table} from '@/component'
 import {Create} from '@v/volume/component'
@@ -56,7 +56,7 @@ export default class List extends React.Component<any, any> {
         },
     ];
 
-    handleSearch = (query?: SearchModel) => {
+    handleSearch = (query?: Search) => {
         api.post("k8s/volume/list", query).then((data: any) => {
             let d: DetailModel[] = data.items.map((t: any) => {
                 return {
