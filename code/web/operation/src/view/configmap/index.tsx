@@ -1,9 +1,9 @@
-import React from 'react'
+import Layout from '@/layout/Layout'
+import List from '@v/configmap/component/List'
+import Detail from "@v/configmap/component/Detail";
 import {renderRoutes, RouteConfig} from "react-router-config";
-import {List, Detail, Layout} from '@v/volume/component'
 
-
-const PATH = '/volume'
+const PATH = '/configmap'
 
 let routes: RouteConfig[] = [
     {
