@@ -8,10 +8,7 @@ import Create from '@c/Create'
 import {CheckboxOptionType} from "antd/lib/checkbox/Group";
 import {DashOutlined} from "@ant-design/icons";
 import {UnControlled as CodeMirror} from 'react-codemirror2'
-import 'codemirror/lib/codemirror.css'
-import 'codemirror/lib/codemirror.js'
-import 'codemirror/theme/solarized.css'
-import 'codemirror/mode/clike/clike'
+
 
 const title: string = "存储卷"
 
@@ -222,10 +219,10 @@ export default class List extends React.Component<any, any> {
                         }}
                 >
                     <CodeMirror
-                        value={"react-codemirror"}
                         options={{
-                            lineNumbers:true,
-                            mode:{name:"text/javascript"}
+                            theme: 'material',
+                            lineNumbers: true,
+                            mode: {name: "text/javascript"}
                         }}
                     >
 
