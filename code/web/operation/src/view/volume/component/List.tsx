@@ -9,6 +9,7 @@ import {CheckboxOptionType} from "antd/lib/checkbox/Group";
 import {DashOutlined} from "@ant-design/icons";
 import {UnControlled as CodeMirror} from 'react-codemirror2'
 
+import {objectMapper, yaml} from '@/utils'
 
 const title: string = "存储卷"
 
@@ -49,7 +50,7 @@ export default class List extends React.Component<any, any> {
             title: '操作',
             render: (text: any, record: any) => (
                 <AntdList
-                    size="large"
+                    size={"small"}
                     rowKey="id"
                     dataSource={[record]}
                     renderItem={(item: any, index: number) => {
@@ -91,20 +92,13 @@ export default class List extends React.Component<any, any> {
         this.setState({
             options: accessModeOptions
         })
+
         this.handleSearch()
     }
 
     handleSearch = (query?: Search) => {
         api.post("k8s/volume/list", query).then((data: any) => {
-            let d: DetailModel[] = data.items.map((t: any) => {
-                return {
-                    id: t.metadata.uid,
-                    name: t.metadata.name,
-                    phase: t.status.phase,
-                    accessMode: t.status.accessModes.join(","),
-                    createTime: moment(t.metadata.creationTimestamp).format("yyyy-MM-DD HH:mm:ss")
-                }
-            })
+            let d: DetailModel[] = data.items.map((t: any) => objectMapper.volumes(t))
             this.setState({
                 "data": d,
                 "total": d.length
@@ -140,7 +134,13 @@ export default class List extends React.Component<any, any> {
         if (key === 'edit') {
         } else if (key === 'editConfig') {
             this.handleEditShow()
-            this.handleEditShow()
+            api.post("k8s/volume/detail", {name: currentItem.name}).then((t: any) => {
+                let yamlConfig: any = objectMapper.volumes(t)._originData
+                this.setState({
+                    currentRowYaml: yaml.getValue(yamlConfig)
+                })
+            })
+
         } else if (key === 'delete') {
             Modal.confirm({
                 title: '删除任务',
@@ -210,6 +210,7 @@ export default class List extends React.Component<any, any> {
                     </AntdForm>
                 </Create>
                 <Create title={`编辑配置文件`}
+                        width={1200}
                         visible={this.state.editVisible}
                         onOk={this.handleEditOk}
                         onCancel={() => {
@@ -219,13 +220,17 @@ export default class List extends React.Component<any, any> {
                         }}
                 >
                     <CodeMirror
+                        editorDidMount={(editor) => {
+                            editor.setSize('auto', '600');
+                        }}
+                        value={this.state.currentRowYaml}
                         options={{
                             theme: 'material',
                             lineNumbers: true,
-                            mode: {name: "text/javascript"}
+                            mode: {name: 'text/x-yaml',},
+                            styleActiveLine: true,
                         }}
                     >
-
                     </CodeMirror>
                 </Create>
             </div>

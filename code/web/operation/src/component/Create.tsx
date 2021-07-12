@@ -5,14 +5,17 @@ interface CreateFormProps {
     visible: boolean;
     title: string
     width?: string | number
+    style?: React.CSSProperties
     onOk: () => void
     onCancel: () => void
 }
 
 const Create: React.FC<CreateFormProps> = (props) => {
-    const {title, visible, onOk, onCancel, width} = props;
+    const {title, visible, onOk, onCancel, width, style} = props;
     return (
         <Modal
+            width={width ?? 800}
+            style={style}
             destroyOnClose
             title={`${title}`}
             visible={visible}
@@ -20,7 +23,6 @@ const Create: React.FC<CreateFormProps> = (props) => {
             okText={"确认"}
             onCancel={onCancel}
             cancelText={"取消"}
-            width={width ?? 800}
         >
             {props.children}
         </Modal>

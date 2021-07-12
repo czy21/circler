@@ -39,16 +39,18 @@ const Table: React.FC<TableFormProp> = (props: TableFormProp) => {
                     </Col>
                 </Row>
             </AntdForm>
-            <AntdTable columns={columns?.map((t: any) => {
-                let p = {
-                    ...t,
-                    dataIndex: t.key,
-                }
-                if (t.key !== "operation") {
-                    p.width = t.width ?? 150
-                }
-                return p
-            })} rowKey={(r:any) => r.id} dataSource={datasource} pagination={{total: datasource?.length, pageSize: 10, showTotal: ((t: any, r: any) => `第 ${r[0]}-${r[1]} 条/总共 ${t} 条`)}}/>
+            <AntdTable
+                size={"small"}
+                columns={columns?.map((t: any) => {
+                    let p = {
+                        ...t,
+                        dataIndex: t.key,
+                    }
+                    if (t.key !== "operation") {
+                        p.width = t.width ?? 150
+                    }
+                    return p
+                })} rowKey={(r: any) => r.id} dataSource={datasource} pagination={{total: datasource?.length, pageSize: 10, showTotal: ((t: any, r: any) => `第 ${r[0]}-${r[1]} 条/总共 ${t} 条`)}}/>
         </div>
     )
 }
