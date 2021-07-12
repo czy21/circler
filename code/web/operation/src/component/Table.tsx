@@ -1,5 +1,5 @@
-import React, {useState} from "react";
-import {Button, Col, Form as AntdForm, Input, Modal, Row, Space, Table as AntdTable} from "antd";
+import React from "react";
+import {Button, Col, Form as AntdForm, Input, Row, Space, Table as AntdTable,Select} from "antd";
 import {PlusOutlined, SearchOutlined} from "@ant-design/icons";
 
 interface TableFormProp {
@@ -23,7 +23,7 @@ const Table: React.FC<TableFormProp> = (props: TableFormProp) => {
                 <Row style={{width: "100%"}}>
                     <Col span={20}>
                         <AntdForm.Item name="search">
-                            <Input prefix={<SearchOutlined/>}/>
+                            <Input prefix={<SearchOutlined/>} onPressEnter={() => onSearch(searchForm.getFieldsValue())}/>
                         </AntdForm.Item>
                     </Col>
                     <Col span={4}>

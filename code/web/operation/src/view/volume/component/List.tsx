@@ -73,12 +73,12 @@ export default class List extends React.Component<any, any> {
                             </AntdList.Item>
                         )
                     }}
-                />
+                        />
 
-            ),
-            fixed: "right",
-            width: 100
-        },
+                        ),
+                        fixed: "right",
+                        width: 100
+                    },
     ];
 
     createFormRef = React.createRef<FormInstance>();
