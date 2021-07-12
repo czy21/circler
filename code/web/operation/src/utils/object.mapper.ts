@@ -14,9 +14,8 @@ const getOriginData = (item: any) =>
         'metadata.managedFields',
     ])
 
-
 const getBaseInfo = (item: any) => ({
-    uid: get(item, 'metadata.uid'),
+    id: get(item, 'metadata.uid'),
     name: get(item, 'metadata.name'),
     creator: getResourceCreator(item),
     description: getDescription(item),

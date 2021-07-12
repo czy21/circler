@@ -14,6 +14,7 @@ func Init(r *gin.Engine) {
 		k8sRouter.POST("volume/list", k8s.VolumeList)
 		k8sRouter.POST("volume/detail", k8s.VolumeDetail)
 		k8sRouter.POST("volume/create", k8s.VolumeCreate)
+		k8sRouter.POST("volume/editYaml", k8s.VolumeEditYaml)
 		// node
 		k8sRouter.POST("node/list", k8s.NodeList)
 		// service

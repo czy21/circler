@@ -10,6 +10,7 @@ import (
 	v1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/api/resource"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/util/yaml"
 	"strconv"
 	"strings"
 )
@@ -18,6 +19,7 @@ type inputModel struct {
 	dto.InputModel
 	Capacity   int64  `json:"capacity"`
 	AccessMode string `json:"accessMode"`
+	Yaml       string `json:"yaml"`
 }
 
 type searchModel struct {
@@ -87,5 +89,25 @@ func VolumeCreate(c *gin.Context) {
 	}
 	result.Result{Context: c}.
 		Data(pvCreateResult).
+		Build()
+}
+
+func VolumeEditYaml(c *gin.Context) {
+	input := inputModel{}
+	err := c.Bind(&input)
+	if err != nil {
+		panic(err)
+	}
+	var pv v1.PersistentVolumeClaim
+	err = yaml.Unmarshal([]byte(input.Yaml), &pv)
+	if err != nil {
+		panic(err)
+	}
+	pvPatchResult, err := config.K8sClient.CoreV1().PersistentVolumeClaims(config.Namespace).Update(context.TODO(), &pv, metav1.UpdateOptions{})
+	if err != nil {
+		panic(err)
+	}
+	result.Result{Context: c}.
+		Data(pvPatchResult).
 		Build()
 }

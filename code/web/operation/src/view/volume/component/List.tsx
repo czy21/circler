@@ -1,7 +1,6 @@
 import React from "react";
-import {Button, Col, Dropdown, Form as AntdForm, FormInstance, Input, InputNumber, List as AntdList, Menu, Modal, Radio, Row, Slider, Space} from "antd";
+import {Button, Col, Dropdown, Form as AntdForm, FormInstance, Input, InputNumber, List as AntdList, Menu, Modal, Radio, Row, Slider} from "antd";
 import api from "@/api"
-import moment from "moment";
 import {Detail as DetailModel, Search} from "@v/volume/data";
 import {Table} from '@/component'
 import Create from '@c/Create'
@@ -22,36 +21,33 @@ export default class List extends React.Component<any, any> {
     columns = [
         {
             key: 'name',
-            title: '名称',
+            header: '名称',
             render: (text: any, record: any) => {
                 return (
-                    <Space>
-                        <a onClick={() => {
-                            this.props.history.push(`${this.props.route.path}/${record.name}`)
-                        }}>{record.name}</a>
-                    </Space>)
-            },
-            fixed: "left"
+                    <a onClick={() => {
+                        this.props.history.push(`${this.props.route.path}/${record.name}`)
+                    }}>{record.name}</a>
+                )
+            }
         },
         {
             key: 'phase',
-            title: '状态'
+            header: '状态'
         },
         {
             key: 'accessMode',
-            title: '访问模式',
+            header: '访问模式',
         },
         {
             key: 'createTime',
-            title: '创建时间',
+            header: '创建时间',
         },
         {
             key: 'operation',
-            title: '操作',
+            header: '操作',
             render: (text: any, record: any) => (
                 <AntdList
                     size={"small"}
-                    rowKey="id"
                     dataSource={[record]}
                     renderItem={(item: any, index: number) => {
                         return (
@@ -73,12 +69,9 @@ export default class List extends React.Component<any, any> {
                             </AntdList.Item>
                         )
                     }}
-                        />
-
-                        ),
-                        fixed: "right",
-                        width: 100
-                    },
+                />
+            )
+        },
     ];
 
     createFormRef = React.createRef<FormInstance>();
@@ -90,7 +83,9 @@ export default class List extends React.Component<any, any> {
             {label: 'ReadWriteMany 多节点读写', value: 'ReadWriteMany'},
         ]
         this.setState({
-            options: accessModeOptions
+            pocket: {
+                volumeAccessMode: accessModeOptions
+            }
         })
 
         this.handleSearch()
@@ -98,10 +93,14 @@ export default class List extends React.Component<any, any> {
 
     handleSearch = (query?: Search) => {
         api.post("k8s/volume/list", query).then((data: any) => {
-            let d: DetailModel[] = data.items.map((t: any) => objectMapper.volumes(t))
+            let d: any = data.items.map((t: any) => objectMapper.volumes(t))
             this.setState({
                 "data": d,
-                "total": d.length
+                page: {
+                    pageCurrent: 1,
+                    pageSize: 10,
+                    total: d.length
+                }
             })
         })
     }
@@ -137,7 +136,7 @@ export default class List extends React.Component<any, any> {
             api.post("k8s/volume/detail", {name: currentItem.name}).then((t: any) => {
                 let yamlConfig: any = objectMapper.volumes(t)._originData
                 this.setState({
-                    currentRowYaml: yaml.getValue(yamlConfig)
+                    yaml: yaml.getValue(yamlConfig)
                 })
             })
 
@@ -161,21 +160,32 @@ export default class List extends React.Component<any, any> {
         this.setState({
             editVisible: false
         })
+        api.post("k8s/volume/editYaml", {yaml: this.state.yamlUpdate}).then(() => {
+
+        })
     }
 
     render() {
         return (
             <div>
-                <Table title={title} onSearch={this.handleSearch} datasource={this.state.data} columns={this.columns} showCreateModal={this.handleCreateShow}/>
+                <Table title={title}
+                       onSearch={this.handleSearch}
+                       datasource={this.state.data}
+                       pageCurrent={this.state.page?.pageCurrent}
+                       pageSize={this.state.page?.pageSize}
+                       total={this.state.page?.total}
+                       columns={this.columns}
+                       showCreateModal={this.handleCreateShow}
+                />
                 <Create title={`创建${title}`} visible={this.state.createVisible} onOk={this.handleCreateOk} onCancel={this.handleCreateCancel}>
                     <AntdForm ref={this.createFormRef}>
-                        <AntdForm.Item label={"名称"} name={"name"}>
+                        <AntdForm.Item label={"名称"} name={"name"} required={true}>
                             <Input/>
                         </AntdForm.Item>
-                        <AntdForm.Item label={"访问模式"} name={"accessMode"}>
-                            <Radio.Group options={this.state.options} optionType={"button"} buttonStyle={"outline"}/>
+                        <AntdForm.Item label={"访问模式"} name={"accessMode"} required={true}>
+                            <Radio.Group options={this.state.pocket?.volumeAccessMode} optionType={"button"} buttonStyle={"outline"}/>
                         </AntdForm.Item>
-                        <AntdForm.Item label={"容量"} name={"capacity"}>
+                        <AntdForm.Item label={"容量"} name={"capacity"} required={true}>
                             <Row justify={"space-between"}>
                                 <Col span={20}>
                                     <Slider defaultValue={this.state.capacity}
@@ -223,12 +233,17 @@ export default class List extends React.Component<any, any> {
                         editorDidMount={(editor) => {
                             editor.setSize('auto', '600');
                         }}
-                        value={this.state.currentRowYaml}
+                        value={this.state.yaml}
                         options={{
                             theme: 'material',
                             lineNumbers: true,
                             mode: {name: 'text/x-yaml',},
                             styleActiveLine: true,
+                        }}
+                        onChange={(editor, data, value) => {
+                            this.setState({
+                                yamlUpdate: value
+                            })
                         }}
                     >
                     </CodeMirror>
