@@ -67,7 +67,7 @@ export default class List extends React.Component<any, any> {
                                             </Menu>
                                         }
                                     >
-                                        <Button icon={<DashOutlined/>} type={"text"} style={{borderRadius: "16px"}}/>
+                                        <Button size={"small"} icon={<DashOutlined/>} type={"text"} style={{borderRadius: "16px"}}/>
                                     </Dropdown>
                                 ]}>
                             </AntdList.Item>
