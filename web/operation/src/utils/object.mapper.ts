@@ -1,5 +1,5 @@
 import {get, omit,} from 'lodash'
-import {getAliasName, getDescription, getResourceCreator,} from '@/utils'
+import {getAliasName, getDescription, getResourceCreator,} from '@/utils/index'
 import moment from "moment";
 
 const getOriginData = (item: any) =>

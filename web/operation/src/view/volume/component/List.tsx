@@ -2,7 +2,7 @@ import React from "react";
 import {Button, Col, Dropdown, Form as AntdForm, FormInstance, Input, InputNumber, List as AntdList, Menu, Modal, Radio, Row, Slider} from "antd";
 import api from "@/api"
 import {Detail as DetailModel, Search} from "@v/volume/data";
-import {Table} from '@/component'
+import {Table} from '@c/index'
 import Create from '@c/Create'
 import {CheckboxOptionType} from "antd/lib/checkbox/Group";
 import {DashOutlined} from "@ant-design/icons";

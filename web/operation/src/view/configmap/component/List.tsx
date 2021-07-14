@@ -4,7 +4,7 @@ import api from "@/api"
 import moment from "moment";
 import {Detail as DetailModel, Search} from "@v/configmap/data";
 import {DashOutlined} from "@ant-design/icons";
-import {Table} from '@/component'
+import {Table} from '@c/index'
 
 const title = "配置"
 
