@@ -1,6 +1,6 @@
 import {RouteConfig} from "react-router-config";
-import {App as Volume} from '@/route/index'
-import {App as ConfigMap} from '@/route/index'
+import {App as Volume} from '@v/volume'
+import {App as ConfigMap} from '@v/configmap'
 
 const routes: RouteConfig[] = [
     {
