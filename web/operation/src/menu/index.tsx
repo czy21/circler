@@ -24,6 +24,11 @@ const menus: MenuModel[] = [
         name: "配置管理",
         path: "/configmap",
         icon: <ContactsOutlined/>,
+    },
+    {
+        name: "项目管理",
+        path: "/project",
+        icon: <ContactsOutlined/>,
     }
 ];
 export default menus
