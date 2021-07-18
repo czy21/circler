@@ -3,7 +3,7 @@ import Layout from '@/layout/Layout'
 // import Detail from "@v/volume/component/Detail";
 import {renderRoutes, RouteConfig} from "react-router-config";
 
-const PATH = '/volume'
+const PATH = '/project'
 
 let routes: RouteConfig[] = [
     {

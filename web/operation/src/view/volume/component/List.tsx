@@ -91,7 +91,7 @@ const List: React.FC<any> = (props: any) => {
 
     const handleSearch = (query?: Search) => {
         api.post("k8s/volume/list", query).then((data: any) => {
-            let d: any = data.items.map((t: any) => objectMapper.volumes(t))
+            let d: any = data.items.map((t: any) => objectMapper.volume(t))
             setData(d)
             setPage({
                 pageCurrent: 1,
@@ -116,7 +116,6 @@ const List: React.FC<any> = (props: any) => {
     };
     const handleCreateCancel = () => {
         setCreateVisible(false)
-
     };
 
     const editAndDelete = (key: string | number, currentItem: any) => {
@@ -124,7 +123,7 @@ const List: React.FC<any> = (props: any) => {
         } else if (key === 'editConfig') {
             handleEditShow()
             api.post("k8s/volume/detail", {name: currentItem.name}).then((t: any) => {
-                let yamlConfig: any = objectMapper.volumes(t)._originData
+                let yamlConfig: any = objectMapper.volume(t)._originData
                 setYaml(yamlUtil.getValue(yamlConfig))
             })
 

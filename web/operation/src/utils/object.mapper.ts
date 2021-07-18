@@ -36,7 +36,6 @@ const getVolumePhase = (item: any) => {
 }
 
 const VolumeMapper = (item: any) => {
-
     return {
         ...getBaseInfo(item),
         phase: getVolumePhase(item),
@@ -63,10 +62,20 @@ const VolumeMapper = (item: any) => {
     }
 }
 
+const ConfigmapMapper = (item: any) => ({
+    ...getBaseInfo(item),
+    namespace: get(item, 'metadata.namespace'),
+    labels: get(item, 'metadata.labels', {}),
+    annotations: get(item, 'metadata.annotations', {}),
+    data: get(item, 'data', {}),
+    _originData: getOriginData(item),
+})
+
 export const getLastApplyConfig = (item: {}) => {
     return JSON.parse(get(item, 'metadata.annotations["kubectl.kubernetes.io/last-applied-configuration"]'))
 }
 
 export default {
-    volumes: VolumeMapper
+    volume: VolumeMapper,
+    configmap:ConfigmapMapper
 }
