@@ -1,14 +1,11 @@
 import React from "react";
 import stub from "@/init"
-import {Search} from "@v/configmap/data";
-import {DashOutlined} from "@ant-design/icons";
-import {Table} from '@c/index'
-import Create from "@c/Create";
+import {Search} from "../data";
 
 const title = "配置"
 const List: React.FC<any> = (props: any) => {
     const {history, route} = props
-    const [pocket] = stub.react.useState({
+    const [pocket] = stub.ref.react.useState({
         volumeAccessMode: [
             {label: 'ReadWriteOnce 单个节点读写', value: 'ReadWriteOnce'},
             {label: 'ReadOnlyMany  多节点只读', value: 'ReadOnlyMany'},
@@ -16,14 +13,14 @@ const List: React.FC<any> = (props: any) => {
         ]
     })
 
-    const [data, setData] = stub.react.useState([])
-    const [page, setPage] = stub.react.useState({pageCurrent: 1, pageSize: 10, total: 0})
-    const [createVisible, setCreateVisible] = stub.react.useState(false)
-    const [editVisible, setEditVisible] = stub.react.useState(false)
-    const [capacity, setCapacity] = stub.react.useState(0)
-    const [yaml, setYaml] = stub.react.useState("")
+    const [data, setData] = stub.ref.react.useState([])
+    const [page, setPage] = stub.ref.react.useState({pageCurrent: 1, pageSize: 10, total: 0})
+    const [createVisible, setCreateVisible] = stub.ref.react.useState(false)
+    const [editVisible, setEditVisible] = stub.ref.react.useState(false)
+    const [capacity, setCapacity] = stub.ref.react.useState(0)
+    const [yaml, setYaml] = stub.ref.react.useState("")
 
-    stub.react.useEffect(() => {
+    stub.ref.react.useEffect(() => {
         handleSearch()
     }, [])
 
@@ -47,14 +44,14 @@ const List: React.FC<any> = (props: any) => {
             key: 'operation',
             title: '操作',
             render: (text: any, record: any) => (
-                <stub.antd.Button icon={<DashOutlined/>} type={"text"} style={{borderRadius: "16px"}}/>
+                <stub.ref.antd.Button icon={<stub.ref.icon.DashOutlined/>} type={"text"} style={{borderRadius: "16px"}}/>
             ),
             fixed: "right",
             width: 100
         },
     ];
 
-    const [createForm] = stub.antd.Form.useForm();
+    const [createForm] = stub.ref.antd.Form.useForm();
 
     const handleSearch = (query?: Search) => {
         stub.api.post("k8s/configmap/list", query).then((data: any) => {
@@ -86,23 +83,23 @@ const List: React.FC<any> = (props: any) => {
     };
     return (
         <div>
-            <Table title={title}
-                   onSearch={handleSearch}
-                   datasource={data}
-                   pageCurrent={page.pageCurrent}
-                   pageSize={page.pageSize}
-                   total={page.total}
-                   columns={columns}
-                   showCreateModal={handleCreateShow}
+            <stub.component.Table title={title}
+                                  onSearch={handleSearch}
+                                  datasource={data}
+                                  pageCurrent={page.pageCurrent}
+                                  pageSize={page.pageSize}
+                                  total={page.total}
+                                  columns={columns}
+                                  showCreateModal={handleCreateShow}
             />
-            <Create title={`创建${title}`} visible={createVisible} onOk={handleCreateOk} onCancel={handleCreateCancel}>
-                <stub.antd.Form form={createForm}>
-                    <stub.antd.Form.Item label={"名称"} name={"name"} required={true}>
-                        <stub.antd.Input/>
-                    </stub.antd.Form.Item>
+            <stub.component.Create title={`创建${title}`} visible={createVisible} onOk={handleCreateOk} onCancel={handleCreateCancel}>
+                <stub.ref.antd.Form form={createForm}>
+                    <stub.ref.antd.Form.Item label={"名称"} name={"name"} required={true}>
+                        <stub.ref.antd.Input/>
+                    </stub.ref.antd.Form.Item>
 
-                </stub.antd.Form>
-            </Create>
+                </stub.ref.antd.Form>
+            </stub.component.Create>
         </div>
     )
 

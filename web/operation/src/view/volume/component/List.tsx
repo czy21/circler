@@ -1,7 +1,6 @@
 import React from "react";
 import stub from "@/init"
 import {Search} from "@v/volume/data";
-import {Table} from '@c/index'
 import Create from '@c/Create'
 import {DashOutlined} from "@ant-design/icons";
 import {UnControlled as CodeMirror} from 'react-codemirror2'
@@ -9,7 +8,7 @@ import {UnControlled as CodeMirror} from 'react-codemirror2'
 const title: string = "存储卷"
 const List: React.FC<any> = (props: any) => {
     const {history, route} = props
-    const [pocket] = stub.react.useState({
+    const [pocket] = stub.ref.react.useState({
         volumeAccessMode: [
             {label: 'ReadWriteOnce 单个节点读写', value: 'ReadWriteOnce'},
             {label: 'ReadOnlyMany  多节点只读', value: 'ReadOnlyMany'},
@@ -17,14 +16,14 @@ const List: React.FC<any> = (props: any) => {
         ]
     })
 
-    const [data, setData] = stub.react.useState([])
-    const [page, setPage] = stub.react.useState({pageCurrent: 1, pageSize: 10, total: 0})
-    const [createVisible, setCreateVisible] = stub.react.useState(false)
-    const [editVisible, setEditVisible] = stub.react.useState(false)
-    const [capacity, setCapacity] = stub.react.useState(0)
-    const [yaml, setYaml] = stub.react.useState("")
+    const [data, setData] = stub.ref.react.useState([])
+    const [page, setPage] = stub.ref.react.useState({pageCurrent: 1, pageSize: 10, total: 0})
+    const [createVisible, setCreateVisible] = stub.ref.react.useState(false)
+    const [editVisible, setEditVisible] = stub.ref.react.useState(false)
+    const [capacity, setCapacity] = stub.ref.react.useState(0)
+    const [yaml, setYaml] = stub.ref.react.useState("")
 
-    stub.react.useEffect(() => {
+    stub.ref.react.useEffect(() => {
         handleSearch()
     }, [])
 
@@ -56,27 +55,27 @@ const List: React.FC<any> = (props: any) => {
             key: 'operation',
             header: '操作',
             render: (text: any, record: any) => (
-                <stub.antd.List
+                <stub.ref.antd.List
                     size={"small"}
                     dataSource={[record]}
                     renderItem={(item: any, index: number) => {
                         return (
-                            <stub.antd.List.Item
+                            <stub.ref.antd.List.Item
                                 actions={[
-                                    <stub.antd.Dropdown
+                                    <stub.ref.antd.Dropdown
                                         trigger={["click"]}
                                         overlay={
-                                            <stub.antd.Menu onClick={({key}) => editAndDelete(key, item)}>
-                                                <stub.antd.Menu.Item key="edit">编辑</stub.antd.Menu.Item>
-                                                <stub.antd.Menu.Item key="editConfig">编辑配置文件</stub.antd.Menu.Item>
-                                                <stub.antd.Menu.Item key="delete">删除</stub.antd.Menu.Item>
-                                            </stub.antd.Menu>
+                                            <stub.ref.antd.Menu onClick={({key}) => editAndDelete(key, item)}>
+                                                <stub.ref.antd.Menu.Item key="edit">编辑</stub.ref.antd.Menu.Item>
+                                                <stub.ref.antd.Menu.Item key="editConfig">编辑配置文件</stub.ref.antd.Menu.Item>
+                                                <stub.ref.antd.Menu.Item key="delete">删除</stub.ref.antd.Menu.Item>
+                                            </stub.ref.antd.Menu>
                                         }
                                     >
-                                        <stub.antd.Button size={"small"} icon={<DashOutlined/>} type={"text"} style={{borderRadius: "16px"}}/>
-                                    </stub.antd.Dropdown>
+                                        <stub.ref.antd.Button size={"small"} icon={<DashOutlined/>} type={"text"} style={{borderRadius: "16px"}}/>
+                                    </stub.ref.antd.Dropdown>
                                 ]}>
-                            </stub.antd.List.Item>
+                            </stub.ref.antd.List.Item>
                         )
                     }}
                 />
@@ -84,7 +83,7 @@ const List: React.FC<any> = (props: any) => {
         },
     ];
 
-    const [createForm] = stub.antd.Form.useForm();
+    const [createForm] = stub.ref.antd.Form.useForm();
 
     const handleSearch = (query?: Search) => {
         stub.api.post("k8s/volume/list", query).then((data: any) => {
@@ -125,7 +124,7 @@ const List: React.FC<any> = (props: any) => {
             })
 
         } else if (key === 'delete') {
-            stub.antd.Modal.confirm({
+            stub.ref.antd.Modal.confirm({
                 title: '删除任务',
                 content: '确定删除该任务吗？',
                 okText: '确认',
@@ -146,7 +145,7 @@ const List: React.FC<any> = (props: any) => {
     }
     return (
         <div>
-            <Table title={title}
+            <stub.component.Table title={title}
                    onSearch={handleSearch}
                    datasource={data}
                    pageCurrent={page.pageCurrent}
@@ -156,17 +155,17 @@ const List: React.FC<any> = (props: any) => {
                    showCreateModal={handleCreateShow}
             />
             <Create title={`创建${title}`} visible={createVisible} onOk={handleCreateOk} onCancel={handleCreateCancel}>
-                <stub.antd.Form form={createForm}>
-                    <stub.antd.Form.Item label={"名称"} name={"name"} required={true}>
-                        <stub.antd.Input/>
-                    </stub.antd.Form.Item>
-                    <stub.antd.Form.Item label={"访问模式"} name={"accessMode"} required={true}>
-                        <stub.antd.Radio.Group options={pocket.volumeAccessMode} optionType={"button"} buttonStyle={"outline"}/>
-                    </stub.antd.Form.Item>
-                    <stub.antd.Form.Item label={"容量"} name={"capacity"} required={true}>
-                        <stub.antd.Row justify={"space-between"}>
-                            <stub.antd.Col span={20}>
-                                <stub.antd.Slider defaultValue={capacity}
+                <stub.ref.antd.Form form={createForm}>
+                    <stub.ref.antd.Form.Item label={"名称"} name={"name"} required={true}>
+                        <stub.ref.antd.Input/>
+                    </stub.ref.antd.Form.Item>
+                    <stub.ref.antd.Form.Item label={"访问模式"} name={"accessMode"} required={true}>
+                        <stub.ref.antd.Radio.Group options={pocket.volumeAccessMode} optionType={"button"} buttonStyle={"outline"}/>
+                    </stub.ref.antd.Form.Item>
+                    <stub.ref.antd.Form.Item label={"容量"} name={"capacity"} required={true}>
+                        <stub.ref.antd.Row justify={"space-between"}>
+                            <stub.ref.antd.Col span={20}>
+                                <stub.ref.antd.Slider defaultValue={capacity}
                                                   marks={{
                                                       128: "128Gi",
                                                       512: "512Gi",
@@ -179,19 +178,19 @@ const List: React.FC<any> = (props: any) => {
                                                   }}
                                                   value={capacity}
                                 />
-                            </stub.antd.Col>
-                            <stub.antd.Col style={{display: "flex", alignItems: "center"}}>
-                                <stub.antd.InputNumber
+                            </stub.ref.antd.Col>
+                            <stub.ref.antd.Col style={{display: "flex", alignItems: "center"}}>
+                                <stub.ref.antd.InputNumber
                                     step={10}
                                     onChange={(val) => {
                                         setCapacity(val)
                                     }}
                                     value={capacity}
                                 />
-                            </stub.antd.Col>
-                        </stub.antd.Row>
-                    </stub.antd.Form.Item>
-                </stub.antd.Form>
+                            </stub.ref.antd.Col>
+                        </stub.ref.antd.Row>
+                    </stub.ref.antd.Form.Item>
+                </stub.ref.antd.Form>
             </Create>
             <Create title={`编辑配置文件`}
                     width={1200}

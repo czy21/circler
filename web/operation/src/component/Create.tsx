@@ -1,5 +1,5 @@
 import React from 'react';
-import {Modal} from 'antd';
+import stub from '@/init';
 
 interface CreateFormProps {
     visible: boolean;
@@ -13,7 +13,7 @@ interface CreateFormProps {
 const Create: React.FC<CreateFormProps> = (props) => {
     const {title, visible, onOk, onCancel, width, style} = props;
     return (
-        <Modal
+        <stub.ref.antd.Modal
             width={width ?? 800}
             style={style}
             destroyOnClose
@@ -25,7 +25,7 @@ const Create: React.FC<CreateFormProps> = (props) => {
             cancelText={"取消"}
         >
             {props.children}
-        </Modal>
+        </stub.ref.antd.Modal>
     );
 };
 

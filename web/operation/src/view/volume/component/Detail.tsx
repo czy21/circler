@@ -26,13 +26,13 @@ export default class Detail extends React.Component<any, any> {
     render() {
         return (
             <div>
-                <stub.antd.Descriptions title={`${this.state.data?.name}`}>
-                    <stub.antd.Descriptions.Item label={"状态"}>{this.state.data?.phase}</stub.antd.Descriptions.Item>
-                    <stub.antd.Descriptions.Item label={"容量"}>{this.state.data?.capacity}</stub.antd.Descriptions.Item>
-                    <stub.antd.Descriptions.Item label={"访问模式"}>{this.state.data?.accessMode}</stub.antd.Descriptions.Item>
-                    <stub.antd.Descriptions.Item label={"存储类型"}>{this.state.data?.storageType}</stub.antd.Descriptions.Item>
-                    <stub.antd.Descriptions.Item label={"创建时间"}>{this.state.data?.createTime}</stub.antd.Descriptions.Item>
-                </stub.antd.Descriptions>
+                <stub.ref.antd.Descriptions title={`${this.state.data?.name}`}>
+                    <stub.ref.antd.Descriptions.Item label={"状态"}>{this.state.data?.phase}</stub.ref.antd.Descriptions.Item>
+                    <stub.ref.antd.Descriptions.Item label={"容量"}>{this.state.data?.capacity}</stub.ref.antd.Descriptions.Item>
+                    <stub.ref.antd.Descriptions.Item label={"访问模式"}>{this.state.data?.accessMode}</stub.ref.antd.Descriptions.Item>
+                    <stub.ref.antd.Descriptions.Item label={"存储类型"}>{this.state.data?.storageType}</stub.ref.antd.Descriptions.Item>
+                    <stub.ref.antd.Descriptions.Item label={"创建时间"}>{this.state.data?.createTime}</stub.ref.antd.Descriptions.Item>
+                </stub.ref.antd.Descriptions>
             </div>
         )
     }

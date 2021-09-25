@@ -1,6 +1,5 @@
 import React from "react";
-import {Button, Col, Form as AntdForm, Input, Row, Space, Table as AntdTable, Select} from "antd";
-import {PlusOutlined, SearchOutlined} from "@ant-design/icons";
+import stub from '@/init'
 
 interface TableFormProp {
     title: string
@@ -15,34 +14,35 @@ interface TableFormProp {
 
 const Table: React.FC<TableFormProp> = (props: TableFormProp) => {
     const {onSearch, datasource, columns, title, total, pageCurrent, pageSize, showCreateModal} = props
-    const [searchForm] = AntdForm.useForm();
+    const [searchForm] = stub.ref.antd.Form.useForm();
 
     return (
         <div>
-            <AntdForm layout={"inline"}
-                      style={{marginBottom: 20}}
-                      form={searchForm}
+            <stub.ref.antd.Form layout={"inline"}
+                            style={{marginBottom: 20}}
+                            form={searchForm}
             >
-                <Row style={{width: "100%"}}>
-                    <Col span={20}>
-                        <AntdForm.Item name="search">
-                            <Input prefix={<SearchOutlined/>} onPressEnter={() => onSearch(searchForm.getFieldsValue())}/>
-                        </AntdForm.Item>
-                    </Col>
-                    <Col span={4}>
-                        <Space>
-                            <Button type={"default"} onClick={() => {
+                <stub.ref.antd.Row style={{width: "100%"}}>
+                    <stub.ref.antd.Col span={20}>
+                        <stub.ref.antd.Form.Item name="search">
+                            <stub.ref.antd.Input prefix={<stub.ref.icon.SearchOutlined/>} onPressEnter={() => onSearch(searchForm.getFieldsValue())}/>
+                        </stub.ref.antd.Form.Item>
+                    </stub.ref.antd.Col>
+                    <stub.ref.antd.Col span={4}>
+                        <stub.ref.antd.Space>
+                            <stub.ref.antd.Button type={"default"} onClick={() => {
                                 searchForm.resetFields()
                                 onSearch()
-                            }}>重置</Button>
-                            <Button type={"primary"} onClick={() => onSearch(searchForm.getFieldsValue())}>查询</Button>
-                            <Button type={"primary"} onClick={showCreateModal}><PlusOutlined/>创建</Button>
-                        </Space>
+                            }}>重置
+                            </stub.ref.antd.Button>
+                            <stub.ref.antd.Button type={"primary"} onClick={() => onSearch(searchForm.getFieldsValue())}>查询</stub.ref.antd.Button>
+                            <stub.ref.antd.Button type={"primary"} onClick={showCreateModal}><stub.ref.icon.PlusOutlined/>创建</stub.ref.antd.Button>
+                        </stub.ref.antd.Space>
 
-                    </Col>
-                </Row>
-            </AntdForm>
-            <AntdTable
+                    </stub.ref.antd.Col>
+                </stub.ref.antd.Row>
+            </stub.ref.antd.Form>
+            <stub.ref.antd.Table
                 size={"small"}
                 columns={columns?.map((t: any) => {
                     let p = {

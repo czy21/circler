@@ -1,7 +1,7 @@
-import Table from '@c/Table'
-import Create from '@c/Create'
+import Table from './Table'
+import Create from './Create'
 
-export {
+export default {
     Table,
     Create
 }
