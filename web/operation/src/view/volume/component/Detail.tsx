@@ -1,7 +1,6 @@
 import React from "react";
 import stub from "@/init";
 import moment from "moment";
-import {Descriptions} from "antd";
 import {Detail as DetailModel} from "@v/volume/data";
 
 export default class Detail extends React.Component<any, any> {
@@ -27,13 +26,13 @@ export default class Detail extends React.Component<any, any> {
     render() {
         return (
             <div>
-                <Descriptions title={`${this.state.data?.name}`}>
-                    <Descriptions.Item label={"状态"}>{this.state.data?.phase}</Descriptions.Item>
-                    <Descriptions.Item label={"容量"}>{this.state.data?.capacity}</Descriptions.Item>
-                    <Descriptions.Item label={"访问模式"}>{this.state.data?.accessMode}</Descriptions.Item>
-                    <Descriptions.Item label={"存储类型"}>{this.state.data?.storageType}</Descriptions.Item>
-                    <Descriptions.Item label={"创建时间"}>{this.state.data?.createTime}</Descriptions.Item>
-                </Descriptions>
+                <stub.antd.Descriptions title={`${this.state.data?.name}`}>
+                    <stub.antd.Descriptions.Item label={"状态"}>{this.state.data?.phase}</stub.antd.Descriptions.Item>
+                    <stub.antd.Descriptions.Item label={"容量"}>{this.state.data?.capacity}</stub.antd.Descriptions.Item>
+                    <stub.antd.Descriptions.Item label={"访问模式"}>{this.state.data?.accessMode}</stub.antd.Descriptions.Item>
+                    <stub.antd.Descriptions.Item label={"存储类型"}>{this.state.data?.storageType}</stub.antd.Descriptions.Item>
+                    <stub.antd.Descriptions.Item label={"创建时间"}>{this.state.data?.createTime}</stub.antd.Descriptions.Item>
+                </stub.antd.Descriptions>
             </div>
         )
     }
