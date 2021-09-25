@@ -1,11 +1,9 @@
 import React, {useEffect, useState} from "react";
-import {Button, Col, Form as AntdForm, Input, InputNumber, Radio, Row, Slider} from "antd";
-import api from "@/api"
-import moment from "moment";
-import {Detail as DetailModel, Search} from "@v/configmap/data";
+import {Button, Form as AntdForm, Input} from "antd";
+import stub from "@/init"
+import {Search} from "@v/configmap/data";
 import {DashOutlined} from "@ant-design/icons";
 import {Table} from '@c/index'
-import {objectMapper} from "@/utils";
 import Create from "@c/Create";
 
 const title = "配置"
@@ -61,8 +59,8 @@ const List: React.FC<any> = (props: any) => {
     const [createForm] = AntdForm.useForm();
 
     const handleSearch = (query?: Search) => {
-        api.post("k8s/configmap/list", query).then((data: any) => {
-            let d: any = data.items.map((t: any) => objectMapper.configmap(t))
+        stub.api.post("k8s/configmap/list", query).then((data: any) => {
+            let d: any = data.items.map((t: any) => stub.util.mapper.configmap(t))
             setData(d)
             setPage({
                 pageCurrent: 1,
@@ -81,7 +79,7 @@ const List: React.FC<any> = (props: any) => {
         createForm.setFieldsValue({
             capacity: capacity
         })
-        api.post("k8s/volume/create", createForm.getFieldsValue()).then(() => {
+        stub.api.post("k8s/volume/create", createForm.getFieldsValue()).then(() => {
 
         })
     };

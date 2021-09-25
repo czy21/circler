@@ -1,5 +1,5 @@
 import React from "react";
-import api from "@/api";
+import stub from "@/init";
 import moment from "moment";
 import {Descriptions} from "antd";
 import {Detail as DetailModel} from "@v/configmap/data";
@@ -11,7 +11,7 @@ export default class Detail extends React.Component<any, any> {
     }
 
     componentDidMount() {
-        api.post("k8s/configmap/detail", {name: this.props.match.params.name}).then((t: any) => {
+        stub.api.post("k8s/configmap/detail", {name: this.props.match.params.name}).then((t: any) => {
             let data: DetailModel = {
                 name: t.metadata.name,
                 createTime: moment(t.metadata.creationTimestamp).format("yyyy-MM-DD HH:mm:ss")

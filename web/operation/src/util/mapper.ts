@@ -1,6 +1,11 @@
 import {get, omit,} from 'lodash'
-import {getAliasName, getDescription, getResourceCreator,} from '@/utils/index'
 import moment from "moment";
+
+const getResourceCreator = (item: any) => get(item, 'metadata.annotations.creator') || ''
+
+const getDescription = (item: any) => get(item, 'metadata.annotations.desc') || ''
+
+const getAliasName = (item: any) => get(item, 'metadata.annotations.displayName') || ''
 
 const getOriginData = (item: any) =>
     omit(item, [
@@ -35,7 +40,7 @@ const getVolumePhase = (item: any) => {
     return phase
 }
 
-const VolumeMapper = (item: any) => {
+export const volume = (item: any) => {
     return {
         ...getBaseInfo(item),
         phase: getVolumePhase(item),
@@ -62,7 +67,7 @@ const VolumeMapper = (item: any) => {
     }
 }
 
-const ConfigmapMapper = (item: any) => ({
+export const configmap = (item: any) => ({
     ...getBaseInfo(item),
     namespace: get(item, 'metadata.namespace'),
     labels: get(item, 'metadata.labels', {}),
@@ -73,9 +78,4 @@ const ConfigmapMapper = (item: any) => ({
 
 export const getLastApplyConfig = (item: {}) => {
     return JSON.parse(get(item, 'metadata.annotations["kubectl.kubernetes.io/last-applied-configuration"]'))
-}
-
-export default {
-    volume: VolumeMapper,
-    configmap:ConfigmapMapper
 }
