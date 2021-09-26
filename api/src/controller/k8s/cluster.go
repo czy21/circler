@@ -4,11 +4,12 @@ import (
 	"github.com/czyhome/circler/src/entity/dto"
 	"github.com/czyhome/circler/src/entity/result"
 	"github.com/gin-gonic/gin"
+	"io/ioutil"
 )
 
 type ClusterInputModel struct {
 	dto.InputModel
-	Content string `json:"string"`
+	Content string `json:"content"`
 }
 
 type ClusterSearchModel struct {
@@ -45,7 +46,14 @@ func ClusterCreate(c *gin.Context) {
 	if err != nil {
 		panic(err)
 	}
+	// 将保存的字符串转换为字节流
+	str := []byte(input.Content)
 
+
+	err = ioutil.WriteFile("../data/cluster/"+input.Name, str, 0666)
+	if err != nil {
+		panic(err)
+	}
 	result.Result{Context: c}.
 		Data("").
 		Build()
