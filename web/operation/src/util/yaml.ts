@@ -1,6 +1,6 @@
-import yaml from 'js-yaml'
+import stub from '@/init'
 
 
 export const getValue = (value: {}) => {
-    return yaml.dump(JSON.parse(JSON.stringify(value)), {noRefs: true})
+    return stub.ref.yaml.dump(JSON.parse(JSON.stringify(value)), {noRefs: true})
 }

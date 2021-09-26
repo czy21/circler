@@ -1,5 +1,6 @@
-import {get, omit,} from 'lodash'
-import moment from "moment";
+import stub from '@/init'
+
+const {get, omit} = stub.ref.lodash
 
 const getResourceCreator = (item: any) => get(item, 'metadata.annotations.creator') || ''
 
@@ -25,7 +26,7 @@ const getBaseInfo = (item: any) => ({
     creator: getResourceCreator(item),
     description: getDescription(item),
     aliasName: getAliasName(item),
-    createTime: moment(get(item, 'metadata.creationTimestamp')).format("yyyy-MM-DD HH:mm:ss"),
+    createTime: stub.ref.moment(get(item, 'metadata.creationTimestamp')).format("yyyy-MM-DD HH:mm:ss"),
     resourceVersion: get(item, 'metadata.resourceVersion'),
 })
 
