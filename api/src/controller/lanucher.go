@@ -23,9 +23,13 @@ func Init(r *gin.Engine) {
 		// configmap
 		k8sRouter.POST("configmap/list", k8s.ConfigMapList)
 		k8sRouter.POST("configmap/detail", k8s.ConfigMapDetail)
+		// cluster
+		k8sRouter.POST("cluster/list",k8s.ClusterList)
+		k8sRouter.POST("cluster/create",k8s.ClusterCreate)
 	}
 	basicRouter:=r.Group("basic")
 	{
 		basicRouter.POST("test1",basic.Test1)
 	}
+
 }

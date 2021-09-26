@@ -15,19 +15,19 @@ import (
 	"strings"
 )
 
-type inputModel struct {
+type VolumeInputModel struct {
 	dto.InputModel
 	Capacity   int64  `json:"capacity"`
 	AccessMode string `json:"accessMode"`
 	Yaml       string `json:"yaml"`
 }
 
-type searchModel struct {
+type VolumeSearchModel struct {
 	dto.SearchModel
 }
 
 func VolumeList(c *gin.Context) {
-	search := searchModel{}
+	search := VolumeSearchModel{}
 	err := c.Bind(&search)
 	if err != nil {
 		panic(err)
@@ -51,7 +51,7 @@ func VolumeList(c *gin.Context) {
 }
 
 func VolumeDetail(c *gin.Context) {
-	input := inputModel{}
+	input := VolumeInputModel{}
 	err := c.Bind(&input)
 	if err != nil {
 		panic(err)
@@ -63,7 +63,7 @@ func VolumeDetail(c *gin.Context) {
 }
 
 func VolumeCreate(c *gin.Context) {
-	input := inputModel{}
+	input := VolumeInputModel{}
 	err := c.Bind(&input)
 	if err != nil {
 		panic(err)
@@ -93,7 +93,7 @@ func VolumeCreate(c *gin.Context) {
 }
 
 func VolumeEditYaml(c *gin.Context) {
-	input := inputModel{}
+	input := VolumeInputModel{}
 	err := c.Bind(&input)
 	if err != nil {
 		panic(err)

@@ -1,6 +1,5 @@
-import {ContactsOutlined} from '@ant-design/icons';
 import React from "react"
-
+import stub from '@/init'
 export interface MenuModel {
     name: string,
     path?: string
@@ -11,24 +10,29 @@ export interface MenuModel {
 const menus: MenuModel[] = [
     {
         name: "存储管理",
-        icon: <ContactsOutlined/>,
+        icon: <stub.ref.icon.ContactsOutlined/>,
         children: [
             {
                 name: "存储卷管理",
                 path: "/volume",
-                icon: <ContactsOutlined/>,
+                icon: <stub.ref.icon.ContactsOutlined/>,
             }
         ]
     },
     {
         name: "配置管理",
         path: "/configmap",
-        icon: <ContactsOutlined/>,
+        icon: <stub.ref.icon.ContactsOutlined/>,
     },
     {
         name: "项目管理",
         path: "/project",
-        icon: <ContactsOutlined/>,
+        icon: <stub.ref.icon.ContactsOutlined/>,
+    },
+    {
+        name: "集群管理",
+        path: "/cluster",
+        icon: <stub.ref.icon.ClusterOutlined/>,
     }
 ];
 export default menus

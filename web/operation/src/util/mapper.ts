@@ -1,15 +1,13 @@
 import stub from '@/init'
 
-const {get, omit} = stub.ref.lodash
+const getResourceCreator = (item: any) => stub.ref.lodash.get(item, 'metadata.annotations.creator') || ''
 
-const getResourceCreator = (item: any) => get(item, 'metadata.annotations.creator') || ''
+const getDescription = (item: any) => stub.ref.lodash.get(item, 'metadata.annotations.desc') || ''
 
-const getDescription = (item: any) => get(item, 'metadata.annotations.desc') || ''
-
-const getAliasName = (item: any) => get(item, 'metadata.annotations.displayName') || ''
+const getAliasName = (item: any) => stub.ref.lodash.get(item, 'metadata.annotations.displayName') || ''
 
 const getOriginData = (item: any) =>
-    omit(item, [
+    stub.ref.lodash.omit(item, [
         'status',
         'metadata.uid',
         'metadata.selfLink',
@@ -21,18 +19,18 @@ const getOriginData = (item: any) =>
     ])
 
 const getBaseInfo = (item: any) => ({
-    id: get(item, 'metadata.uid'),
-    name: get(item, 'metadata.name'),
+    id: stub.ref.lodash.get(item, 'metadata.uid'),
+    name: stub.ref.lodash.get(item, 'metadata.name'),
     creator: getResourceCreator(item),
     description: getDescription(item),
     aliasName: getAliasName(item),
-    createTime: stub.ref.moment(get(item, 'metadata.creationTimestamp')).format("yyyy-MM-DD HH:mm:ss"),
-    resourceVersion: get(item, 'metadata.resourceVersion'),
+    createTime: stub.ref.moment(stub.ref.lodash.get(item, 'metadata.creationTimestamp')).format("yyyy-MM-DD HH:mm:ss"),
+    resourceVersion: stub.ref.lodash.get(item, 'metadata.resourceVersion'),
 })
 
 const getVolumePhase = (item: any) => {
-    const phase = get(item, 'status.phase')
-    const deletionTime = get(item, 'metadata.deletionTimestamp')
+    const phase = stub.ref.lodash.get(item, 'status.phase')
+    const deletionTime = stub.ref.lodash.get(item, 'metadata.deletionTimestamp')
 
     if (deletionTime) {
         return 'Terminating'
@@ -45,21 +43,21 @@ export const volume = (item: any) => {
     return {
         ...getBaseInfo(item),
         phase: getVolumePhase(item),
-        namespace: get(item, 'metadata.namespace'),
-        status: get(item, 'status', {}),
-        conditions: get(item, 'status.conditions', []),
-        labels: get(item, 'metadata.labels'),
-        annotations: get(item, 'metadata.annotations'),
-        accessMode: get(item, 'spec.accessModes[0]'),
-        accessModes: get(item, 'spec.accessModes'),
-        storageClassName: get(item, 'spec.storageClassName'),
-        resources: get(item, 'spec.resources'),
-        capacity: get(
+        namespace: stub.ref.lodash.get(item, 'metadata.namespace'),
+        status: stub.ref.lodash.get(item, 'status', {}),
+        conditions: stub.ref.lodash.get(item, 'status.conditions', []),
+        labels: stub.ref.lodash.get(item, 'metadata.labels'),
+        annotations: stub.ref.lodash.get(item, 'metadata.annotations'),
+        accessMode: stub.ref.lodash.get(item, 'spec.accessModes[0]'),
+        accessModes: stub.ref.lodash.get(item, 'spec.accessModes'),
+        storageClassName: stub.ref.lodash.get(item, 'spec.storageClassName'),
+        resources: stub.ref.lodash.get(item, 'spec.resources'),
+        capacity: stub.ref.lodash.get(
             item,
             'status.capacity.storage',
-            get(item, 'spec.resources.requests.storage')
+            stub.ref.lodash.get(item, 'spec.resources.requests.storage')
         ),
-        storageProvisioner: get(
+        storageProvisioner: stub.ref.lodash.get(
             item,
             'metadata.annotations["volume.beta.kubernetes.io/storage-provisioner"]'
         ),
@@ -70,13 +68,13 @@ export const volume = (item: any) => {
 
 export const configmap = (item: any) => ({
     ...getBaseInfo(item),
-    namespace: get(item, 'metadata.namespace'),
-    labels: get(item, 'metadata.labels', {}),
-    annotations: get(item, 'metadata.annotations', {}),
-    data: get(item, 'data', {}),
+    namespace: stub.ref.lodash.get(item, 'metadata.namespace'),
+    labels: stub.ref.lodash.get(item, 'metadata.labels', {}),
+    annotations: stub.ref.lodash.get(item, 'metadata.annotations', {}),
+    data: stub.ref.lodash.get(item, 'data', {}),
     _originData: getOriginData(item),
 })
 
 export const getLastApplyConfig = (item: {}) => {
-    return JSON.parse(get(item, 'metadata.annotations["kubectl.kubernetes.io/last-applied-configuration"]'))
+    return JSON.parse(stub.ref.lodash.get(item, 'metadata.annotations["kubectl.kubernetes.io/last-applied-configuration"]'))
 }
