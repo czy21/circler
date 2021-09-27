@@ -4,9 +4,9 @@ import (
 	"context"
 	"flag"
 	"github.com/bndr/gojenkins"
+	"github.com/czyhome/circler/src/service"
 	"io/fs"
 	"k8s.io/client-go/kubernetes"
-	"k8s.io/client-go/tools/clientcmd"
 	"os"
 	"path/filepath"
 )
@@ -25,17 +25,22 @@ func init() {
 	if err != nil {
 		return
 	}
-	if os.Getenv("target_env") == "dev" {
-		pwd, _ := os.Getwd()
-		kubeconfig = flag.String("kubeconfig", filepath.Join(pwd, "src/config/___temp/.kube", "config"), "(optional) absolute path to the kubeconfig file")
-		flag.Parse()
-		config, err := clientcmd.BuildConfigFromFlags("", *kubeconfig)
-		if err != nil {
-			panic(err.Error())
-		}
-		clientside, _ := kubernetes.NewForConfig(config)
-		K8sClient = clientside
-	}
+	//if os.Getenv("target_env") == "dev" {
+
+	pwd, _ := os.Getwd()
+	kubeconfig = flag.String("kubeconfig", filepath.Join(pwd, "src/config/___temp/.kube", "config"), "(optional) absolute path to the kubeconfig file")
+	flag.Parse()
+	println(kubeconfig)
+
+	var configs = service.GetClusterList(ClusterDir)
+	println(configs)
+	//config, err := clientcmd.BuildConfigFromFlags("", *kubeconfig)
+	//if err != nil {
+	//	panic(err.Error())
+	//}
+	//clientside, _ := kubernetes.NewForConfig(config)
+	//K8sClient = clientside
+	//}
 	GlobalContext := context.Background()
 	jenkins, _ := gojenkins.CreateJenkins(nil, "http://192.168.2.21:8082/", "admin", "Czy20210314.").Init(GlobalContext)
 	JenkinsClient = jenkins
