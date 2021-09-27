@@ -1,10 +1,10 @@
 package k8s
 
 import (
+	"github.com/czyhome/circler/src/config"
 	"github.com/czyhome/circler/src/entity/dto"
 	"github.com/czyhome/circler/src/entity/result"
 	"github.com/gin-gonic/gin"
-	"io/ioutil"
 )
 
 type ClusterInputModel struct {
@@ -47,13 +47,15 @@ func ClusterCreate(c *gin.Context) {
 		panic(err)
 	}
 	// 将保存的字符串转换为字节流
-	str := []byte(input.Content)
+	//str := []byte(input.Content)
 
 
-	err = ioutil.WriteFile("../data/cluster/"+input.Name, str, 0666)
-	if err != nil {
-		panic(err)
-	}
+	//err = ioutil.WriteFile("../data/cluster/"+input.Name, str, 0666)
+	//if err != nil {
+	//	panic(err)
+	//}
+	println(config.Workspace)
+	println(config.DataDir)
 	result.Result{Context: c}.
 		Data("").
 		Build()
