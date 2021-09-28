@@ -62,7 +62,7 @@ const List: React.FC<any> = (props: any) => {
         setCreateVisible(true)
     }
     const handleCreateOk = () => {
-        setCreateVisible(false)
+        // setCreateVisible(false)
         const data = {...createForm.getFieldsValue(), content: content}
         stub.api.post("k8s/cluster/create", data).then((t: any) => {
             // let yamlConfig: any = stub.util.mapper.volume(t)._originData
