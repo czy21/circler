@@ -8,7 +8,8 @@ build/
 
 # Api #
 target/
-api/data/
+api/go/data/
+api/python/data/
 
 # Web #
 node_modules/
