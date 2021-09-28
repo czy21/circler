@@ -70,7 +70,10 @@ func ClusterCreate(c *gin.Context) {
 	if err != nil {
 		panic(err)
 	}
+	ret := make(map[string]interface{})
+	ret["a"] = "tr"
+	ret["b"] = "e"
 	result.Result{Context: c}.
-		Data("").
+		Data(ret).
 		Build()
 }

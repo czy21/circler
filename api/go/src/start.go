@@ -2,11 +2,14 @@ package main
 
 import (
 	"github.com/czyhome/circler/src/controller"
+	"github.com/czyhome/circler/src/handle"
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
-	router := gin.Default()
-	controller.Init(router)
-	_ = router.Run(":8080")
+	r := gin.Default()
+	r.Use(gin.Logger())
+	r.Use(handle.ResponseWrapper())
+	controller.Init(r)
+	_ = r.Run(":8080")
 }
