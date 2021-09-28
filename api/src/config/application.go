@@ -32,7 +32,7 @@ func init() {
 	flag.Parse()
 	println(kubeconfig)
 
-	var configs = service.GetClusterList(ClusterDir)
+	var configs = service.GetClusterList(ClusterDir, "meta.json")
 	println(configs)
 	//config, err := clientcmd.BuildConfigFromFlags("", *kubeconfig)
 	//if err != nil {

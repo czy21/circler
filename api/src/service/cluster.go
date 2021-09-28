@@ -8,7 +8,7 @@ import (
 	"path/filepath"
 )
 
-func GetClusterList(root string,configName string) []po.Cluster {
+func GetClusterList(root string, configName string) []po.Cluster {
 	var configs []po.Cluster
 
 	files, err := ioutil.ReadDir(root)
