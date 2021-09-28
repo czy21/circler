@@ -1,7 +1,7 @@
 from flask import Flask
 
-from controller import k8s as k8s_controller
+from controller.k8s import volume
 
 
 def register(app: Flask):
-    app.register_blueprint(k8s_controller.bp)
+    app.register_blueprint(blueprint=volume.bp, url_prefix="/k8s")
