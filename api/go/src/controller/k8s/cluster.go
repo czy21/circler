@@ -1,15 +1,21 @@
 package k8s
 
 import (
+	"encoding/json"
 	"github.com/czyhome/circler/src/config"
 	"github.com/czyhome/circler/src/entity/dto"
 	"github.com/czyhome/circler/src/entity/result"
 	"github.com/gin-gonic/gin"
+	"io/ioutil"
+	"os"
+	"path/filepath"
 )
 
 type ClusterInputModel struct {
-	dto.InputModel
-	Content string `json:"content"`
+	Name        string `json:"name"`
+	Description string `json:"description"`
+	ConfigPath  string `json:"configPath"`
+	Content     string `json:"content"`
 }
 
 type ClusterSearchModel struct {
@@ -46,16 +52,24 @@ func ClusterCreate(c *gin.Context) {
 	if err != nil {
 		panic(err)
 	}
-	// 将保存的字符串转换为字节流
-	//str := []byte(input.Content)
 
-
-	//err = ioutil.WriteFile("../data/cluster/"+input.Name, str, 0666)
-	//if err != nil {
-	//	panic(err)
-	//}
-	println(config.Workspace)
-	println(config.DataDir)
+	var envPath = filepath.Join(config.ClusterDir, input.Name)
+	var metaPath = filepath.Join(envPath, "meta.json")
+	var configPath = filepath.Join(envPath, "config.yaml")
+	err = os.MkdirAll(envPath, os.ModePerm)
+	if err != nil {
+		panic(err)
+	}
+	input.ConfigPath = filepath.Base(configPath)
+	metaBytes, err := json.Marshal(input)
+	if err != nil {
+		panic(err)
+	}
+	err = ioutil.WriteFile(metaPath, metaBytes, 0666)
+	err = ioutil.WriteFile(configPath, []byte(input.Content), 0666)
+	if err != nil {
+		panic(err)
+	}
 	result.Result{Context: c}.
 		Data("").
 		Build()

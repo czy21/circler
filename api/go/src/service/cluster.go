@@ -8,7 +8,10 @@ import (
 	"path/filepath"
 )
 
-func GetClusterList(root string, configName string) []po.Cluster {
+var metaName="meta.json"
+var configName="config.yaml"
+
+func GetClusterList(root string) []po.Cluster {
 	var configs []po.Cluster
 
 	files, err := ioutil.ReadDir(root)
@@ -18,7 +21,7 @@ func GetClusterList(root string, configName string) []po.Cluster {
 	for _, f := range files {
 		func(fileInfo os.FileInfo) {
 			path := filepath.Join(root, f.Name())
-			jsonFile, err := os.Open(filepath.Join(path, "meta.json"))
+			jsonFile, err := os.Open(filepath.Join(path, metaName))
 			if err != nil {
 				panic(err)
 			}

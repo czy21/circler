@@ -2,10 +2,7 @@ package config
 
 import (
 	"context"
-	"flag"
 	"github.com/bndr/gojenkins"
-	"github.com/czyhome/circler/src/service"
-	"io/fs"
 	"k8s.io/client-go/kubernetes"
 	"os"
 	"path/filepath"
@@ -20,20 +17,15 @@ var DataDir = filepath.Join(Workspace, "data")
 var ClusterDir = filepath.Join(DataDir, "cluster")
 
 func init() {
-	var kubeconfig *string
-	err := os.MkdirAll(ClusterDir, fs.ModeDir)
-	if err != nil {
-		return
-	}
-	//if os.Getenv("target_env") == "dev" {
+	//var kubeconfig *string
 
-	pwd, _ := os.Getwd()
-	kubeconfig = flag.String("kubeconfig", filepath.Join(pwd, "src/config/___temp/.kube", "config"), "(optional) absolute path to the kubeconfig file")
-	flag.Parse()
-	println(kubeconfig)
-
-	var configs = service.GetClusterList(ClusterDir, "meta.json")
-	println(configs)
+	//pwd, _ := os.Getwd()
+	//kubeconfig = flag.String("kubeconfig", filepath.Join(pwd, "src/config/___temp/.kube", "config"), "(optional) absolute path to the kubeconfig file")
+	//flag.Parse()
+	//println(kubeconfig)
+	//
+	//var configs = service.GetClusterList(ClusterDir)
+	//println(configs)
 	//config, err := clientcmd.BuildConfigFromFlags("", *kubeconfig)
 	//if err != nil {
 	//	panic(err.Error())
