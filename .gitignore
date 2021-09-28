@@ -8,6 +8,7 @@ build/
 
 # Api #
 target/
+api/data/
 
 # Web #
 node_modules/
