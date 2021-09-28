@@ -1,6 +1,7 @@
 from flask import Flask
 
 from controller import k8s
+from model import cluster
 
 
 def register(app: Flask):

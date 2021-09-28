@@ -16,6 +16,6 @@ def get_cluster():
             with io.open(t.joinpath("meta.json").as_posix(), "r", encoding="utf-8", newline="\n") as meta_file:
                 c = cluster.Cluster(**humps.decamelize(json.load(meta_file)))
                 if not Path(c.config_path).is_absolute():
-                    c.config_path = t.joinpath(c.config_path)
+                    c.config_path = t.joinpath(c.config_path).as_posix()
                 clusters.append(c)
     return clusters

@@ -1,9 +1,9 @@
 import io
-import json
+# import json
 from pathlib import Path
 
 import humps
-from flask import Blueprint, request, current_app
+from flask import Blueprint, request, current_app, json
 
 import util.path
 from decorator import response
@@ -15,7 +15,7 @@ bp = Blueprint(name="k8s", import_name=__name__)
 @bp.post(rule="/cluster/search")
 @response.wrapper
 def cluster_search():
-    return json.dump(util.path.get_cluster())
+    return [(lambda p: p)(t.__dict__) for t in util.path.get_cluster()]
 
 
 @bp.post(rule="/cluster/create")
