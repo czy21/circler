@@ -1,7 +1,7 @@
 package po
 
 type Cluster struct {
-	Key         string `json:"key"`
+	Name        string `json:"name"`
 	Description string `json:"description"`
 	ConfigPath  string `json:"configPath"`
 }

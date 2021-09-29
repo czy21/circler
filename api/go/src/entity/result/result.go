@@ -3,19 +3,23 @@ package result
 import (
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"time"
 )
 
 type Result struct {
 	Context *gin.Context
 }
 
-var ret interface{}
+var data interface{}
 
-func (r Result) Data(data interface{}) Result {
-	ret = data
+func (r Result) Data(val interface{}) Result {
+	data = val
 	return r
 }
 
 func (r Result) Build() {
-	r.Context.JSON(http.StatusOK, ret)
+	var m = make(map[string]interface{})
+	m["data"] = data
+	m["timestamp"] = time.Now().UnixMilli()
+	r.Context.JSON(http.StatusOK, m)
 }

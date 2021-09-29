@@ -46,7 +46,7 @@ const List: React.FC<any> = (props: any) => {
     const [createForm] = stub.ref.antd.Form.useForm();
 
     const handleSearch = (query?: Search) => {
-        stub.api.post("k8s/cluster/search", query).then((data: any) => {
+        stub.api.post("k8s/cluster/list", query).then((data: any) => {
             console.log(data)
             // let d: any = data.items.map((t: any) => stub.util.mapper.configmap(t))
             // setData(d)

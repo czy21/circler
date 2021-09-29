@@ -2,9 +2,12 @@ package k8s
 
 import (
 	"encoding/json"
+	"github.com/ahmetb/go-linq/v3"
 	"github.com/czyhome/circler/src/config"
 	"github.com/czyhome/circler/src/entity/dto"
+	"github.com/czyhome/circler/src/entity/po"
 	"github.com/czyhome/circler/src/entity/result"
+	"github.com/czyhome/circler/src/service"
 	"github.com/gin-gonic/gin"
 	"io/ioutil"
 	"os"
@@ -42,7 +45,7 @@ func ClusterList(c *gin.Context) {
 	//data["items"] = items
 	//data["metadata"] = pvs.ListMeta
 	//result.Result{Context: c}.
-	//	Data(data).
+	//	Data().
 	//	Build()
 }
 
@@ -52,7 +55,12 @@ func ClusterCreate(c *gin.Context) {
 	if err != nil {
 		panic(err)
 	}
-
+	var clusterConfigs = service.GetClusterList(config.ClusterDir)
+	var existCluster = linq.From(clusterConfigs).
+		WhereT(func(u po.Cluster) bool {
+			return u.Name == input.Name
+		}).First()
+	println(existCluster)
 	var envPath = filepath.Join(config.ClusterDir, input.Name)
 	var metaPath = filepath.Join(envPath, "meta.json")
 	var configPath = filepath.Join(envPath, "config.yaml")
@@ -61,6 +69,7 @@ func ClusterCreate(c *gin.Context) {
 		panic(err)
 	}
 	input.ConfigPath = filepath.Base(configPath)
+	input.Content = ""
 	metaBytes, err := json.Marshal(input)
 	if err != nil {
 		panic(err)
@@ -70,10 +79,7 @@ func ClusterCreate(c *gin.Context) {
 	if err != nil {
 		panic(err)
 	}
-	ret := make(map[string]interface{})
-	ret["a"] = "tr"
-	ret["b"] = "e"
 	result.Result{Context: c}.
-		Data(ret).
+		Data("success").
 		Build()
 }

@@ -3,16 +3,20 @@ package service
 import (
 	"encoding/json"
 	"github.com/czyhome/circler/src/entity/po"
+	"github.com/czyhome/circler/src/util"
 	"io/ioutil"
 	"os"
 	"path/filepath"
 )
 
-var metaName="meta.json"
-var configName="config.yaml"
+var MetaName = "meta.json"
+var ConfigName = "config.yaml"
 
 func GetClusterList(root string) []po.Cluster {
 	var configs []po.Cluster
+	if path.IsNotExist(root) {
+		return configs
+	}
 
 	files, err := ioutil.ReadDir(root)
 	if err != nil {
@@ -20,8 +24,8 @@ func GetClusterList(root string) []po.Cluster {
 	}
 	for _, f := range files {
 		func(fileInfo os.FileInfo) {
-			path := filepath.Join(root, f.Name())
-			jsonFile, err := os.Open(filepath.Join(path, metaName))
+			p := filepath.Join(root, f.Name())
+			jsonFile, err := os.Open(filepath.Join(p, MetaName))
 			if err != nil {
 				panic(err)
 			}
