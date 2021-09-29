@@ -10,6 +10,7 @@ import (
 	"github.com/czyhome/circler/src/entity/result"
 	"github.com/czyhome/circler/src/service"
 	"github.com/gin-gonic/gin"
+	"io/fs"
 	"io/ioutil"
 	"os"
 	"path/filepath"
@@ -55,13 +56,13 @@ func ClusterCreate(c *gin.Context) {
 	var metaPath = filepath.Join(envPath, "meta.json")
 	var configPath = filepath.Join(envPath, "config.yaml")
 	err = os.MkdirAll(envPath, os.ModePerm)
-	err = ioutil.WriteFile(configPath, []byte(input.Content), 0666)
+	err = ioutil.WriteFile(configPath, []byte(input.Content), fs.ModePerm)
 	core.CheckError(err)
 	input.ConfigPath = filepath.Base(configPath)
 	input.Content = ""
 	metaBytes, err := json.Marshal(input)
 	core.CheckError(err)
-	err = ioutil.WriteFile(metaPath, metaBytes, 0666)
+	err = ioutil.WriteFile(metaPath, metaBytes, fs.ModePerm)
 	core.CheckError(err)
 	result.Result{Context: c}.
 		Data("success").
