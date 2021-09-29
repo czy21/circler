@@ -55,13 +55,13 @@ func ClusterCreate(c *gin.Context) {
 	var metaPath = filepath.Join(envPath, "meta.json")
 	var configPath = filepath.Join(envPath, "config.yaml")
 	err = os.MkdirAll(envPath, os.ModePerm)
+	err = ioutil.WriteFile(configPath, []byte(input.Content), 0666)
 	core.CheckError(err)
 	input.ConfigPath = filepath.Base(configPath)
 	input.Content = ""
 	metaBytes, err := json.Marshal(input)
 	core.CheckError(err)
 	err = ioutil.WriteFile(metaPath, metaBytes, 0666)
-	err = ioutil.WriteFile(configPath, []byte(input.Content), 0666)
 	core.CheckError(err)
 	result.Result{Context: c}.
 		Data("success").
