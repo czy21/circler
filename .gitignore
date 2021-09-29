@@ -9,8 +9,6 @@ build/
 # Api #
 .gradle/
 target/
-api/go/data/
-api/python/data/
 
 # Web #
 node_modules/
