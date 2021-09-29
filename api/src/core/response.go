@@ -1,11 +1,11 @@
-package handle
+package core
 
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 )
 
-func ResponseWrapper() gin.HandlerFunc {
+func ResponseHandle() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		fmt.Println("sss")
 	}

@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"github.com/ahmetb/go-linq/v3"
 	"github.com/czyhome/circler/src/config"
+	"github.com/czyhome/circler/src/core"
 	"github.com/czyhome/circler/src/entity/dto"
 	"github.com/czyhome/circler/src/entity/po"
 	"github.com/czyhome/circler/src/entity/result"
@@ -12,6 +13,7 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
 type ClusterInputModel struct {
@@ -26,59 +28,41 @@ type ClusterSearchModel struct {
 }
 
 func ClusterList(c *gin.Context) {
-	//search := searchModel{}
-	//err := c.Bind(&search)
-	//if err != nil {
-	//	panic(err)
-	//}
-	//pvs, _ := config.K8sClient.CoreV1().PersistentVolumeClaims(config.Namespace).List(context.TODO(), metav1.ListOptions{})
-	//items := make([]v1.PersistentVolumeClaim, 0)
-	//itemQuery := linq.From(pvs.Items)
-	//if search.Search != "" {
-	//	itemQuery = itemQuery.
-	//		WhereT(func(t v1.PersistentVolumeClaim) bool {
-	//			return strings.Contains(t.Name, search.Search)
-	//		})
-	//}
-	//itemQuery.ToSlice(&items)
-	//data := make(map[string]interface{})
-	//data["items"] = items
-	//data["metadata"] = pvs.ListMeta
-	//result.Result{Context: c}.
-	//	Data().
-	//	Build()
+	search := ClusterSearchModel{}
+	err := c.Bind(&search)
+	if err != nil {
+		panic(err)
+	}
+	var list = service.GetClusterList(config.ClusterDir)
+	result.Result{Context: c}.
+		Data(list).
+		Build()
 }
 
 func ClusterCreate(c *gin.Context) {
 	input := ClusterInputModel{}
 	err := c.Bind(&input)
-	if err != nil {
-		panic(err)
-	}
+	core.CheckError(err)
 	var clusterConfigs = service.GetClusterList(config.ClusterDir)
 	var existCluster = linq.From(clusterConfigs).
 		WhereT(func(u po.Cluster) bool {
 			return u.Name == input.Name
 		}).First()
-	println(existCluster)
+	if existCluster != nil {
+		panic(core.NewException(strings.Join([]string{input.Name, "exists"}, " ")))
+	}
 	var envPath = filepath.Join(config.ClusterDir, input.Name)
 	var metaPath = filepath.Join(envPath, "meta.json")
 	var configPath = filepath.Join(envPath, "config.yaml")
 	err = os.MkdirAll(envPath, os.ModePerm)
-	if err != nil {
-		panic(err)
-	}
+	core.CheckError(err)
 	input.ConfigPath = filepath.Base(configPath)
 	input.Content = ""
 	metaBytes, err := json.Marshal(input)
-	if err != nil {
-		panic(err)
-	}
+	core.CheckError(err)
 	err = ioutil.WriteFile(metaPath, metaBytes, 0666)
 	err = ioutil.WriteFile(configPath, []byte(input.Content), 0666)
-	if err != nil {
-		panic(err)
-	}
+	core.CheckError(err)
 	result.Result{Context: c}.
 		Data("success").
 		Build()

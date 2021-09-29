@@ -1,0 +1,6 @@
+package basic
+
+
+func AAA(){
+
+}

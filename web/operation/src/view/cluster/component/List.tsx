@@ -29,8 +29,8 @@ const List: React.FC<any> = (props: any) => {
             }
         },
         {
-            key: 'createTime',
-            title: '创建时间',
+            key: 'description',
+            title: '描述',
         },
         {
             key: 'operation',
@@ -47,14 +47,7 @@ const List: React.FC<any> = (props: any) => {
 
     const handleSearch = (query?: Search) => {
         stub.api.post("k8s/cluster/list", query).then((data: any) => {
-            console.log(data)
-            // let d: any = data.items.map((t: any) => stub.util.mapper.configmap(t))
-            // setData(d)
-            // setPage({
-            //     pageCurrent: 1,
-            //     pageSize: 10,
-            //     total: d.length
-            // })
+            setData(data.data)
         })
     }
     const handleCreateShow = () => {

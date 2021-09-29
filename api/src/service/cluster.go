@@ -3,7 +3,7 @@ package service
 import (
 	"encoding/json"
 	"github.com/czyhome/circler/src/entity/po"
-	"github.com/czyhome/circler/src/util"
+	"github.com/czyhome/circler/src/util/path"
 	"io/ioutil"
 	"os"
 	"path/filepath"
