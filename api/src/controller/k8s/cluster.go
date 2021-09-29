@@ -1,7 +1,6 @@
 package k8s
 
 import (
-	"encoding/json"
 	"github.com/ahmetb/go-linq/v3"
 	"github.com/czyhome/circler/src/config"
 	"github.com/czyhome/circler/src/core"
@@ -10,10 +9,6 @@ import (
 	"github.com/czyhome/circler/src/entity/result"
 	"github.com/czyhome/circler/src/service"
 	"github.com/gin-gonic/gin"
-	"io/fs"
-	"io/ioutil"
-	"os"
-	"path/filepath"
 	"strings"
 )
 
@@ -31,10 +26,8 @@ type ClusterSearchModel struct {
 func ClusterList(c *gin.Context) {
 	search := ClusterSearchModel{}
 	err := c.Bind(&search)
-	if err != nil {
-		panic(err)
-	}
-	var list = service.GetClusterList(config.ClusterDir)
+	core.CheckError(err)
+	list := service.GetClusterList(config.ClusterDir)
 	result.Result{Context: c}.
 		Data(list).
 		Build()
@@ -52,18 +45,7 @@ func ClusterCreate(c *gin.Context) {
 	if existCluster != nil {
 		panic(core.NewException(strings.Join([]string{input.Name, "exists"}, " ")))
 	}
-	var envPath = filepath.Join(config.ClusterDir, input.Name)
-	var metaPath = filepath.Join(envPath, "meta.json")
-	var configPath = filepath.Join(envPath, "config.yaml")
-	err = os.MkdirAll(envPath, os.ModePerm)
-	err = ioutil.WriteFile(configPath, []byte(input.Content), fs.ModePerm)
-	core.CheckError(err)
-	input.ConfigPath = filepath.Base(configPath)
-	input.Content = ""
-	metaBytes, err := json.Marshal(input)
-	core.CheckError(err)
-	err = ioutil.WriteFile(metaPath, metaBytes, fs.ModePerm)
-	core.CheckError(err)
+	service.CreateCluster(input)
 	result.Result{Context: c}.
 		Data("success").
 		Build()

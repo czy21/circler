@@ -2,6 +2,8 @@ package service
 
 import (
 	"encoding/json"
+	"github.com/czyhome/circler/src/config"
+	"github.com/czyhome/circler/src/controller/k8s"
 	"github.com/czyhome/circler/src/core"
 	"github.com/czyhome/circler/src/entity/po"
 	"github.com/czyhome/circler/src/util/path"
@@ -42,4 +44,19 @@ func GetClusterList(root string) []po.Cluster {
 		}(f)
 	}
 	return configs
+}
+
+func CreateCluster(input k8s.ClusterInputModel) {
+	var envPath = filepath.Join(config.ClusterDir, input.Name)
+	var metaPath = filepath.Join(envPath, MetaName)
+	var configPath = filepath.Join(envPath, ConfigName)
+	err := os.MkdirAll(envPath, os.ModePerm)
+	err = ioutil.WriteFile(configPath, []byte(input.Content), fs.ModePerm)
+	core.CheckError(err)
+	input.ConfigPath = filepath.Base(configPath)
+	input.Content = ""
+	metaBytes, err := json.Marshal(input)
+	core.CheckError(err)
+	err = ioutil.WriteFile(metaPath, metaBytes, fs.ModePerm)
+	core.CheckError(err)
 }
