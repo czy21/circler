@@ -11,9 +11,13 @@ func ErrorHandle() gin.HandlerFunc {
 		defer func() {
 			if err := recover(); err != nil {
 				var m = make(map[string]interface{})
-				m["error"] = err
 				m["timestamp"] = time.Now().UnixMilli()
-				c.JSON(http.StatusOK, m)
+				switch err.(type) {
+				case ExceptionModel:
+					m["error"] = err
+					c.JSON(http.StatusOK, m)
+					break
+				}
 				panic(err)
 			}
 		}()
@@ -33,5 +37,5 @@ type ExceptionModel struct {
 }
 
 func NewException(message string) ExceptionModel {
-	return ExceptionModel{Message: message}
+	panic(ExceptionModel{Message: message})
 }

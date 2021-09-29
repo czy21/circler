@@ -85,6 +85,9 @@ const List: React.FC<any> = (props: any) => {
                     <stub.ref.antd.Form.Item label={"名称"} name={"name"} required={true}>
                         <stub.ref.antd.Input/>
                     </stub.ref.antd.Form.Item>
+                    <stub.ref.antd.Form.Item label={"描述"} name={"description"} required={true}>
+                        <stub.ref.antd.Input/>
+                    </stub.ref.antd.Form.Item>
                     <stub.ref.antd.Form.Item label={"内容"}>
                         <CodeMirror
                             editorDidMount={(editor) => {

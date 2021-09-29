@@ -1,4 +1,5 @@
 import axios from 'axios'
+import stub from "@/init/index";
 
 enum Method {
     GET = "GET",
@@ -17,7 +18,13 @@ service.interceptors.request.use(
 );
 
 service.interceptors.response.use(
-    response => response,
+    response => {
+        const error = response.data?.error
+        if (error) {
+            stub.ref.antd.Modal.error({content: error.message, centered: true})
+        }
+        return response
+    },
     error => Promise.reject(error)
 );
 

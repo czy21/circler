@@ -5,10 +5,10 @@ import (
 	"github.com/czyhome/circler/src/core"
 	"github.com/czyhome/circler/src/entity/po"
 	"github.com/czyhome/circler/src/util/path"
+	"io/fs"
 	"io/ioutil"
 	"os"
 	"path/filepath"
-	"strings"
 )
 
 var MetaName = "meta.json"
@@ -17,7 +17,8 @@ var ConfigName = "config.yaml"
 func GetClusterList(root string) []po.Cluster {
 	var configs []po.Cluster
 	if path.IsNotExist(root) {
-		panic(strings.Join([]string{root, " not exists"}, " "))
+		err := os.MkdirAll(root, fs.ModePerm)
+		core.CheckError(err)
 	}
 
 	files, err := ioutil.ReadDir(root)
