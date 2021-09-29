@@ -5,10 +5,10 @@
 
 # Build #
 build/
+target/
 
 # Api #
 .gradle/
-target/
 
 # Web #
 node_modules/
