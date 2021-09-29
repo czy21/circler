@@ -1,3 +1,4 @@
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation 'io.kubernetes:client-java:10.0.0'
 }
