@@ -1,6 +1,0 @@
-package basic
-
-
-func AAA(){
-
-}

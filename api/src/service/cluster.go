@@ -5,7 +5,7 @@ import (
 	"github.com/czyhome/circler/src/config"
 	"github.com/czyhome/circler/src/core"
 	"github.com/czyhome/circler/src/entity"
-	"github.com/czyhome/circler/src/util/path"
+	"github.com/czyhome/circler/src/util"
 	"io/fs"
 	"io/ioutil"
 	"os"
@@ -17,7 +17,7 @@ var ConfigName = "config.yaml"
 
 func GetClusterList(root string) []entity.ClusterModel {
 	var configs []entity.ClusterModel
-	if path.IsNotExist(root) {
+	if util.PathIsNotExist(root) {
 		err := os.MkdirAll(root, fs.ModePerm)
 		core.CheckError(err)
 	}
