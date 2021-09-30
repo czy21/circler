@@ -1,10 +1,10 @@
-package dto
+package entity
 
-type InputModel struct {
+type BaseModel struct {
 	Id   string `json:"id"`
 	Name string `json:"name"`
 }
 
-type SearchModel struct {
+type BaseQuery struct {
 	Search string `json:"search"`
 }

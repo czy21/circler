@@ -3,8 +3,7 @@ package k8s
 import (
 	"github.com/ahmetb/go-linq/v3"
 	"github.com/czyhome/circler/src/config"
-	"github.com/czyhome/circler/src/entity/dto"
-	"github.com/czyhome/circler/src/entity/result"
+	"github.com/czyhome/circler/src/entity"
 	"github.com/gin-gonic/gin"
 	"golang.org/x/net/context"
 	v1 "k8s.io/api/core/v1"
@@ -13,7 +12,7 @@ import (
 )
 
 func ConfigMapList(c *gin.Context) {
-	search := dto.SearchModel{}
+	search := entity.BaseQuery{}
 	err := c.Bind(&search)
 	if err != nil {
 		panic(err)
@@ -31,19 +30,19 @@ func ConfigMapList(c *gin.Context) {
 	data := make(map[string]interface{})
 	data["items"] = items
 	data["metadata"] = configmaps.ListMeta
-	result.Result{Context: c}.
+	entity.Response{Context: c}.
 		Data(data).
 		Build()
 }
 
 func ConfigMapDetail(c *gin.Context) {
-	input := dto.InputModel{}
+	input := entity.BaseModel{}
 	err := c.Bind(&input)
 	if err != nil {
 		panic(err)
 	}
 	configmap, _ := config.K8sClient.CoreV1().ConfigMaps(config.Namespace).Get(context.TODO(), input.Name, metav1.GetOptions{})
-	result.Result{Context: c}.
+	entity.Response{Context: c}.
 		Data(configmap).
 		Build()
 }

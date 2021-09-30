@@ -1,21 +1,20 @@
 package core
 
 import (
+	"github.com/czyhome/circler/src/entity"
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"time"
 )
 
 func ErrorHandle() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		defer func() {
 			if err := recover(); err != nil {
-				var m = make(map[string]interface{})
-				m["timestamp"] = time.Now().UnixMilli()
+				response := entity.Response{}
 				switch err.(type) {
 				case ExceptionModel:
-					m["error"] = err
-					c.JSON(http.StatusOK, m)
+					response.Error(err).Build()
+					c.JSON(http.StatusOK, response)
 					break
 				}
 				panic(err)

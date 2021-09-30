@@ -3,9 +3,8 @@ package service
 import (
 	"encoding/json"
 	"github.com/czyhome/circler/src/config"
-	"github.com/czyhome/circler/src/controller/k8s"
 	"github.com/czyhome/circler/src/core"
-	"github.com/czyhome/circler/src/entity/po"
+	"github.com/czyhome/circler/src/entity"
 	"github.com/czyhome/circler/src/util/path"
 	"io/fs"
 	"io/ioutil"
@@ -16,8 +15,8 @@ import (
 var MetaName = "meta.json"
 var ConfigName = "config.yaml"
 
-func GetClusterList(root string) []po.Cluster {
-	var configs []po.Cluster
+func GetClusterList(root string) []entity.ClusterModel {
+	var configs []entity.ClusterModel
 	if path.IsNotExist(root) {
 		err := os.MkdirAll(root, fs.ModePerm)
 		core.CheckError(err)
@@ -37,7 +36,7 @@ func GetClusterList(root string) []po.Cluster {
 
 			byteValue, _ := ioutil.ReadAll(jsonFile)
 
-			var c po.Cluster
+			var c entity.ClusterModel
 			err = json.Unmarshal(byteValue, &c)
 			core.CheckError(err)
 			configs = append(configs, c)
@@ -46,7 +45,7 @@ func GetClusterList(root string) []po.Cluster {
 	return configs
 }
 
-func CreateCluster(input k8s.ClusterInputModel) {
+func CreateCluster(input entity.ClusterModel) {
 	var envPath = filepath.Join(config.ClusterDir, input.Name)
 	var metaPath = filepath.Join(envPath, MetaName)
 	var configPath = filepath.Join(envPath, ConfigName)
