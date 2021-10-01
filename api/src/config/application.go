@@ -4,17 +4,12 @@ import (
 	"context"
 	"github.com/bndr/gojenkins"
 	"k8s.io/client-go/kubernetes"
-	"os"
-	"path/filepath"
 )
 
 var K8sClient *kubernetes.Clientset
 var Namespace = "default"
 var GlobalContext *context.Context
 var JenkinsClient *gojenkins.Jenkins
-var Workspace, _ = os.Getwd()
-var DataDir = filepath.Join(Workspace, "data")
-var ClusterDir = filepath.Join(DataDir, "cluster")
 
 func init() {
 	//var kubeconfig *string

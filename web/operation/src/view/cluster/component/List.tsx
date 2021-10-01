@@ -58,8 +58,10 @@ const List: React.FC<any> = (props: any) => {
     const handleCreateOk = () => {
         const input = {...createForm.getFieldsValue(), content: content}
         stub.api.post("k8s/cluster/create", input).then((t: any) => {
-            // setCreateVisible(false)
-
+            if (!t.error) {
+                stub.ref.antd.message.info("添加成功")
+            }
+            setCreateVisible(false)
         })
     };
     return (
