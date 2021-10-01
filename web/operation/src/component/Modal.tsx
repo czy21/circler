@@ -10,7 +10,7 @@ interface CreateFormProps {
     onCancel: () => void
 }
 
-const Create: React.FC<CreateFormProps> = (props) => {
+const Modal: React.FC<CreateFormProps> = (props) => {
     const {title, visible, onOk, onCancel, width, style} = props;
     return (
         <stub.ref.antd.Modal
@@ -29,4 +29,4 @@ const Create: React.FC<CreateFormProps> = (props) => {
     );
 };
 
-export default Create;
+export default Modal;

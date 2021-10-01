@@ -22,6 +22,9 @@ func ClusterCreate(c *gin.Context) {
 	input := entity.ClusterModel{}
 	err := c.Bind(&input)
 	core.CheckError(err)
+	if input.Name == "" {
+		panic(core.NewException(strings.Join([]string{"name must be not empty"}, " ")))
+	}
 	var clusterConfigs = service.GetClusterList(config.ClusterDir)
 	var existCluster = linq.From(clusterConfigs).
 		WhereT(func(u entity.ClusterModel) bool {

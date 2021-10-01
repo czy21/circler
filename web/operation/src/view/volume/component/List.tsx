@@ -1,7 +1,7 @@
 import React from "react";
 import stub from "@/init"
 import {Search} from "@v/volume/data";
-import Create from '@c/Create'
+import Modal from '@c/Modal'
 import {DashOutlined} from "@ant-design/icons";
 import {UnControlled as CodeMirror} from 'react-codemirror2'
 
@@ -154,7 +154,7 @@ const List: React.FC<any> = (props: any) => {
                    columns={columns}
                    showCreateModal={handleCreateShow}
             />
-            <Create title={`创建${title}`} visible={createVisible} onOk={handleCreateOk} onCancel={handleCreateCancel}>
+            <Modal title={`创建${title}`} visible={createVisible} onOk={handleCreateOk} onCancel={handleCreateCancel}>
                 <stub.ref.antd.Form form={createForm}>
                     <stub.ref.antd.Form.Item label={"名称"} name={"name"} required={true}>
                         <stub.ref.antd.Input/>
@@ -191,12 +191,12 @@ const List: React.FC<any> = (props: any) => {
                         </stub.ref.antd.Row>
                     </stub.ref.antd.Form.Item>
                 </stub.ref.antd.Form>
-            </Create>
-            <Create title={`编辑配置文件`}
-                    width={1200}
-                    visible={editVisible}
-                    onOk={handleEditOk}
-                    onCancel={() => {
+            </Modal>
+            <Modal title={`编辑配置文件`}
+                   width={1200}
+                   visible={editVisible}
+                   onOk={handleEditOk}
+                   onCancel={() => {
                         setEditVisible(false)
                     }}
             >
@@ -216,7 +216,7 @@ const List: React.FC<any> = (props: any) => {
                     }}
                 >
                 </CodeMirror>
-            </Create>
+            </Modal>
         </div>
     )
 }

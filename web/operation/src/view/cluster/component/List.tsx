@@ -56,15 +56,11 @@ const List: React.FC<any> = (props: any) => {
         setCreateVisible(true)
     }
     const handleCreateOk = () => {
-        // setCreateVisible(false)
-        const data = {...createForm.getFieldsValue(), content: content}
-        stub.api.post("k8s/cluster/create", data).then((t: any) => {
-            // let yamlConfig: any = stub.util.mapper.volume(t)._originData
-            // setYaml(stub.util.yaml.getValue(yamlConfig))
+        const input = {...createForm.getFieldsValue(), content: content}
+        stub.api.post("k8s/cluster/create", input).then((t: any) => {
+            // setCreateVisible(false)
+
         })
-    };
-    const handleCreateCancel = () => {
-        setCreateVisible(false)
     };
     return (
         <div>
@@ -80,7 +76,7 @@ const List: React.FC<any> = (props: any) => {
             <stub.component.Create title={`添加${title}`}
                                    visible={createVisible}
                                    onOk={handleCreateOk}
-                                   onCancel={handleCreateCancel}>
+                                   onCancel={() => setCreateVisible(false)}>
                 <stub.ref.antd.Form form={createForm}>
                     <stub.ref.antd.Form.Item label={"名称"} name={"name"} required={true}>
                         <stub.ref.antd.Input/>
