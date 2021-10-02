@@ -12,6 +12,17 @@ const List: React.FC<any> = (props: any) => {
     const [createVisible, setCreateVisible] = stub.ref.react.useState(false)
     const [content, setContent] = stub.ref.react.useState("")
 
+    const [filter, setFilter] = stub.ref.react.useState([
+        {
+            "key": "name",
+            "label": "姓名"
+        },
+        {
+            "key": "age",
+            "label": "年龄"
+        }
+    ])
+
     stub.ref.react.useEffect(() => {
         handleSearch()
     }, [])
@@ -74,6 +85,7 @@ const List: React.FC<any> = (props: any) => {
                                   total={page.total}
                                   columns={columns}
                                   showCreateModal={handleCreateShow}
+                                  filter={filter}
             />
             <stub.component.Create title={`添加${title}`}
                                    visible={createVisible}

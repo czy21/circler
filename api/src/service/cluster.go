@@ -15,7 +15,7 @@ var ClusterMetaFileName = "meta.json"
 var ClusterMetaConfigName = "config.yaml"
 var ClusterDir = filepath.Join(Workspace, "data", "cluster")
 
-func GetClusterList() []entity.ClusterModel {
+func GetClusterList(input entity.ClusterModel) []entity.ClusterModel {
 	var configs []entity.ClusterModel
 	if util.PathIsNotExist(ClusterDir) {
 		err := os.MkdirAll(ClusterDir, fs.ModePerm)
