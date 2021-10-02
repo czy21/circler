@@ -34,10 +34,10 @@ func VolumeList(c *gin.Context) {
 	pvs, _ := config.K8sClient.CoreV1().PersistentVolumeClaims(config.Namespace).List(context.TODO(), metav1.ListOptions{})
 	items := make([]v1.PersistentVolumeClaim, 0)
 	itemQuery := linq.From(pvs.Items)
-	if search.Search != "" {
+	if search.Name != "" {
 		itemQuery = itemQuery.
 			WhereT(func(t v1.PersistentVolumeClaim) bool {
-				return strings.Contains(t.Name, search.Search)
+				return strings.Contains(t.Name, search.Name)
 			})
 	}
 	itemQuery.ToSlice(&items)

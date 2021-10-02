@@ -20,10 +20,10 @@ func ConfigMapList(c *gin.Context) {
 	configmaps, _ := config.K8sClient.CoreV1().ConfigMaps(config.Namespace).List(context.TODO(), metav1.ListOptions{})
 	items := make([]v1.ConfigMap, 0)
 	itemQuery := linq.From(configmaps.Items)
-	if search.Search != "" {
+	if search.Name != "" {
 		itemQuery = itemQuery.
 			WhereT(func(t v1.ConfigMap) bool {
-				return strings.Contains(t.Name, search.Search)
+				return strings.Contains(t.Name, search.Name)
 			})
 	}
 	itemQuery.ToSlice(&items)

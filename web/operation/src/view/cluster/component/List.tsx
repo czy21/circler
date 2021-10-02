@@ -1,6 +1,5 @@
 import React from "react";
 import stub from "@/init"
-import {Search} from "@/model/data";
 import {UnControlled as CodeMirror} from "react-codemirror2";
 
 const title = "集群"
@@ -11,16 +10,13 @@ const List: React.FC<any> = (props: any) => {
     const [page, setPage] = stub.ref.react.useState({pageCurrent: 1, pageSize: 10, total: 0})
     const [createVisible, setCreateVisible] = stub.ref.react.useState(false)
     const [content, setContent] = stub.ref.react.useState("")
+    const [query, setQuery] = stub.ref.react.useState<any>({})
 
     const [filter, setFilter] = stub.ref.react.useState([
         {
             "key": "name",
-            "label": "姓名"
+            "label": "名称"
         },
-        {
-            "key": "age",
-            "label": "年龄"
-        }
     ])
 
     stub.ref.react.useEffect(() => {
@@ -41,7 +37,7 @@ const List: React.FC<any> = (props: any) => {
         },
         {
             key: 'description',
-            title: '描述',
+            header: '描述',
         },
         {
             key: 'operation',
@@ -56,11 +52,11 @@ const List: React.FC<any> = (props: any) => {
 
     const [createForm] = stub.ref.antd.Form.useForm();
 
-    const handleSearch = (query?: Search) => {
-        console.log(query)
-        // stub.api.post("k8s/cluster/list", query).then((data: any) => {
-        //     setData(data.data)
-        // })
+    const handleSearch = (q?: any) => {
+        setQuery(q)
+        stub.api.post("k8s/cluster/search", q).then((data: any) => {
+            setData(data.data)
+        })
     }
     const handleCreateShow = () => {
         createForm.resetFields()
@@ -69,7 +65,7 @@ const List: React.FC<any> = (props: any) => {
     }
     const handleCreateOk = () => {
         const input = {...createForm.getFieldsValue(), content: content}
-        stub.api.post("k8s/cluster/create", input).then((t: any) => {
+        stub.api.post("k8s/cluster/create", {"query": query, "form": input}).then((t: any) => {
             if (!t.error) {
                 stub.ref.antd.message.info("添加成功")
             }
@@ -96,7 +92,7 @@ const List: React.FC<any> = (props: any) => {
                     <stub.ref.antd.Form.Item label={"名称"} name={"name"} required={true}>
                         <stub.ref.antd.Input/>
                     </stub.ref.antd.Form.Item>
-                    <stub.ref.antd.Form.Item label={"描述"} name={"description"} required={true}>
+                    <stub.ref.antd.Form.Item label={"描述"} name={"description"}>
                         <stub.ref.antd.Input/>
                     </stub.ref.antd.Form.Item>
                     <stub.ref.antd.Form.Item label={"内容"}>

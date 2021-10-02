@@ -6,5 +6,8 @@ type BaseModel struct {
 }
 
 type BaseQuery struct {
-	Search string `json:"search"`
+	Name        string `json:"name"`
+	PageCurrent int    `json:"pageCurrent"`
+	PageSize    int    `json:"pageSize"`
+	Total       int    `json:"total"`
 }

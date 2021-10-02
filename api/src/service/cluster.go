@@ -2,6 +2,7 @@ package service
 
 import (
 	"encoding/json"
+	"github.com/ahmetb/go-linq/v3"
 	"github.com/czyhome/circler/src/core"
 	"github.com/czyhome/circler/src/entity"
 	"github.com/czyhome/circler/src/util"
@@ -9,13 +10,14 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
 var ClusterMetaFileName = "meta.json"
 var ClusterMetaConfigName = "config.yaml"
 var ClusterDir = filepath.Join(Workspace, "data", "cluster")
 
-func GetClusterList(input entity.ClusterModel) []entity.ClusterModel {
+func GetClusterList(query entity.ClusterQuery) []entity.ClusterModel {
 	var configs []entity.ClusterModel
 	if util.PathIsNotExist(ClusterDir) {
 		err := os.MkdirAll(ClusterDir, fs.ModePerm)
@@ -42,6 +44,13 @@ func GetClusterList(input entity.ClusterModel) []entity.ClusterModel {
 			configs = append(configs, c)
 		}(f)
 	}
+	q := linq.From(configs)
+	if query.Name != "" {
+		q = q.WhereT(func(t entity.ClusterModel) bool {
+			return strings.Contains(t.Name, query.Name)
+		})
+	}
+	q.ToSlice(&configs)
 	return configs
 }
 

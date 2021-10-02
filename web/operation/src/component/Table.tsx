@@ -137,7 +137,8 @@ const Table: React.FC<TableFormProp> = (props: TableFormProp) => {
                     }
                     let {header, key, ...params} = p
                     return params
-                })} rowKey={(r: any) => r.id}
+                })}
+                rowKey={(r: any) => r.id}
                 dataSource={datasource}
                 pagination={{total: total, current: pageCurrent ?? 1, pageSize: pageSize ?? 10, showTotal: ((t: any, r: any) => `第 ${r[0]}-${r[1]} 条/总共 ${t} 条`)}}/>
         </div>

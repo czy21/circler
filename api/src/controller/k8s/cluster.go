@@ -9,11 +9,11 @@ import (
 	"strings"
 )
 
-func ClusterList(c *gin.Context) {
+func ClusterSearch(c *gin.Context) {
 	query := entity.ClusterQuery{}
 	err := c.Bind(&query)
 	core.CheckError(err)
-	list := service.GetClusterList(entity.ClusterModel{})
+	list := service.GetClusterList(query)
 	entity.Response{Context: c}.Data(list).Build()
 }
 
@@ -28,15 +28,15 @@ func ClusterCreate(c *gin.Context) {
 		panic(core.NewException(strings.Join([]string{"name must be not empty"}, " ")))
 	}
 
-	list := service.GetClusterList(entity.ClusterModel{})
+	exists := service.GetClusterList(entity.ClusterQuery{BaseQuery: entity.BaseQuery{Name: input.Form.Name}})
 
-	if exists := linq.From(list).
+	if e := linq.From(exists).
 		AnyWithT(func(u entity.ClusterModel) bool {
 			return u.Name == input.Form.Name
-		}); exists {
+		}); e {
 		panic(core.NewException(strings.Join([]string{input.Form.Name, "exists"}, " ")))
 	}
 	service.CreateCluster(input.Form)
-	list = service.GetClusterList(entity.ClusterModel{})
+	list := service.GetClusterList(input.Query)
 	entity.Response{Context: c}.Data(list).Build()
 }
