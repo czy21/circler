@@ -153,6 +153,7 @@ const List: React.FC<any> = (props: any) => {
                    total={page.total}
                    columns={columns}
                    showCreateModal={handleCreateShow}
+                                  filter={[]}
             />
             <Modal title={`创建${title}`} visible={createVisible} onOk={handleCreateOk} onCancel={handleCreateCancel}>
                 <stub.ref.antd.Form form={createForm}>

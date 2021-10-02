@@ -57,9 +57,10 @@ const List: React.FC<any> = (props: any) => {
     const [createForm] = stub.ref.antd.Form.useForm();
 
     const handleSearch = (query?: Search) => {
-        stub.api.post("k8s/cluster/list", query).then((data: any) => {
-            setData(data.data)
-        })
+        console.log(query)
+        // stub.api.post("k8s/cluster/list", query).then((data: any) => {
+        //     setData(data.data)
+        // })
     }
     const handleCreateShow = () => {
         createForm.resetFields()
