@@ -10,6 +10,7 @@ var K8sClient *kubernetes.Clientset
 var Namespace = "default"
 var GlobalContext *context.Context
 var JenkinsClient *gojenkins.Jenkins
+var K8sClientMap = make(map[string]interface{})
 
 func init() {
 	//var kubeconfig *string
@@ -31,4 +32,9 @@ func init() {
 	GlobalContext := context.Background()
 	jenkins, _ := gojenkins.CreateJenkins(nil, "http://192.168.2.21:8082/", "admin", "Czy20210314.").Init(GlobalContext)
 	JenkinsClient = jenkins
+
+	K8sClientMap["a"] = "aV"
+	K8sClientMap["b"] = "bV"
+	K8sClientMap["c"] = "cV"
+
 }

@@ -30,6 +30,7 @@ func Init(r *gin.Engine) {
 	basicRouter := r.Group("basic")
 	{
 		basicRouter.POST("test1", basic.Test1)
+		basicRouter.POST("test2", basic.Test2)
 	}
 
 }
