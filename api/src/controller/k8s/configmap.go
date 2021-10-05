@@ -17,7 +17,8 @@ func ConfigMapList(c *gin.Context) {
 	if err != nil {
 		panic(err)
 	}
-	configmaps, _ := config.K8sClient.CoreV1().ConfigMaps(config.Namespace).List(context.TODO(), metav1.ListOptions{})
+	client:=config.K8sClientMap["dev"]
+	configmaps, _ := client.CoreV1().ConfigMaps(config.Namespace).List(context.TODO(), metav1.ListOptions{})
 	items := make([]v1.ConfigMap, 0)
 	itemQuery := linq.From(configmaps.Items)
 	if search.Name != "" {
@@ -41,7 +42,8 @@ func ConfigMapDetail(c *gin.Context) {
 	if err != nil {
 		panic(err)
 	}
-	configmap, _ := config.K8sClient.CoreV1().ConfigMaps(config.Namespace).Get(context.TODO(), input.Name, metav1.GetOptions{})
+	client:=config.K8sClientMap["dev"]
+	configmap, _ := client.CoreV1().ConfigMaps(config.Namespace).Get(context.TODO(), input.Name, metav1.GetOptions{})
 	entity.Response{Context: c}.
 		Data(configmap).
 		Build()

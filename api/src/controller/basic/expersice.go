@@ -30,7 +30,6 @@ func Test1(c *gin.Context) {
 	//time.Sleep(1000 * time.Millisecond)
 	fmt.Println("over!")
 	km := config.K8sClientMap
-	km["t1"] = "t1V"
 	fmt.Println(km)
 	entity.Response{Context: c}.
 		Data(km).

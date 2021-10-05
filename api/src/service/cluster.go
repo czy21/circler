@@ -41,6 +41,7 @@ func GetClusterList(query entity.ClusterQuery) []entity.ClusterModel {
 			var c entity.ClusterModel
 			err = json.Unmarshal(byteValue, &c)
 			core.CheckError(err)
+			c.ConfigPath = filepath.Join(p, c.ConfigPath)
 			configs = append(configs, c)
 		}(f)
 	}

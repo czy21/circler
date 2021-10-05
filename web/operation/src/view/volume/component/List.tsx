@@ -86,8 +86,8 @@ const List: React.FC<any> = (props: any) => {
     const [createForm] = stub.ref.antd.Form.useForm();
 
     const handleSearch = (query?: Search) => {
-        stub.api.post("k8s/volume/list", query).then((data: any) => {
-            let d: any = data.items.map((t: any) => stub.util.mapper.volume(t))
+        stub.api.post("k8s/volume/search", query).then((data: any) => {
+            let d: any = data.data.items.map((t: any) => stub.util.mapper.volume(t))
             setData(d)
             setPage({
                 pageCurrent: 1,

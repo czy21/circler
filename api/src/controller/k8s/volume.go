@@ -31,7 +31,8 @@ func VolumeList(c *gin.Context) {
 	if err != nil {
 		panic(err)
 	}
-	pvs, _ := config.K8sClient.CoreV1().PersistentVolumeClaims(config.Namespace).List(context.TODO(), metav1.ListOptions{})
+	client:=config.K8sClientMap["dev"]
+	pvs, _ := client.CoreV1().PersistentVolumeClaims(config.Namespace).List(context.TODO(), metav1.ListOptions{})
 	items := make([]v1.PersistentVolumeClaim, 0)
 	itemQuery := linq.From(pvs.Items)
 	if search.Name != "" {
@@ -55,7 +56,8 @@ func VolumeDetail(c *gin.Context) {
 	if err != nil {
 		panic(err)
 	}
-	pv, _ := config.K8sClient.CoreV1().PersistentVolumeClaims(config.Namespace).Get(context.TODO(), input.Name, metav1.GetOptions{})
+	client:=config.K8sClientMap["dev"]
+	pv, _ := client.CoreV1().PersistentVolumeClaims(config.Namespace).Get(context.TODO(), input.Name, metav1.GetOptions{})
 	entity.Response{Context: c}.
 		Data(pv).
 		Build()
@@ -82,7 +84,8 @@ func VolumeCreate(c *gin.Context) {
 			StorageClassName: &storage,
 		},
 	}
-	pvCreateResult, err := config.K8sClient.CoreV1().PersistentVolumeClaims(config.Namespace).Create(context.TODO(), pv, metav1.CreateOptions{})
+	client:=config.K8sClientMap["dev"]
+	pvCreateResult, err := client.CoreV1().PersistentVolumeClaims(config.Namespace).Create(context.TODO(), pv, metav1.CreateOptions{})
 	if err != nil {
 		panic(err)
 	}
@@ -102,7 +105,8 @@ func VolumeEditYaml(c *gin.Context) {
 	if err != nil {
 		panic(err)
 	}
-	pvPatchResult, err := config.K8sClient.CoreV1().PersistentVolumeClaims(config.Namespace).Update(context.TODO(), &pv, metav1.UpdateOptions{})
+	client:=config.K8sClientMap["dev"]
+	pvPatchResult, err := client.CoreV1().PersistentVolumeClaims(config.Namespace).Update(context.TODO(), &pv, metav1.UpdateOptions{})
 	if err != nil {
 		panic(err)
 	}
