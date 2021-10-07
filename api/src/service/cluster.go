@@ -17,7 +17,7 @@ var ClusterMetaFileName = "meta.json"
 var ClusterMetaConfigName = "config.yaml"
 var ClusterDir = filepath.Join(Workspace, "data", "cluster")
 
-func GetClusterList(query entity.ClusterQuery) []entity.ClusterModel {
+func GetClusterList(query entity.ClusterQuery) ([]entity.ClusterModel, int64) {
 	var configs []entity.ClusterModel
 	if util.PathIsNotExist(ClusterDir) {
 		err := os.MkdirAll(ClusterDir, fs.ModePerm)
@@ -52,7 +52,7 @@ func GetClusterList(query entity.ClusterQuery) []entity.ClusterModel {
 		})
 	}
 	q.ToSlice(&configs)
-	return configs
+	return configs, 10
 }
 
 func CreateCluster(input entity.ClusterModel) {

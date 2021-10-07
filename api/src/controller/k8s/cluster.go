@@ -13,7 +13,7 @@ func ClusterSearch(c *gin.Context) {
 	query := entity.ClusterQuery{}
 	err := c.Bind(&query)
 	core.CheckError(err)
-	list := service.GetClusterList(query)
+	list, _ := service.GetClusterList(query)
 	entity.Response{Context: c}.Data(list).Build()
 }
 
@@ -28,7 +28,7 @@ func ClusterCreate(c *gin.Context) {
 		panic(core.NewException(strings.Join([]string{"name must be not empty"}, " ")))
 	}
 
-	exists := service.GetClusterList(entity.ClusterQuery{BaseQuery: entity.BaseQuery{Name: input.Form.Name}})
+	exists, _ := service.GetClusterList(entity.ClusterQuery{BaseQuery: entity.BaseQuery{Name: input.Form.Name}})
 
 	if e := linq.From(exists).
 		AnyWithT(func(u entity.ClusterModel) bool {
@@ -37,6 +37,6 @@ func ClusterCreate(c *gin.Context) {
 		panic(core.NewException(strings.Join([]string{input.Form.Name, "exists"}, " ")))
 	}
 	service.CreateCluster(input.Form)
-	list := service.GetClusterList(input.Query)
+	list, _ := service.GetClusterList(input.Query)
 	entity.Response{Context: c}.Data(list).Build()
 }

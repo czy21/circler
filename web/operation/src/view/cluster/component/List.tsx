@@ -7,12 +7,11 @@ const List: React.FC<any> = (props: any) => {
     const {history, route} = props
 
     const [data, setData] = stub.ref.react.useState([])
-    const [page, setPage] = stub.ref.react.useState({pageCurrent: 1, pageSize: 10, total: 0})
     const [createVisible, setCreateVisible] = stub.ref.react.useState(false)
     const [content, setContent] = stub.ref.react.useState("")
     const [query, setQuery] = stub.ref.react.useState<any>({})
 
-    const [filter, setFilter] = stub.ref.react.useState([
+    const [filters, setFilter] = stub.ref.react.useState([
         {
             "key": "name",
             "label": "名称"
@@ -54,11 +53,12 @@ const List: React.FC<any> = (props: any) => {
 
     const handleSearch = (q?: any) => {
         setQuery(q)
-        stub.api.post("k8s/cluster/search", q).then((data: any) => {
-            setData(data.data)
-        })
+        stub.api.post("k8s/cluster/search", stub.ref.lodash.omit(q, "total"))
+            .then((data: any) => {
+                setData(data.data)
+            })
     }
-    const handleCreateShow = () => {
+    const handleShowCreateModal = () => {
         createForm.resetFields()
         setContent("")
         setCreateVisible(true)
@@ -69,20 +69,18 @@ const List: React.FC<any> = (props: any) => {
             if (!t.error) {
                 stub.ref.antd.message.info("添加成功")
             }
+            setData(t.data)
             setCreateVisible(false)
         })
     };
     return (
         <div>
             <stub.component.Table title={title}
-                                  onSearch={handleSearch}
                                   datasource={data}
-                                  pageCurrent={page.pageCurrent}
-                                  pageSize={page.pageSize}
-                                  total={page.total}
                                   columns={columns}
-                                  showCreateModal={handleCreateShow}
-                                  filter={filter}
+                                  onSearch={handleSearch}
+                                  onShowCreateModal={handleShowCreateModal}
+                                  filters={filters}
             />
             <stub.component.Create title={`添加${title}`}
                                    visible={createVisible}

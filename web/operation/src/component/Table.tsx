@@ -3,22 +3,25 @@ import stub from '@/init'
 
 interface TableFormProp {
     title: string
-    datasource: any[]
-    pageCurrent?: number
-    pageSize?: number
-    total?: number
-    columns: any[]
     onSearch: (query?: any) => void
-    showCreateModal?: () => void
-    filter?: any[]
+    datasource: any[]
+    page?: {
+        pageCurrent?: number,
+        pageSize?: number,
+        total?: number
+    }
+    columns: any[]
+    onShowCreateModal?: () => void
+    filters?: any[]
 }
 
 const Table: React.FC<TableFormProp> = (props: TableFormProp) => {
-    const {onSearch, datasource, columns, title, total, pageCurrent, pageSize, showCreateModal, filter = []} = props
+    const {datasource, columns, title, page, onSearch, onShowCreateModal, filters = []} = props
 
-    const [filterOptions, seFilterOptions] = stub.ref.react.useState(filter)
+    const [filterOptions, seFilterOptions] = stub.ref.react.useState(filters)
     const [currentFilter, setCurrentFilter] = stub.ref.react.useState<[string, any]>(["", undefined])
     const [tag, setTag] = stub.ref.react.useState({})
+    const [pageState, setPageState] = stub.ref.react.useState(page)
 
 
     const tagValueAny = () => {
@@ -75,14 +78,14 @@ const Table: React.FC<TableFormProp> = (props: TableFormProp) => {
     }
 
     const getQuery = (query: any[]) => {
-        return {...Object.fromEntries(Object.entries(query).map(([k, v]) => [k, v.value])), ...{pageCurrent, pageSize, total}}
+        return {...Object.fromEntries(Object.entries(query).map(([k, v]) => [k, v.value])), ...pageState}
     }
 
     return (
         <div>
             <stub.ref.antd.Row>
                 <stub.ref.antd.Col span={20}>
-                    <div hidden={stub.ref.lodash.size(filter) == 0}>
+                    <div hidden={stub.ref.lodash.size(filters) == 0}>
                         {renderTag()}
                         <stub.ref.antd.Dropdown overlay={renderFilter()} trigger={['click']}>
                             <stub.ref.antd.Input value={(currentFilter as any[])[1]}
@@ -120,7 +123,7 @@ const Table: React.FC<TableFormProp> = (props: TableFormProp) => {
                             }
                         }}>查询
                         </stub.ref.antd.Button>
-                        <stub.ref.antd.Button type={"primary"} onClick={showCreateModal}>
+                        <stub.ref.antd.Button type={"primary"} onClick={onShowCreateModal}>
                             <stub.ref.icon.PlusOutlined/>
                             创建
                         </stub.ref.antd.Button>
@@ -140,7 +143,14 @@ const Table: React.FC<TableFormProp> = (props: TableFormProp) => {
                 })}
                 rowKey={(r: any) => r.id}
                 dataSource={datasource}
-                pagination={{total: total, current: pageCurrent ?? 1, pageSize: pageSize ?? 10, showTotal: ((t: any, r: any) => `第 ${r[0]}-${r[1]} 条/总共 ${t} 条`)}}/>
+                pagination={{
+                    total: pageState?.total,
+                    current: pageState?.pageCurrent ?? 1,
+                    pageSize: pageState?.pageSize ?? 10,
+                    showTotal: ((t: any, r: any) => `第 ${r[0]}-${r[1]} 条/总共 ${t} 条`),
+                    onChange: (pageCurrent, pageSize) => setPageState({pageCurrent, pageSize})
+                }}
+            />
         </div>
     )
 }

@@ -148,12 +148,10 @@ const List: React.FC<any> = (props: any) => {
             <stub.component.Table title={title}
                    onSearch={handleSearch}
                    datasource={data}
-                   pageCurrent={page.pageCurrent}
-                   pageSize={page.pageSize}
-                   total={page.total}
+                   page={page}
                    columns={columns}
-                   showCreateModal={handleCreateShow}
-                                  filter={[]}
+                   onShowCreateModal={handleCreateShow}
+                                  filters={[]}
             />
             <Modal title={`创建${title}`} visible={createVisible} onOk={handleCreateOk} onCancel={handleCreateCancel}>
                 <stub.ref.antd.Form form={createForm}>

@@ -10,14 +10,15 @@ import (
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/tools/clientcmd"
 )
-var Namespace = "default"
+
+var Namespace = ""
 var GlobalContext *context.Context
 var JenkinsClient *gojenkins.Jenkins
 var K8sClientMap = make(map[string]kubernetes.Clientset)
 
 func init() {
 
-	c := service.GetClusterList(entity.ClusterQuery{})
+	c, _ := service.GetClusterList(entity.ClusterQuery{})
 	for _, t := range c {
 		kubeConfig := flag.String("kubeconfig", t.ConfigPath, "(optional) absolute path to the kubeconfig file")
 		flag.Parse()

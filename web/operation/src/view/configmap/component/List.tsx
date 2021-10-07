@@ -90,7 +90,7 @@ const List: React.FC<any> = (props: any) => {
                                   pageSize={page.pageSize}
                                   total={page.total}
                                   columns={columns}
-                                  showCreateModal={handleCreateShow}
+                                  onShowCreateModal={handleCreateShow}
             />
             <stub.component.Create title={`创建${title}`} visible={createVisible} onOk={handleCreateOk} onCancel={handleCreateCancel}>
                 <stub.ref.antd.Form form={createForm}>
