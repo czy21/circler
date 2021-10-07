@@ -1,5 +1,6 @@
 import React from "react";
 import stub from '@/init'
+import {PageModel} from "@/model/data";
 
 interface TableFormProp {
     title: string
@@ -21,7 +22,7 @@ const Table: React.FC<TableFormProp> = (props: TableFormProp) => {
     const [filterOptions, seFilterOptions] = stub.ref.react.useState(filters)
     const [currentFilter, setCurrentFilter] = stub.ref.react.useState<[string, any]>(["", undefined])
     const [tag, setTag] = stub.ref.react.useState({})
-    const [pageState, setPageState] = stub.ref.react.useState(page)
+    const [pageState, setPageState] = stub.ref.react.useState<PageModel>({pageCurrent: 1, pageSize: 10, ...page})
 
 
     const tagValueAny = () => {
@@ -30,28 +31,6 @@ const Table: React.FC<TableFormProp> = (props: TableFormProp) => {
 
     const editTag = (value: {}) => {
         setTag({...tag, ...value})
-    }
-
-    const renderFilter = () => {
-        return (
-            <stub.ref.antd.Menu
-                onClick={({item, key, keyPath, domEvent}) => {
-                    let tagValue: any = (tag as any)[key]?.value;
-                    if (stub.ref.lodash.isEmpty(tag) || tagValueAny()) {
-                        setCurrentFilter([key, tagValue])
-                        editTag({
-                            [key]: {
-                                "label": (filterOptions.filter(t => t.key === key)[0]).label,
-                                "value": tagValue
-                            }
-                        })
-                    }
-                }}>
-                {filterOptions.map(t => {
-                    return (<stub.ref.antd.Menu.Item key={t.key}>{t.label}</stub.ref.antd.Menu.Item>)
-                })}
-            </stub.ref.antd.Menu>
-        )
     }
 
     const removeTag = (key: string) => {
@@ -79,6 +58,28 @@ const Table: React.FC<TableFormProp> = (props: TableFormProp) => {
 
     const getQuery = (query: any[]) => {
         return {...Object.fromEntries(Object.entries(query).map(([k, v]) => [k, v.value])), ...pageState}
+    }
+
+    const renderFilter = () => {
+        return (
+            <stub.ref.antd.Menu
+                onClick={({item, key, keyPath, domEvent}) => {
+                    let tagValue: any = (tag as any)[key]?.value;
+                    if (stub.ref.lodash.isEmpty(tag) || tagValueAny()) {
+                        setCurrentFilter([key, tagValue])
+                        editTag({
+                            [key]: {
+                                "label": (filterOptions.filter(t => t.key === key)[0]).label,
+                                "value": tagValue
+                            }
+                        })
+                    }
+                }}>
+                {filterOptions.map(t => {
+                    return (<stub.ref.antd.Menu.Item key={t.key}>{t.label}</stub.ref.antd.Menu.Item>)
+                })}
+            </stub.ref.antd.Menu>
+        )
     }
 
     return (
@@ -143,10 +144,10 @@ const Table: React.FC<TableFormProp> = (props: TableFormProp) => {
                 })}
                 rowKey={(r: any) => r.id}
                 dataSource={datasource}
-                pagination={{
+                pagination={page && {
                     total: pageState?.total,
-                    current: pageState?.pageCurrent ?? 1,
-                    pageSize: pageState?.pageSize ?? 10,
+                    current: pageState?.pageCurrent,
+                    pageSize: pageState?.pageSize,
                     showTotal: ((t: any, r: any) => `第 ${r[0]}-${r[1]} 条/总共 ${t} 条`),
                     onChange: (pageCurrent, pageSize) => setPageState({pageCurrent, pageSize})
                 }}

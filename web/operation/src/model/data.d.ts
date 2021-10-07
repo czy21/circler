@@ -6,3 +6,9 @@ export interface BaseDetail {
 export interface Search {
     search?: string
 }
+
+export interface PageModel {
+    pageCurrent?: number
+    pageSize?: number
+    total?: number
+}

@@ -1,6 +1,7 @@
 import React from "react";
 import stub from "@/init"
 import {UnControlled as CodeMirror} from "react-codemirror2";
+import {PageModel} from "@/model/data";
 
 const title = "集群"
 const List: React.FC<any> = (props: any) => {
@@ -10,6 +11,7 @@ const List: React.FC<any> = (props: any) => {
     const [createVisible, setCreateVisible] = stub.ref.react.useState(false)
     const [content, setContent] = stub.ref.react.useState("")
     const [query, setQuery] = stub.ref.react.useState<any>({})
+    const [page, setPage] = stub.ref.react.useState<PageModel>({})
 
     const [filters, setFilter] = stub.ref.react.useState([
         {
@@ -56,6 +58,7 @@ const List: React.FC<any> = (props: any) => {
         stub.api.post("k8s/cluster/search", stub.ref.lodash.omit(q, "total"))
             .then((data: any) => {
                 setData(data.data)
+                setPage(data.page)
             })
     }
     const handleShowCreateModal = () => {
@@ -78,6 +81,7 @@ const List: React.FC<any> = (props: any) => {
             <stub.component.Table title={title}
                                   datasource={data}
                                   columns={columns}
+                                  page={page}
                                   onSearch={handleSearch}
                                   onShowCreateModal={handleShowCreateModal}
                                   filters={filters}

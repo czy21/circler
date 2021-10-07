@@ -5,9 +5,14 @@ type BaseModel struct {
 	Name string `json:"name"`
 }
 
+type PageModel struct {
+	PageCurrent int `json:"pageCurrent"`
+	PageSize    int `json:"pageSize"`
+	Total       int `json:"total"`
+}
+
 type BaseQuery struct {
-	Name        string `json:"name"`
-	PageCurrent int    `json:"pageCurrent"`
-	PageSize    int    `json:"pageSize"`
-	Total       int    `json:"total"`
+	Id   string `json:"id"`
+	Name string `json:"name"`
+	PageModel
 }

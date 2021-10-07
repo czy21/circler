@@ -86,9 +86,6 @@ const List: React.FC<any> = (props: any) => {
             <stub.component.Table title={title}
                                   onSearch={handleSearch}
                                   datasource={data}
-                                  pageCurrent={page.pageCurrent}
-                                  pageSize={page.pageSize}
-                                  total={page.total}
                                   columns={columns}
                                   onShowCreateModal={handleCreateShow}
             />

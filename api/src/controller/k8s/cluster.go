@@ -13,8 +13,11 @@ func ClusterSearch(c *gin.Context) {
 	query := entity.ClusterQuery{}
 	err := c.Bind(&query)
 	core.CheckError(err)
-	list, _ := service.GetClusterList(query)
-	entity.Response{Context: c}.Data(list).Build()
+	list, count := service.GetClusterList(query)
+	entity.Response{Context: c}.
+		Data(list).
+		Page(entity.PageModel{PageCurrent: query.PageCurrent, PageSize: query.PageSize, Total: count}).
+		Build()
 }
 
 func ClusterCreate(c *gin.Context) {
@@ -37,6 +40,8 @@ func ClusterCreate(c *gin.Context) {
 		panic(core.NewException(strings.Join([]string{input.Form.Name, "exists"}, " ")))
 	}
 	service.CreateCluster(input.Form)
-	list, _ := service.GetClusterList(input.Query)
-	entity.Response{Context: c}.Data(list).Build()
+	list, count := service.GetClusterList(input.Query)
+	entity.Response{Context: c}.Data(list).
+		Page(entity.PageModel{PageCurrent: input.Query.PageCurrent, PageSize: input.Query.PageSize, Total: count}).
+		Build()
 }

@@ -4,6 +4,7 @@ import {Search} from "@v/volume/data";
 import Modal from '@c/Modal'
 import {DashOutlined} from "@ant-design/icons";
 import {UnControlled as CodeMirror} from 'react-codemirror2'
+import {PageModel} from "@/model/data";
 
 const title: string = "存储卷"
 const List: React.FC<any> = (props: any) => {
@@ -17,11 +18,11 @@ const List: React.FC<any> = (props: any) => {
     })
 
     const [data, setData] = stub.ref.react.useState([])
-    const [page, setPage] = stub.ref.react.useState({pageCurrent: 1, pageSize: 10, total: 0})
     const [createVisible, setCreateVisible] = stub.ref.react.useState(false)
     const [editVisible, setEditVisible] = stub.ref.react.useState(false)
     const [capacity, setCapacity] = stub.ref.react.useState(0)
     const [yaml, setYaml] = stub.ref.react.useState("")
+    const [page, setPage] = stub.ref.react.useState<PageModel>({})
 
     stub.ref.react.useEffect(() => {
         handleSearch()
@@ -89,11 +90,6 @@ const List: React.FC<any> = (props: any) => {
         stub.api.post("k8s/volume/search", query).then((data: any) => {
             let d: any = data.data.items.map((t: any) => stub.util.mapper.volume(t))
             setData(d)
-            setPage({
-                pageCurrent: 1,
-                pageSize: 10,
-                total: d.length
-            })
         })
     }
     const handleCreateShow = () => {
@@ -146,11 +142,11 @@ const List: React.FC<any> = (props: any) => {
     return (
         <div>
             <stub.component.Table title={title}
-                   onSearch={handleSearch}
-                   datasource={data}
-                   page={page}
-                   columns={columns}
-                   onShowCreateModal={handleCreateShow}
+                                  onSearch={handleSearch}
+                                  datasource={data}
+                                  page={page}
+                                  columns={columns}
+                                  onShowCreateModal={handleCreateShow}
                                   filters={[]}
             />
             <Modal title={`创建${title}`} visible={createVisible} onOk={handleCreateOk} onCancel={handleCreateCancel}>
@@ -165,17 +161,17 @@ const List: React.FC<any> = (props: any) => {
                         <stub.ref.antd.Row justify={"space-between"}>
                             <stub.ref.antd.Col span={20}>
                                 <stub.ref.antd.Slider defaultValue={capacity}
-                                                  marks={{
-                                                      128: "128Gi",
-                                                      512: "512Gi",
-                                                      1024: "1024Gi",
-                                                      2048: "2048Gi",
-                                                  }}
-                                                  max={2048}
-                                                  onChange={(val) => {
-                                                      setCapacity(val)
-                                                  }}
-                                                  value={capacity}
+                                                      marks={{
+                                                          128: "128Gi",
+                                                          512: "512Gi",
+                                                          1024: "1024Gi",
+                                                          2048: "2048Gi",
+                                                      }}
+                                                      max={2048}
+                                                      onChange={(val) => {
+                                                          setCapacity(val)
+                                                      }}
+                                                      value={capacity}
                                 />
                             </stub.ref.antd.Col>
                             <stub.ref.antd.Col style={{display: "flex", alignItems: "center"}}>
@@ -196,8 +192,8 @@ const List: React.FC<any> = (props: any) => {
                    visible={editVisible}
                    onOk={handleEditOk}
                    onCancel={() => {
-                        setEditVisible(false)
-                    }}
+                       setEditVisible(false)
+                   }}
             >
                 <CodeMirror
                     editorDidMount={(editor) => {
