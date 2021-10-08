@@ -3,18 +3,15 @@ package core
 import (
 	"github.com/czyhome/circler/src/entity"
 	"github.com/gin-gonic/gin"
-	"net/http"
 )
 
 func ErrorHandle() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		defer func() {
 			if err := recover(); err != nil {
-				response := entity.Response{}
 				switch err.(type) {
 				case ExceptionModel:
-					response.Error(err).Build()
-					c.JSON(http.StatusOK, response)
+					entity.Response{Context: c}.Error(err).Build()
 					break
 				}
 				panic(err)

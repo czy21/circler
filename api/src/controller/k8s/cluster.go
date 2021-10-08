@@ -2,7 +2,6 @@ package k8s
 
 import (
 	"github.com/ahmetb/go-linq/v3"
-	"github.com/czyhome/circler/src/config"
 	"github.com/czyhome/circler/src/core"
 	"github.com/czyhome/circler/src/entity"
 	"github.com/czyhome/circler/src/service"
@@ -10,26 +9,39 @@ import (
 	"strings"
 )
 
-func ClusterList(c *gin.Context) {
-	search := entity.ClusterQuery{}
-	err := c.Bind(&search)
+func ClusterSearch(c *gin.Context) {
+	query := entity.ClusterQuery{}
+	err := c.Bind(&query)
 	core.CheckError(err)
-	list := service.GetClusterList(config.ClusterDir)
-	entity.Response{Context: c}.Data(list).Build()
+	list, count := service.GetClusterList(query)
+	entity.Response{Context: c}.
+		Data(list).
+		Page(entity.PageModel{PageCurrent: query.PageCurrent, PageSize: query.PageSize, Total: count}).
+		Build()
 }
 
 func ClusterCreate(c *gin.Context) {
-	input := entity.ClusterModel{}
+	input := struct {
+		Query entity.ClusterQuery
+		Form  entity.ClusterModel
+	}{}
 	err := c.Bind(&input)
 	core.CheckError(err)
-	var clusterConfigs = service.GetClusterList(config.ClusterDir)
-	var existCluster = linq.From(clusterConfigs).
-		WhereT(func(u entity.ClusterModel) bool {
-			return u.Name == input.Name
-		}).First()
-	if existCluster != nil {
-		panic(core.NewException(strings.Join([]string{input.Name, "exists"}, " ")))
+	if input.Form.Name == "" {
+		panic(core.NewException(strings.Join([]string{"name must be not empty"}, " ")))
 	}
-	service.CreateCluster(input)
-	entity.Response{Context: c}.Data("success").Build()
+
+	exists, _ := service.GetClusterList(entity.ClusterQuery{BaseQuery: entity.BaseQuery{Name: input.Form.Name}})
+
+	if e := linq.From(exists).
+		AnyWithT(func(u entity.ClusterModel) bool {
+			return u.Name == input.Form.Name
+		}); e {
+		panic(core.NewException(strings.Join([]string{input.Form.Name, "exists"}, " ")))
+	}
+	service.CreateCluster(input.Form)
+	list, count := service.GetClusterList(input.Query)
+	entity.Response{Context: c}.Data(list).
+		Page(entity.PageModel{PageCurrent: input.Query.PageCurrent, PageSize: input.Query.PageSize, Total: count}).
+		Build()
 }

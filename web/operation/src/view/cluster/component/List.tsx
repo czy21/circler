@@ -1,16 +1,24 @@
 import React from "react";
 import stub from "@/init"
-import {Search} from "@/model/data";
 import {UnControlled as CodeMirror} from "react-codemirror2";
+import {PageModel} from "@/model/data";
 
 const title = "集群"
 const List: React.FC<any> = (props: any) => {
     const {history, route} = props
 
     const [data, setData] = stub.ref.react.useState([])
-    const [page, setPage] = stub.ref.react.useState({pageCurrent: 1, pageSize: 10, total: 0})
     const [createVisible, setCreateVisible] = stub.ref.react.useState(false)
     const [content, setContent] = stub.ref.react.useState("")
+    const [query, setQuery] = stub.ref.react.useState<any>({})
+    const [page, setPage] = stub.ref.react.useState<PageModel>({})
+
+    const [filters, setFilter] = stub.ref.react.useState([
+        {
+            "key": "name",
+            "label": "名称"
+        },
+    ])
 
     stub.ref.react.useEffect(() => {
         handleSearch()
@@ -30,7 +38,7 @@ const List: React.FC<any> = (props: any) => {
         },
         {
             key: 'description',
-            title: '描述',
+            header: '描述',
         },
         {
             key: 'operation',
@@ -45,47 +53,48 @@ const List: React.FC<any> = (props: any) => {
 
     const [createForm] = stub.ref.antd.Form.useForm();
 
-    const handleSearch = (query?: Search) => {
-        stub.api.post("k8s/cluster/list", query).then((data: any) => {
-            setData(data.data)
-        })
+    const handleSearch = (q?: any) => {
+        setQuery(q)
+        stub.api.post("k8s/cluster/search", stub.ref.lodash.omit(q, "total"))
+            .then((data: any) => {
+                setData(data.data)
+                setPage(data.page)
+            })
     }
-    const handleCreateShow = () => {
+    const handleShowCreateModal = () => {
         createForm.resetFields()
         setContent("")
         setCreateVisible(true)
     }
     const handleCreateOk = () => {
-        // setCreateVisible(false)
-        const data = {...createForm.getFieldsValue(), content: content}
-        stub.api.post("k8s/cluster/create", data).then((t: any) => {
-            // let yamlConfig: any = stub.util.mapper.volume(t)._originData
-            // setYaml(stub.util.yaml.getValue(yamlConfig))
+        const input = {...createForm.getFieldsValue(), content: content}
+        stub.api.post("k8s/cluster/create", {"query": query, "form": input}).then((t: any) => {
+            if (!t.error) {
+                stub.ref.antd.message.info("添加成功")
+            }
+            setData(t.data)
+            setCreateVisible(false)
         })
-    };
-    const handleCreateCancel = () => {
-        setCreateVisible(false)
     };
     return (
         <div>
             <stub.component.Table title={title}
-                                  onSearch={handleSearch}
                                   datasource={data}
-                                  pageCurrent={page.pageCurrent}
-                                  pageSize={page.pageSize}
-                                  total={page.total}
                                   columns={columns}
-                                  showCreateModal={handleCreateShow}
+                                  page={page}
+                                  onSearch={handleSearch}
+                                  onShowCreateModal={handleShowCreateModal}
+                                  filters={filters}
             />
             <stub.component.Create title={`添加${title}`}
                                    visible={createVisible}
                                    onOk={handleCreateOk}
-                                   onCancel={handleCreateCancel}>
+                                   onCancel={() => setCreateVisible(false)}>
                 <stub.ref.antd.Form form={createForm}>
                     <stub.ref.antd.Form.Item label={"名称"} name={"name"} required={true}>
                         <stub.ref.antd.Input/>
                     </stub.ref.antd.Form.Item>
-                    <stub.ref.antd.Form.Item label={"描述"} name={"description"} required={true}>
+                    <stub.ref.antd.Form.Item label={"描述"} name={"description"}>
                         <stub.ref.antd.Input/>
                     </stub.ref.antd.Form.Item>
                     <stub.ref.antd.Form.Item label={"内容"}>

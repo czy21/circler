@@ -2,38 +2,34 @@ package config
 
 import (
 	"context"
+	"flag"
 	"github.com/bndr/gojenkins"
+	"github.com/czyhome/circler/src/core"
+	"github.com/czyhome/circler/src/entity"
+	"github.com/czyhome/circler/src/service"
 	"k8s.io/client-go/kubernetes"
-	"os"
-	"path/filepath"
+	"k8s.io/client-go/tools/clientcmd"
 )
 
-var K8sClient *kubernetes.Clientset
-var Namespace = "default"
+var Namespace = ""
 var GlobalContext *context.Context
 var JenkinsClient *gojenkins.Jenkins
-var Workspace, _ = os.Getwd()
-var DataDir = filepath.Join(Workspace, "data")
-var ClusterDir = filepath.Join(DataDir, "cluster")
+var K8sClientMap = make(map[string]kubernetes.Clientset)
 
 func init() {
-	//var kubeconfig *string
 
-	//pwd, _ := os.Getwd()
-	//kubeconfig = flag.String("kubeconfig", filepath.Join(pwd, "src/config/___temp/.kube", "config"), "(optional) absolute path to the kubeconfig file")
-	//flag.Parse()
-	//println(kubeconfig)
-	//
-	//var configs = service.GetClusterList(ClusterDir)
-	//println(configs)
-	//config, err := clientcmd.BuildConfigFromFlags("", *kubeconfig)
-	//if err != nil {
-	//	panic(err.Error())
-	//}
-	//clientside, _ := kubernetes.NewForConfig(config)
-	//K8sClient = clientside
-	//}
+	c, _ := service.GetClusterList(entity.ClusterQuery{})
+	for _, t := range c {
+		kubeConfig := flag.String("kubeconfig", t.ConfigPath, "(optional) absolute path to the kubeconfig file")
+		flag.Parse()
+		config, err := clientcmd.BuildConfigFromFlags("", *kubeConfig)
+		core.CheckError(err)
+		client, _ := kubernetes.NewForConfig(config)
+		K8sClientMap[t.Name] = *client
+	}
+
 	GlobalContext := context.Background()
-	jenkins, _ := gojenkins.CreateJenkins(nil, "http://192.168.2.21:8082/", "admin", "Czy20210314.").Init(GlobalContext)
+	jenkins, _ := gojenkins.CreateJenkins(nil, "http://192.168.2.25:8082/", "admin", "Czy20210314.").Init(GlobalContext)
 	JenkinsClient = jenkins
+
 }

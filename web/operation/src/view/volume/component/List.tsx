@@ -1,9 +1,10 @@
 import React from "react";
 import stub from "@/init"
 import {Search} from "@v/volume/data";
-import Create from '@c/Create'
+import Modal from '@c/Modal'
 import {DashOutlined} from "@ant-design/icons";
 import {UnControlled as CodeMirror} from 'react-codemirror2'
+import {PageModel} from "@/model/data";
 
 const title: string = "存储卷"
 const List: React.FC<any> = (props: any) => {
@@ -17,11 +18,11 @@ const List: React.FC<any> = (props: any) => {
     })
 
     const [data, setData] = stub.ref.react.useState([])
-    const [page, setPage] = stub.ref.react.useState({pageCurrent: 1, pageSize: 10, total: 0})
     const [createVisible, setCreateVisible] = stub.ref.react.useState(false)
     const [editVisible, setEditVisible] = stub.ref.react.useState(false)
     const [capacity, setCapacity] = stub.ref.react.useState(0)
     const [yaml, setYaml] = stub.ref.react.useState("")
+    const [page, setPage] = stub.ref.react.useState<PageModel>({})
 
     stub.ref.react.useEffect(() => {
         handleSearch()
@@ -86,14 +87,9 @@ const List: React.FC<any> = (props: any) => {
     const [createForm] = stub.ref.antd.Form.useForm();
 
     const handleSearch = (query?: Search) => {
-        stub.api.post("k8s/volume/list", query).then((data: any) => {
-            let d: any = data.items.map((t: any) => stub.util.mapper.volume(t))
+        stub.api.post("k8s/volume/search", query).then((data: any) => {
+            let d: any = data.data.items.map((t: any) => stub.util.mapper.volume(t))
             setData(d)
-            setPage({
-                pageCurrent: 1,
-                pageSize: 10,
-                total: d.length
-            })
         })
     }
     const handleCreateShow = () => {
@@ -146,15 +142,14 @@ const List: React.FC<any> = (props: any) => {
     return (
         <div>
             <stub.component.Table title={title}
-                   onSearch={handleSearch}
-                   datasource={data}
-                   pageCurrent={page.pageCurrent}
-                   pageSize={page.pageSize}
-                   total={page.total}
-                   columns={columns}
-                   showCreateModal={handleCreateShow}
+                                  onSearch={handleSearch}
+                                  datasource={data}
+                                  page={page}
+                                  columns={columns}
+                                  onShowCreateModal={handleCreateShow}
+                                  filters={[]}
             />
-            <Create title={`创建${title}`} visible={createVisible} onOk={handleCreateOk} onCancel={handleCreateCancel}>
+            <Modal title={`创建${title}`} visible={createVisible} onOk={handleCreateOk} onCancel={handleCreateCancel}>
                 <stub.ref.antd.Form form={createForm}>
                     <stub.ref.antd.Form.Item label={"名称"} name={"name"} required={true}>
                         <stub.ref.antd.Input/>
@@ -166,17 +161,17 @@ const List: React.FC<any> = (props: any) => {
                         <stub.ref.antd.Row justify={"space-between"}>
                             <stub.ref.antd.Col span={20}>
                                 <stub.ref.antd.Slider defaultValue={capacity}
-                                                  marks={{
-                                                      128: "128Gi",
-                                                      512: "512Gi",
-                                                      1024: "1024Gi",
-                                                      2048: "2048Gi",
-                                                  }}
-                                                  max={2048}
-                                                  onChange={(val) => {
-                                                      setCapacity(val)
-                                                  }}
-                                                  value={capacity}
+                                                      marks={{
+                                                          128: "128Gi",
+                                                          512: "512Gi",
+                                                          1024: "1024Gi",
+                                                          2048: "2048Gi",
+                                                      }}
+                                                      max={2048}
+                                                      onChange={(val) => {
+                                                          setCapacity(val)
+                                                      }}
+                                                      value={capacity}
                                 />
                             </stub.ref.antd.Col>
                             <stub.ref.antd.Col style={{display: "flex", alignItems: "center"}}>
@@ -191,14 +186,14 @@ const List: React.FC<any> = (props: any) => {
                         </stub.ref.antd.Row>
                     </stub.ref.antd.Form.Item>
                 </stub.ref.antd.Form>
-            </Create>
-            <Create title={`编辑配置文件`}
-                    width={1200}
-                    visible={editVisible}
-                    onOk={handleEditOk}
-                    onCancel={() => {
-                        setEditVisible(false)
-                    }}
+            </Modal>
+            <Modal title={`编辑配置文件`}
+                   width={1200}
+                   visible={editVisible}
+                   onOk={handleEditOk}
+                   onCancel={() => {
+                       setEditVisible(false)
+                   }}
             >
                 <CodeMirror
                     editorDidMount={(editor) => {
@@ -216,7 +211,7 @@ const List: React.FC<any> = (props: any) => {
                     }}
                 >
                 </CodeMirror>
-            </Create>
+            </Modal>
         </div>
     )
 }

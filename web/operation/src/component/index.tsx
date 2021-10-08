@@ -1,7 +1,7 @@
 import Table from './Table'
-import Create from './Create'
+import Modal from './Modal'
 
 export default {
     Table,
-    Create
+    Create: Modal
 }
