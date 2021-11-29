@@ -4,20 +4,19 @@
 
 FROM golang:alpine as build
 ENV GOPROXY=http://nexus.cluster.com/repository/go-proxy/
-ENV WORKDIR=/home/app
-WORKDIR ${WORKDIR}
+WORKDIR /app
 
 COPY . .
 
-RUN mkdir -p /home/app && go mod download && go build -o ${WORKDIR}/main
+RUN go mod download && go build -o /docker-gs-ping /docker-gs-ping
 
 ##
 ## Deploy
 ##
 FROM gcr.io/distroless/base-debian10
-WORKDIR ${WORKDIR}
+WORKDIR /
 
-COPY --from=build ${WORKDIR}/main ${WORKDIR}/main
+COPY --from=build /docker-gs-ping /docker-gs-ping
 
 EXPOSE 8080
-CMD [/home/app/main]
+CMD ["/docker-gs-ping /docker-gs-ping"]
