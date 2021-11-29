@@ -8,7 +8,7 @@ WORKDIR /app
 
 COPY . .
 
-RUN go mod download && go build -o /docker-gs-ping
+RUN go mod download && go build -o /main
 
 ##
 ## Deploy
@@ -16,7 +16,7 @@ RUN go mod download && go build -o /docker-gs-ping
 FROM gcr.io/distroless/base-debian10
 WORKDIR /
 
-COPY --from=build /docker-gs-ping /docker-gs-ping
+COPY --from=build /main /main
 
 EXPOSE 8080
-CMD ["/docker-gs-ping /docker-gs-ping"]
+CMD ["/main"]
