@@ -4,7 +4,7 @@
 ## Build
 ##
 FROM golang:alpine as build
-
+ENV GOPROXY=http://nexus.cluster.com/repository/go-proxy/
 WORKDIR /app
 
 COPY . .
@@ -14,8 +14,14 @@ RUN go mod download && go build -o /docker-gs-ping
 ##
 ## Deploy
 ##
-FROM scratch as runner
+FROM debian:stable
+
+WORKDIR /
+
 COPY --from=build /docker-gs-ping /docker-gs-ping
 
 EXPOSE 8080
-CMD ["/docker-gs-ping"]
+
+USER root:root
+
+ENTRYPOINT ["/docker-gs-ping"]
