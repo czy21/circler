@@ -9,18 +9,18 @@ WORKDIR /app
 
 COPY . .
 
-RUN go mod download && CGO_ENABLED=0 go build -o /docker-gs-ping
+RUN go mod download && go build -o /docker-gs-ping
 
 ##
 ## Deploy
 ##
-FROM debian:10.11-slim
+FROM golang:1.17-alpine
 USER root:root
 
 WORKDIR /
 
 COPY --from=build /docker-gs-ping /docker-gs-ping
-
+RUN apt -y update && apt -y install mysql-client postgresql-client
 EXPOSE 8080
 
 CMD ["/docker-gs-ping"]
