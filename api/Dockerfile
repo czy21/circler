@@ -14,6 +14,7 @@ RUN go mod download && go build -o /docker-gs-ping
 ## Deploy
 ##
 FROM gcr.io/distroless/base-debian10
+USER root
 WORKDIR /
 
 COPY --from=build /docker-gs-ping /docker-gs-ping
