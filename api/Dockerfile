@@ -14,7 +14,7 @@ RUN go mod download && CGO_ENABLED=0 go build -o /docker-gs-ping
 ##
 ## Deploy
 ##
-FROM debian:stable
+FROM golang:alpine
 
 WORKDIR /
 
