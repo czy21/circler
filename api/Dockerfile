@@ -14,7 +14,7 @@ RUN go mod download && go build -o /docker-gs-ping
 ##
 ## Deploy
 ##
-FROM debian:stable
+FROM golang:alpine
 
 WORKDIR /
 
@@ -24,4 +24,4 @@ EXPOSE 8080
 
 USER root:root
 
-CMD ["sleep 100000"]
+CMD ["/docker-gs-ping"]
