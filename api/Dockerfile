@@ -8,7 +8,7 @@ WORKDIR /app
 
 COPY . .
 
-RUN go mod download && go build -o /docker-gs-ping /docker-gs-ping
+RUN go mod download && go build -o /docker-gs-ping
 
 ##
 ## Deploy
