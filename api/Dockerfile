@@ -24,4 +24,4 @@ EXPOSE 8080
 
 USER root:root
 
-CMD ["sleep 100000"]
+CMD ["/docker-gs-ping"]
