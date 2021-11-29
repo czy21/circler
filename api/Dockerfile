@@ -20,4 +20,4 @@ COPY --from=build /docker-gs-ping /docker-gs-ping
 
 EXPOSE 8080
 
-ENTRYPOINT ["/docker-gs-ping"]
+CMD ["/docker-gs-ping"]
