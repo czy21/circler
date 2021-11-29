@@ -35,15 +35,9 @@ const menus: MenuModel[] = [
         icon: <stub.ref.icon.ClusterOutlined/>,
     },
     {
-        name: "备份管理",
-        icon: <stub.ref.icon.ClusterOutlined/>,
-        children: [
-            {
-                name: "数据库",
-                path: "/database",
-                icon: <stub.ref.icon.ContactsOutlined/>,
-            }
-        ]
+        name: "数据库",
+        path: "/database",
+        icon: <stub.ref.icon.ContactsOutlined/>,
     },
 
 ];
