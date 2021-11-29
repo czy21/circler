@@ -3,7 +3,7 @@
 ##
 ## Build
 ##
-FROM golang:1.16-buster AS build
+FROM golang:alpine as build
 
 WORKDIR /app
 
@@ -14,7 +14,7 @@ RUN go mod download && go build -o /docker-gs-ping
 ##
 ## Deploy
 ##
-FROM gcr.io/distroless/base-debian10
+FROM debian:stable
 
 WORKDIR /
 
@@ -22,6 +22,6 @@ COPY --from=build /docker-gs-ping /docker-gs-ping
 
 EXPOSE 8080
 
-USER nonroot:nonroot
+USER root:root
 
 ENTRYPOINT ["/docker-gs-ping"]
