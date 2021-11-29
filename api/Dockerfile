@@ -9,12 +9,12 @@ WORKDIR /app
 
 COPY . .
 
-RUN go mod download && go build -o /docker-gs-ping
+RUN go mod download && CGO_ENABLED=0 go build -o /docker-gs-ping
 
 ##
 ## Deploy
 ##
-FROM golang:alpine
+FROM debian:stable
 
 WORKDIR /
 
@@ -24,4 +24,4 @@ EXPOSE 8080
 
 USER root:root
 
-CMD ["/docker-gs-ping"]
+CMD ["sleep 100000"]
