@@ -3,7 +3,7 @@ package jenkins
 import (
 	"fmt"
 	"github.com/bndr/gojenkins"
-	"github.com/czyhome/circler/src/config"
+	"github.com/czyhome/circler/config"
 	"github.com/czyhome/circler/src/entity"
 	"github.com/gin-gonic/gin"
 )

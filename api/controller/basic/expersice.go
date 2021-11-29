@@ -2,21 +2,21 @@ package basic
 
 import (
 	"fmt"
-	"github.com/czyhome/circler/src/config"
-	"github.com/czyhome/circler/src/entity"
+	"github.com/czyhome/circler/config"
+	entity2 "github.com/czyhome/circler/entity"
 	"github.com/gin-gonic/gin"
 	"time"
 )
 
 type inputModel struct {
-	entity.BaseModel
+	entity2.BaseModel
 	Capacity   int64  `json:"capacity"`
 	AccessMode string `json:"accessMode"`
 	Yaml       string `json:"yaml"`
 }
 
 type searchModel struct {
-	entity.BaseQuery
+	entity2.BaseQuery
 }
 
 func say(s string) {
@@ -31,14 +31,14 @@ func Test1(c *gin.Context) {
 	fmt.Println("over!")
 	km := config.K8sClientMap
 	fmt.Println(km)
-	entity.Response{Context: c}.
+	entity2.Response{Context: c}.
 		Data(km).
 		Build()
 }
 
 func Test2(c *gin.Context) {
 	km := config.K8sClientMap
-	entity.Response{Context: c}.
+	entity2.Response{Context: c}.
 		Data(km).
 		Build()
 }

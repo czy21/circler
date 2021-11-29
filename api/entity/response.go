@@ -9,9 +9,9 @@ import (
 
 type Response struct {
 	Context   *gin.Context
-	error     interface{}
-	page      PageModel
-	data      interface{}
+	error interface{}
+	page  PageModel
+	data  interface{}
 	extension map[string]interface{}
 }
 

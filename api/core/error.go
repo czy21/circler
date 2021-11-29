@@ -1,7 +1,7 @@
 package core
 
 import (
-	"github.com/czyhome/circler/src/entity"
+	"github.com/czyhome/circler/entity"
 	"github.com/gin-gonic/gin"
 )
 

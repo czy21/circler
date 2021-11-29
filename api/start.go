@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/czyhome/circler/src/controller"
-	"github.com/czyhome/circler/src/core"
+	"github.com/czyhome/circler/controller"
+	"github.com/czyhome/circler/core"
 	"github.com/gin-gonic/gin"
 )
 

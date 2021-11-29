@@ -4,9 +4,9 @@ import (
 	"context"
 	"flag"
 	"github.com/bndr/gojenkins"
-	"github.com/czyhome/circler/src/core"
-	"github.com/czyhome/circler/src/entity"
-	"github.com/czyhome/circler/src/service"
+	"github.com/czyhome/circler/core"
+	"github.com/czyhome/circler/entity"
+	"github.com/czyhome/circler/service"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/tools/clientcmd"
 )
