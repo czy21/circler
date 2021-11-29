@@ -20,7 +20,7 @@ USER root:root
 WORKDIR /
 
 COPY --from=build /docker-gs-ping /docker-gs-ping
-RUN apk-y update && apk -y add mysql-client postgresql-client
+RUN apk -y update && apk -y add mysql-client postgresql-client
 EXPOSE 8080
 
 CMD ["/docker-gs-ping"]
