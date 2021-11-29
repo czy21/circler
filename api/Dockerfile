@@ -20,7 +20,7 @@ USER root:root
 WORKDIR /
 
 COPY --from=build /docker-gs-ping /docker-gs-ping
-RUN apt -y update && apt -y install mysql-client postgresql-client
+RUN apk -y update && apk -y install mysql-client postgresql-client
 EXPOSE 8080
 
 CMD ["/docker-gs-ping"]
