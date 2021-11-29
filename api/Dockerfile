@@ -7,6 +7,7 @@ WORKDIR ${WORKDIR}
 COPY . .
 
 RUN mkdir -p ${DISTDIR} && go build -o ${MAINBIN} .
+RUN ls -al
 
 EXPOSE 8080
 
