@@ -4,14 +4,12 @@
 
 FROM golang:alpine as build
 ENV GOPROXY=http://nexus.cluster.com/repository/go-proxy/
-ENV WORKDIR=/app
-ENV MAINBIN=${WORKDIR}/main
-USER root:root
+ENV WORKDIR=/home/app
 WORKDIR ${WORKDIR}
 
 COPY . .
 
-RUN go mod download && go build -o ${MAINBIN}
+RUN mkdir -p /home/app && go mod download && go build -o ${WORKDIR}/main
 
 ##
 ## Deploy
@@ -19,7 +17,7 @@ RUN go mod download && go build -o ${MAINBIN}
 FROM gcr.io/distroless/base-debian10
 WORKDIR ${WORKDIR}
 
-COPY --from=build ${MAINBIN} ${MAINBIN}
+COPY --from=build ${WORKDIR}/main ${WORKDIR}/main
 
 EXPOSE 8080
-CMD [${MAINBIN}]
+CMD [/home/app/main]
