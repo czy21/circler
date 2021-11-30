@@ -2,6 +2,7 @@ package controller
 
 import (
 	"github.com/czyhome/circler/controller/basic"
+	"github.com/czyhome/circler/controller/db"
 	k8s2 "github.com/czyhome/circler/controller/k8s"
 	"github.com/gin-gonic/gin"
 )
@@ -31,6 +32,12 @@ func Init(r *gin.Engine) {
 	{
 		basicRouter.POST("test1", basic.Test1)
 		basicRouter.POST("test2", basic.Test2)
+	}
+
+	dbRouter := r.Group("db")
+	{
+		dbRouter.POST("listMeta", db.ListMeta)
+		dbRouter.POST("createBackup", db.CreateBackup)
 	}
 
 }

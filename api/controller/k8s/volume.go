@@ -3,7 +3,7 @@ package k8s
 import (
 	"github.com/ahmetb/go-linq/v3"
 	"github.com/czyhome/circler/config"
-	entity2 "github.com/czyhome/circler/entity"
+	entity "github.com/czyhome/circler/entity"
 	"github.com/gin-gonic/gin"
 	"golang.org/x/net/context"
 	v1 "k8s.io/api/core/v1"
@@ -15,14 +15,14 @@ import (
 )
 
 type VolumeInputModel struct {
-	entity2.BaseModel
+	entity.BaseModel
 	Capacity   int64  `json:"capacity"`
 	AccessMode string `json:"accessMode"`
 	Yaml       string `json:"yaml"`
 }
 
 type VolumeSearchModel struct {
-	entity2.BaseQuery
+	entity.BaseQuery
 }
 
 func VolumeList(c *gin.Context) {
@@ -45,7 +45,7 @@ func VolumeList(c *gin.Context) {
 	data := make(map[string]interface{})
 	data["items"] = items
 	data["metadata"] = pvs.ListMeta
-	entity2.Response{Context: c}.
+	entity.Response{Context: c}.
 		Data(data).
 		Build()
 }
@@ -58,7 +58,7 @@ func VolumeDetail(c *gin.Context) {
 	}
 	client:= config.K8sClientMap["dev"]
 	pv, _ := client.CoreV1().PersistentVolumeClaims(config.Namespace).Get(context.TODO(), input.Name, metav1.GetOptions{})
-	entity2.Response{Context: c}.
+	entity.Response{Context: c}.
 		Data(pv).
 		Build()
 }
@@ -89,7 +89,7 @@ func VolumeCreate(c *gin.Context) {
 	if err != nil {
 		panic(err)
 	}
-	entity2.Response{Context: c}.
+	entity.Response{Context: c}.
 		Data(pvCreateResult).
 		Build()
 }
@@ -110,7 +110,7 @@ func VolumeEditYaml(c *gin.Context) {
 	if err != nil {
 		panic(err)
 	}
-	entity2.Response{Context: c}.
+	entity.Response{Context: c}.
 		Data(pvPatchResult).
 		Build()
 }

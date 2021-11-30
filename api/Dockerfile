@@ -1,15 +1,13 @@
-# syntax=docker/dockerfile:1
-
 ##
 ## Build
 ##
 FROM golang:1.17-alpine as build
 ENV GOPROXY=http://nexus.cluster.com/repository/go-proxy/
-WORKDIR /app
+WORKDIR /home/app
 
 COPY . .
 
-RUN go mod download && go build -o /docker-gs-ping
+RUN go mod download && go build -o /main
 
 ##
 ## Deploy
@@ -17,10 +15,10 @@ RUN go mod download && go build -o /docker-gs-ping
 FROM golang:1.17-alpine
 USER root:root
 
-WORKDIR /
+WORKDIR /home/app
 
-COPY --from=build /docker-gs-ping /docker-gs-ping
+COPY --from=build /main /home/app/main
 RUN apk update && apk add mysql-client postgresql-client
 EXPOSE 8080
-
-CMD ["/docker-gs-ping"]
+VOLUME ["/home/app/config","/home/app/data"]
+CMD ["/home/app/main"]

@@ -1,8 +1,8 @@
 import Layout from '@/layout/Layout'
-import List from '@v/database/component/List'
+import List from '@v/db/component/List'
 import {renderRoutes, RouteConfig} from "react-router-config";
 
-const PATH = '/database'
+const PATH = '/db'
 
 let routes: RouteConfig[] = [
     {

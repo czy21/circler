@@ -36,7 +36,7 @@ const menus: MenuModel[] = [
     },
     {
         name: "数据库",
-        path: "/database",
+        path: "/db",
         icon: <stub.ref.icon.ContactsOutlined/>,
     },
 

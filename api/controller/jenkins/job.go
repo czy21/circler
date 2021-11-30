@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/bndr/gojenkins"
 	"github.com/czyhome/circler/config"
-	"github.com/czyhome/circler/src/entity"
+	"github.com/czyhome/circler/entity"
 	"github.com/gin-gonic/gin"
 )
 
@@ -18,7 +18,7 @@ func JobList(c *gin.Context) {
 	for _, job := range jobs {
 		jobNames["jobName"] = job.GetName()
 	}
-	entity.Result{c}.
+	entity.Response{Context: c}.
 		Data("").
 		Build()
 }

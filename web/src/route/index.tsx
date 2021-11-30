@@ -3,7 +3,7 @@ import {App as Volume} from '@v/volume'
 import {App as ConfigMap} from '@v/configmap'
 import {App as Project} from '@v/project'
 import {App as Cluster} from '@v/cluster'
-import {App as Database} from '@v/database'
+import {App as DB} from '@v/db'
 
 const routes: RouteConfig[] = [
     {
@@ -23,8 +23,8 @@ const routes: RouteConfig[] = [
         component: Cluster,
     },
     {
-        path: "/database",
-        component: Database,
+        path: "/db",
+        component: DB,
     },
 ];
 export default routes
