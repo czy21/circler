@@ -1,14 +1,14 @@
 import React from "react";
 import stub from "@/init"
 import {PageModel, Search} from "@/model/data";
+import {Button} from "antd";
 
 const title = "集群"
 const List: React.FC<any> = (props: any) => {
     const {history, route} = props
 
     const [data, setData] = stub.ref.react.useState([])
-    const [createVisible, setCreateVisible] = stub.ref.react.useState(false)
-    const [content, setContent] = stub.ref.react.useState("")
+    const [createVisible, setBackupVisible] = stub.ref.react.useState(false)
     const [query, setQuery] = stub.ref.react.useState<any>({})
     const [page, setPage] = stub.ref.react.useState<PageModel>({})
 
@@ -50,7 +50,7 @@ const List: React.FC<any> = (props: any) => {
         },
     ];
 
-    const [createForm] = stub.ref.antd.Form.useForm();
+    const [backupForm] = stub.ref.antd.Form.useForm();
 
     const handleSearch = (q?: any) => {
         setQuery(q)
@@ -60,20 +60,20 @@ const List: React.FC<any> = (props: any) => {
                 setPage(data.page)
             })
     }
-    const handleShowCreateModal = () => {
-        createForm.resetFields()
-        setContent("")
-        setCreateVisible(true)
+    const handleShowBackupModal = () => {
+        backupForm.resetFields()
+        setBackupVisible(true)
     }
-    const handleCreateOk = () => {
-        const input = {...createForm.getFieldsValue(), content: content}
-        stub.api.post("database/backup/create", {"query": query, "form": input}).then((t: any) => {
-            if (!t.error) {
-                stub.ref.antd.message.info("添加成功")
-            }
-            setData(t.data)
-            setCreateVisible(false)
-        })
+    const handleBackupOk = () => {
+        const input = {...backupForm.getFieldsValue()}
+        console.log(input)
+        // stub.api.post("database/backup/create", {"query": query, "form": input}).then((t: any) => {
+        //     if (!t.error) {
+        //         stub.ref.antd.message.info("添加成功")
+        //     }
+        //     setData(t.data)
+        //     setBackupVisible(false)
+        // })
     };
     return (
         <div>
@@ -82,18 +82,26 @@ const List: React.FC<any> = (props: any) => {
                                   columns={columns}
                                   page={page}
                                   onSearch={handleSearch}
-                                  onShowCreateModal={handleShowCreateModal}
                                   filters={filters}
+                                  actions={[
+                                      <Button onClick={handleShowBackupModal}>备份</Button>
+                                  ]}
             />
-            <stub.component.Create title={`添加${title}`}
+            <stub.component.Create title={`备份${title}`}
                                    visible={createVisible}
-                                   onOk={handleCreateOk}
-                                   onCancel={() => setCreateVisible(false)}>
-                <stub.ref.antd.Form form={createForm}>
-                    <stub.ref.antd.Form.Item label={"名称"} name={"name"} required={true}>
+                                   onOk={handleBackupOk}
+                                   onCancel={() => setBackupVisible(false)}>
+                <stub.ref.antd.Form form={backupForm}>
+                    <stub.ref.antd.Form.Item label={"Host"} name={"host"} required={true}>
                         <stub.ref.antd.Input/>
                     </stub.ref.antd.Form.Item>
-                    <stub.ref.antd.Form.Item label={"描述"} name={"description"}>
+                    <stub.ref.antd.Form.Item label={"Port"} name={"port"} required={true}>
+                        <stub.ref.antd.Input/>
+                    </stub.ref.antd.Form.Item>
+                    <stub.ref.antd.Form.Item label={"UserName"} name={"username"} required={true}>
+                        <stub.ref.antd.Input/>
+                    </stub.ref.antd.Form.Item>
+                    <stub.ref.antd.Form.Item label={"Password"} name={"password"} required={true}>
                         <stub.ref.antd.Input/>
                     </stub.ref.antd.Form.Item>
                 </stub.ref.antd.Form>

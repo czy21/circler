@@ -3,7 +3,7 @@ package controller
 import (
 	"github.com/czyhome/circler/controller/basic"
 	"github.com/czyhome/circler/controller/db"
-	k8s2 "github.com/czyhome/circler/controller/k8s"
+	k8s "github.com/czyhome/circler/controller/k8s"
 	"github.com/gin-gonic/gin"
 )
 
@@ -11,22 +11,22 @@ func Init(r *gin.Engine) {
 	k8sRouter := r.Group("k8s")
 	{
 		// pod
-		k8sRouter.POST("pod/search", k8s2.PodList)
+		k8sRouter.POST("pod/search", k8s.PodList)
 		// volume
-		k8sRouter.POST("volume/search", k8s2.VolumeList)
-		k8sRouter.POST("volume/detail", k8s2.VolumeDetail)
-		k8sRouter.POST("volume/create", k8s2.VolumeCreate)
-		k8sRouter.POST("volume/editYaml", k8s2.VolumeEditYaml)
+		k8sRouter.POST("volume/search", k8s.VolumeList)
+		k8sRouter.POST("volume/detail", k8s.VolumeDetail)
+		k8sRouter.POST("volume/create", k8s.VolumeCreate)
+		k8sRouter.POST("volume/editYaml", k8s.VolumeEditYaml)
 		// node
-		k8sRouter.POST("node/search", k8s2.NodeList)
+		k8sRouter.POST("node/search", k8s.NodeList)
 		// service
-		k8sRouter.POST("service/search", k8s2.ServiceList)
+		k8sRouter.POST("service/search", k8s.ServiceList)
 		// configmap
-		k8sRouter.POST("configmap/search", k8s2.ConfigMapList)
-		k8sRouter.POST("configmap/detail", k8s2.ConfigMapDetail)
+		k8sRouter.POST("configmap/search", k8s.ConfigMapList)
+		k8sRouter.POST("configmap/detail", k8s.ConfigMapDetail)
 		// cluster
-		k8sRouter.POST("cluster/search", k8s2.ClusterSearch)
-		k8sRouter.POST("cluster/create", k8s2.ClusterCreate)
+		k8sRouter.POST("cluster/search", k8s.ClusterSearch)
+		k8sRouter.POST("cluster/create", k8s.ClusterCreate)
 	}
 	basicRouter := r.Group("basic")
 	{

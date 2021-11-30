@@ -18,16 +18,20 @@ func GetDbList(model entity.DbMetaInput) []entity.DbMeta {
 	}), &gorm.Config{})
 	var result []entity.DbTableMeta
 
-	dbClient.Raw("select * from information_schema.tables").Scan(&result)
+	dbClient.Raw("select * from information_schema.tables order by TABLE_SCHEMA asc").Scan(&result)
 
 	query := linq.From(result).GroupByT(func(t entity.DbTableMeta) string {
 		return t.DbName
 	}, func(i entity.DbTableMeta) entity.DbTableMeta {
 		return i
+	}).OrderByT(func(g linq.Group) string{
+		return g.Key.(string)
 	}).SelectT(func(g linq.Group) entity.DbMeta {
 		var t entity.DbMeta
 		t.Name = g.Key.(string)
-		linq.From(g.Group).SelectT(func(i interface{}) entity.DbTableMeta {
+		linq.From(g.Group).OrderByT(func(i entity.DbTableMeta) string {
+			return i.Name
+		}).SelectT(func(i interface{}) entity.DbTableMeta {
 			return i.(entity.DbTableMeta)
 		}).ToSlice(&t.Tables)
 		return t

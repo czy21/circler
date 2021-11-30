@@ -14,10 +14,11 @@ interface TableFormProp {
     columns: any[]
     onShowCreateModal?: () => void
     filters?: any[]
+    actions?: any[]
 }
 
 const Table: React.FC<TableFormProp> = (props: TableFormProp) => {
-    const {datasource, columns, title, page, onSearch, onShowCreateModal, filters = []} = props
+    const {datasource, columns, title, page, onSearch, onShowCreateModal, filters = [],actions} = props
 
     const [filterOptions, seFilterOptions] = stub.ref.react.useState(filters)
     const [currentFilter, setCurrentFilter] = stub.ref.react.useState<[string, any]>(["", undefined])
@@ -131,6 +132,7 @@ const Table: React.FC<TableFormProp> = (props: TableFormProp) => {
                     </stub.ref.antd.Space>
                 </stub.ref.antd.Col>
             </stub.ref.antd.Row>
+            {props.actions}
             <stub.ref.antd.Table
                 size={"small"}
                 columns={columns?.map((t: any) => {
