@@ -5,16 +5,19 @@ import {Provider} from "react-redux";
 import rootReducer from "@/redux";
 import Home from "@/layout/Home";
 import 'codemirror/mode/yaml/yaml.js';
+import {ConfigProvider} from "antd";
 
 const store = createStore(rootReducer);
 
 function App() {
     return (
-        <Provider store={store}>
-            <BrowserRouter>
-                <Home/>
-            </BrowserRouter>
-        </Provider>
+        <ConfigProvider componentSize={"small"}>
+            <Provider store={store}>
+                <BrowserRouter>
+                    <Home/>
+                </BrowserRouter>
+            </Provider>
+        </ConfigProvider>
     );
 }
 
