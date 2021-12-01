@@ -11,6 +11,7 @@ const List: React.FC<any> = (props: any) => {
     const [createVisible, setBackupVisible] = stub.ref.react.useState(false)
     const [query, setQuery] = stub.ref.react.useState<any>({})
     const [page, setPage] = stub.ref.react.useState<PageModel>({})
+    const [dbOptions, setDbOptions] = stub.ref.react.useState<any>([])
 
     const [filters, setFilter] = stub.ref.react.useState([
         {
@@ -50,7 +51,7 @@ const List: React.FC<any> = (props: any) => {
         },
     ];
 
-    const [backupForm] = stub.ref.antd.Form.useForm();
+    const [queryInstanceForm] = stub.ref.antd.Form.useForm();
 
     const handleSearch = (q?: any) => {
         setQuery(q)
@@ -61,20 +62,42 @@ const List: React.FC<any> = (props: any) => {
             })
     }
     const handleShowBackupModal = () => {
-        backupForm.resetFields()
+        queryInstanceForm.resetFields()
         setBackupVisible(true)
     }
-    const handleBackupOk = () => {
-        const input = {...backupForm.getFieldsValue()}
-        console.log(input)
-        // stub.api.post("database/backup/create", {"query": query, "form": input}).then((t: any) => {
-        //     if (!t.error) {
-        //         stub.ref.antd.message.info("添加成功")
-        //     }
-        //     setData(t.data)
-        //     setBackupVisible(false)
-        // })
+    const handleBackupOk = async () => {
+        try {
+            const input = await queryInstanceForm.validateFields();
+            console.log(input)
+            // stub.api.post("database/createBackup", input).then((t: any) => {
+            //     if (!t.error) {
+            //         stub.ref.antd.message.info("添加成功")
+            //     }
+            //     setData(t.data)
+            //     setBackupVisible(false)
+            // })
+        } catch (errorInfo) {
+
+        }
     };
+
+    const handleTest = async () => {
+        try {
+            const input = await queryInstanceForm.validateFields();
+            stub.api.post("db/listMeta", input).then((t: any) => {
+                setDbOptions(t.data.map((t: any) => {
+                    const tables = t.tables.map((p: any) => {
+                        return {label: p.name, value: p.name}
+                    })
+                    return {
+                        label: t.name, value: t.name, children: tables
+                    }
+                }))
+            })
+        } catch (errorInfo) {
+
+        }
+    }
     return (
         <div>
             <stub.component.Table title={title}
@@ -88,21 +111,53 @@ const List: React.FC<any> = (props: any) => {
                                   ]}
             />
             <stub.component.Create title={`备份${title}`}
+                                   width={600}
                                    visible={createVisible}
                                    onOk={handleBackupOk}
                                    onCancel={() => setBackupVisible(false)}>
-                <stub.ref.antd.Form form={backupForm}>
-                    <stub.ref.antd.Form.Item label={"Host"} name={"host"} required={true}>
+                <stub.ref.antd.Form form={queryInstanceForm}
+                                    labelCol={{span: 8}}
+                                    wrapperCol={{span: 10}}
+                                    layout="horizontal"
+                                    initialValues={{
+                                        "host": "192.168.2.18",
+                                        "port": "3306",
+                                        "username": "root",
+                                        "password": "Czy.190815"
+                                    }}
+                >
+                    <stub.ref.antd.Form.Item label={"Host"} name={"host"}
+                                             rules={[{required: true}]}
+                    >
                         <stub.ref.antd.Input/>
                     </stub.ref.antd.Form.Item>
-                    <stub.ref.antd.Form.Item label={"Port"} name={"port"} required={true}>
+                    <stub.ref.antd.Form.Item label={"Port"} name={"port"}
+                                             rules={[{required: true}]}
+                    >
                         <stub.ref.antd.Input/>
                     </stub.ref.antd.Form.Item>
-                    <stub.ref.antd.Form.Item label={"UserName"} name={"username"} required={true}>
+                    <stub.ref.antd.Form.Item label={"UserName"} name={"username"}
+                                             rules={[{required: true}]}
+                    >
                         <stub.ref.antd.Input/>
                     </stub.ref.antd.Form.Item>
-                    <stub.ref.antd.Form.Item label={"Password"} name={"password"} required={true}>
-                        <stub.ref.antd.Input/>
+                    <stub.ref.antd.Form.Item label={"Password"} name={"password"}
+                                             rules={[{required: true}]}
+                    >
+                        <stub.ref.antd.Input.Password/>
+                    </stub.ref.antd.Form.Item>
+                    <stub.ref.antd.Form.Item {...{wrapperCol: {offset: 8}}}>
+                        <stub.ref.antd.Button onClick={handleTest}>Test</stub.ref.antd.Button>
+                    </stub.ref.antd.Form.Item>
+                    <stub.ref.antd.Form.Item>
+                        <stub.ref.antd.Tree
+                            height={300}
+                            checkable
+                            fieldNames={{"title": "label", "key": "value"}}
+                            // onSelect={onSelect}
+                            // onCheck={onCheck}
+                            treeData={dbOptions}
+                        />
                     </stub.ref.antd.Form.Item>
                 </stub.ref.antd.Form>
             </stub.component.Create>

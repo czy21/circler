@@ -16,6 +16,7 @@ func GetDbList(model entity.DbMetaInput) []entity.DbMeta {
 	dbClient, err := gorm.Open(mysql.New(mysql.Config{
 		Conn: dbConnect,
 	}), &gorm.Config{})
+	core.CheckError(err)
 	var result []entity.DbTableMeta
 
 	dbClient.Raw("select * from information_schema.tables order by TABLE_SCHEMA asc").Scan(&result)
