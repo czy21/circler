@@ -3,7 +3,9 @@ import stub from "@/init"
 import {PageModel, Search} from "@/model/data";
 import {Button} from "antd";
 
+
 const title = "集群"
+
 const List: React.FC<any> = (props: any) => {
     const {history, route} = props
 
@@ -12,6 +14,7 @@ const List: React.FC<any> = (props: any) => {
     const [query, setQuery] = stub.ref.react.useState<any>({})
     const [page, setPage] = stub.ref.react.useState<PageModel>({})
     const [dbOptions, setDbOptions] = stub.ref.react.useState<any>([])
+    const [dbSelectOptions, setBbSelectOptions] = stub.ref.react.useState<any>([])
 
     const [filters, setFilter] = stub.ref.react.useState([
         {
@@ -98,6 +101,9 @@ const List: React.FC<any> = (props: any) => {
 
         }
     }
+    const onCheck = (checkedKeysValue:any) => {
+        console.log('onCheck', checkedKeysValue);
+    };
     return (
         <div>
             <stub.component.Table title={title}
@@ -154,6 +160,7 @@ const List: React.FC<any> = (props: any) => {
                             height={300}
                             checkable
                             fieldNames={{"title": "label", "key": "value"}}
+                            onCheck={onCheck}
                             // onSelect={onSelect}
                             // onCheck={onCheck}
                             treeData={dbOptions}
