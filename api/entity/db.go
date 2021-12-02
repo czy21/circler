@@ -10,6 +10,10 @@ type DbInstanceMetaPO struct {
 	Description string `gorm:"column:description" json:"description"`
 }
 
+func (DbInstanceMetaPO) TableName() string {
+	return "db_instance"
+}
+
 type DbInstanceMetaDTO struct {
 	Host        string      `json:"host"`
 	Port        string      `json:"port"`

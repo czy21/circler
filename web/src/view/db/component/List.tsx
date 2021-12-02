@@ -1,7 +1,6 @@
 import React from "react";
 import stub from "@/init"
-import {PageModel, Search} from "@/model/data";
-import {Button} from "antd";
+import {PageModel} from "@/model/data";
 
 
 const title = "集群"
@@ -15,7 +14,19 @@ const List: React.FC<any> = (props: any) => {
     const [page, setPage] = stub.ref.react.useState<PageModel>({})
     const [dbOptions, setDbOptions] = stub.ref.react.useState<any>([])
     const [dbSelectOptions, setBbSelectOptions] = stub.ref.react.useState<any>([])
-
+    const [connectState, setConnectState] = stub.ref.react.useState<boolean>()
+    const [option] = stub.ref.react.useState({
+        "db": [
+            {
+                "label": "mysql",
+                "value": "mysql"
+            },
+            {
+                "label": "postgresql",
+                "value": "postgresql"
+            }
+        ]
+    })
     const [filters, setFilter] = stub.ref.react.useState([
         {
             "key": "name",
@@ -64,67 +75,58 @@ const List: React.FC<any> = (props: any) => {
                 setPage(data.page)
             })
     }
-    const handleShowBackupModal = () => {
+    const handleShowAddInstanceModal = () => {
         queryInstanceForm.resetFields()
         setBackupVisible(true)
     }
-    const handleBackupOk = async () => {
+    const handleAddInstanceOk = async () => {
         try {
             const input = await queryInstanceForm.validateFields();
-            console.log(input)
-            // stub.api.post("database/createBackup", input).then((t: any) => {
-            //     if (!t.error) {
-            //         stub.ref.antd.message.info("添加成功")
-            //     }
-            //     setData(t.data)
-            //     setBackupVisible(false)
-            // })
+            stub.api.post("db/instance/add", input).then((t: any) => {
+                setBackupVisible(false)
+            })
         } catch (errorInfo) {
 
         }
     };
 
-    const handleTest = async () => {
+    const handleTestConnect = async () => {
         try {
             const input = await queryInstanceForm.validateFields();
             stub.api.post("db/listMeta", input).then((t: any) => {
-                setDbOptions(t.data.map((t: any) => {
-                    const tables = t.tables.map((p: any) => {
-                        return {label: p.name, value: p.name}
-                    })
-                    return {
-                        label: t.name, value: t.name, children: tables
-                    }
-                }))
+                setConnectState(true)
             })
         } catch (errorInfo) {
 
         }
     }
-    const onCheck = (checkedKeysValue:any) => {
+    const onCheck = (checkedKeysValue: any) => {
         console.log('onCheck', checkedKeysValue);
     };
-    return (
-        <div>
-            <stub.component.Table title={title}
+
+    const InstanceTable = () => {
+        return (
+            <stub.component.Table title={"实例列表"}
                                   datasource={data}
                                   columns={columns}
                                   page={page}
                                   onSearch={handleSearch}
+                                  onShowCreateModal={handleShowAddInstanceModal}
                                   filters={filters}
-                                  actions={[
-                                      <Button onClick={handleShowBackupModal}>备份</Button>
-                                  ]}
             />
-            <stub.component.Create title={`备份${title}`}
+        )
+    }
+
+    const AddInstanceForm = () => {
+        return (
+            <stub.component.Create title={"添加实例"}
                                    width={600}
                                    visible={createVisible}
-                                   onOk={handleBackupOk}
+                                   onOk={handleAddInstanceOk}
                                    onCancel={() => setBackupVisible(false)}>
                 <stub.ref.antd.Form form={queryInstanceForm}
                                     labelCol={{span: 8}}
                                     wrapperCol={{span: 10}}
-                                    layout="horizontal"
                                     initialValues={{
                                         "host": "192.168.2.18",
                                         "port": "3306",
@@ -132,6 +134,11 @@ const List: React.FC<any> = (props: any) => {
                                         "password": "Czy.190815"
                                     }}
                 >
+                    <stub.ref.antd.Form.Item label={"kind"} name={"kind"}
+                                             rules={[{required: true}]}
+                    >
+                        <stub.ref.antd.Select options={option["db"]}/>
+                    </stub.ref.antd.Form.Item>
                     <stub.ref.antd.Form.Item label={"Host"} name={"host"}
                                              rules={[{required: true}]}
                     >
@@ -153,7 +160,10 @@ const List: React.FC<any> = (props: any) => {
                         <stub.ref.antd.Input.Password/>
                     </stub.ref.antd.Form.Item>
                     <stub.ref.antd.Form.Item {...{wrapperCol: {offset: 8}}}>
-                        <stub.ref.antd.Button onClick={handleTest}>Test</stub.ref.antd.Button>
+                        <stub.ref.antd.Space>
+                            <stub.ref.antd.Button onClick={handleTestConnect}>Test</stub.ref.antd.Button>
+                            {connectState && <stub.ref.icon.CheckCircleTwoTone twoToneColor={"#52c41a"}/>}
+                        </stub.ref.antd.Space>
                     </stub.ref.antd.Form.Item>
                     <stub.ref.antd.Form.Item>
                         <stub.ref.antd.Tree
@@ -168,6 +178,13 @@ const List: React.FC<any> = (props: any) => {
                     </stub.ref.antd.Form.Item>
                 </stub.ref.antd.Form>
             </stub.component.Create>
+        )
+    }
+
+    return (
+        <div>
+            {InstanceTable()}
+            {AddInstanceForm()}
         </div>
     )
 

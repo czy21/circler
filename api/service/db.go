@@ -43,6 +43,10 @@ func GetDbList(model entity.DbInstanceMetaDTO) []entity.DbMetaDTO {
 	return ret
 }
 
-func FindDbInstanceList() []entity.DbInstanceMetaPO {
+func InstanceFindAll() []entity.DbInstanceMetaPO {
 	return repository.DbInstance{}.SelectAll()
+}
+
+func InstanceAdd(dto entity.DbInstanceMetaDTO) {
+
 }
