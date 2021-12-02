@@ -2,12 +2,12 @@ package entity
 
 type DbInstanceMetaPO struct {
 	BaseEntity
-	Host        string `gorm:"host"`
-	Port        string `gorm:"port"`
-	UserName    string `gorm:"username"`
-	Password    string `gorm:"password"`
-	Kind        string `gorm:"kind"`
-	Description string `gorm:"description"`
+	Host        string `gorm:"column:host" json:"host"`
+	Port        string `gorm:"column:port" json:"port"`
+	Kind        string `gorm:"column:kind" json:"kind"`
+	UserName    string `gorm:"column:username" json:"username"`
+	Password    string `gorm:"column:password" json:"password"`
+	Description string `gorm:"column:description" json:"description"`
 }
 
 type DbInstanceMetaDTO struct {
@@ -26,8 +26,8 @@ type DbMetaDTO struct {
 }
 
 type DbTableMetaDTO struct {
-	Name   string `json:"name"`
-	DbName string `json:"dbName"`
+	Name   string `gorm:"column:TABLE_NAME" json:"name"`
+	DbName string `gorm:"column:TABLE_SCHEMA" json:"dbName"`
 }
 
 type DbInstanceMetaQuery struct {

@@ -11,6 +11,6 @@ func main() {
 	r.Use(core.ErrorHandle())
 	//r.Use(gin.Logger())
 	//r.Use(handle.ResponseHandle())
-	controller.Init(r)
+	controller.InitRouter(r)
 	_ = r.Run(":8080")
 }

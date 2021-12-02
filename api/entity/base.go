@@ -8,11 +8,11 @@ type BaseModel struct {
 }
 
 type BaseEntity struct {
-	Id   int64 `json:"id"`
-	CreatedDate  *time.Time
-	CreatedUser  *string
-	ModifiedDate *time.Time
-	ModifiedUser *string
+	Id           int64      `json:"id"`
+	CreatedDate  *time.Time `json:"createdDate"`
+	CreatedUser  *string    `json:"createdUser"`
+	ModifiedDate *time.Time `json:"modifiedDate"`
+	ModifiedUser *string    `json:"modifiedUser"`
 }
 
 type PageModel struct {

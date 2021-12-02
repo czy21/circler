@@ -3,11 +3,11 @@ package controller
 import (
 	"github.com/czyhome/circler/controller/basic"
 	"github.com/czyhome/circler/controller/db"
-	k8s "github.com/czyhome/circler/controller/k8s"
+	"github.com/czyhome/circler/controller/k8s"
 	"github.com/gin-gonic/gin"
 )
 
-func Init(r *gin.Engine) {
+func InitRouter(r *gin.Engine) {
 	k8sRouter := r.Group("k8s")
 	{
 		// pod
