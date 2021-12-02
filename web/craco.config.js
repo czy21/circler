@@ -3,6 +3,9 @@ const cracoAliasPlugin = require("craco-alias");
 const webpackConfigPlugin = require("./webpack.config")
 
 module.exports = {
+    eslint: {
+        enable: process.env.NODE_ENV === "development",
+    },
     plugins: [
         {
             plugin: cracoLessPlugin,
