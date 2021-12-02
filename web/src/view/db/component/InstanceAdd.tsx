@@ -61,10 +61,7 @@ const InstanceAdd: React.FC<TableFormProp> = (props: TableFormProp) => {
                 width={600}
                 visible={createVisible}
                 onOk={handleAddInstanceOk}
-                onCancel={() => {
-                    setBackupVisible(false)
-                    props.onCancel()
-                }}>
+                onCancel={() => props.onCancel()}>
                 <stub.ref.antd.Form form={queryInstanceForm}
                                     labelCol={{span: 8}}
                                     wrapperCol={{span: 10}}
