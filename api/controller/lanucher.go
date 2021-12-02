@@ -37,6 +37,7 @@ func Init(r *gin.Engine) {
 	dbRouter := r.Group("db")
 	{
 		dbRouter.POST("listMeta", db.ListMeta)
+		dbRouter.POST("instance/list", db.InstanceList)
 		dbRouter.POST("createBackup", db.CreateBackup)
 	}
 

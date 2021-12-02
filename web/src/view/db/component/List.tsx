@@ -125,12 +125,12 @@ const List: React.FC<any> = (props: any) => {
                                     labelCol={{span: 8}}
                                     wrapperCol={{span: 10}}
                                     layout="horizontal"
-                                    // initialValues={{
-                                    //     "host": "192.168.2.18",
-                                    //     "port": "3306",
-                                    //     "username": "root",
-                                    //     "password": "Czy.190815"
-                                    // }}
+                                    initialValues={{
+                                        "host": "192.168.2.18",
+                                        "port": "3306",
+                                        "username": "root",
+                                        "password": "Czy.190815"
+                                    }}
                 >
                     <stub.ref.antd.Form.Item label={"Host"} name={"host"}
                                              rules={[{required: true}]}

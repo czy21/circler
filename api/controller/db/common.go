@@ -8,10 +8,17 @@ import (
 )
 
 func ListMeta(c *gin.Context) {
-	query := entity.DbMetaInput{}
+	query := entity.DbInstanceMetaDTO{}
 	err := c.Bind(&query)
 	core.CheckError(err)
 	list := service.GetDbList(query)
+	entity.Response{Context: c}.
+		Data(list).
+		Build()
+}
+
+func InstanceList(c *gin.Context) {
+	list := service.FindDbInstanceList()
 	entity.Response{Context: c}.
 		Data(list).
 		Build()
