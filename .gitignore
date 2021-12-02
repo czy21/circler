@@ -17,6 +17,7 @@ dist/
 
 # Output #
 ___output/
+___temp
 
 # Python #
 __pycache__/
