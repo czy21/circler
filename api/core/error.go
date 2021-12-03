@@ -11,7 +11,7 @@ func ErrorHandle() gin.HandlerFunc {
 			if err := recover(); err != nil {
 				switch err.(type) {
 				case ExceptionModel:
-					entity.Response{Context: c}.Error(err).Build()
+					entity.Response{Context: c,Error: &err}.Build()
 					break
 				}
 				panic(err)

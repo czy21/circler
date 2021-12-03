@@ -1,7 +1,6 @@
 package db
 
 import (
-	entity "github.com/czyhome/circler/entity"
 	"github.com/gin-gonic/gin"
 )
 
@@ -16,6 +15,6 @@ func CreateBackup(c *gin.Context) {
 	//	fmt.Println(string(out))
 	//
 	//}()
-	entity.Response{Context: c}.Data("").
-		Build()
+	//entity.Response{Context: c}.Data("").
+	//	Build()
 }

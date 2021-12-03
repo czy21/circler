@@ -12,15 +12,14 @@ func ListMeta(c *gin.Context) {
 	err := c.Bind(&query)
 	core.CheckError(err)
 	list := service.GetDbList(query)
-	entity.Response{Context: c}.
-		Data(list).
+	entity.Response{Context: c, Data: list}.
 		Build()
 }
 
 func InstanceList(c *gin.Context) {
 	list := service.InstanceFindAll()
-	entity.Response{Context: c}.
-		Data(list).
+	//fmt.Println(list)
+	entity.Response{Context: c,Data: list}.
 		Build()
 }
 
@@ -29,7 +28,6 @@ func InstanceAdd(c *gin.Context) {
 	err := c.Bind(&input)
 	core.CheckError(err)
 	service.InstanceAdd(input)
-	entity.Response{Context: c}.
-		Data(map[string]string{"state": "success"}).
+	entity.Response{Context: c, Data: map[string]interface{}{"state": "s"}}.
 		Build()
 }

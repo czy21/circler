@@ -1,7 +1,5 @@
 package entity
 
-import "time"
-
 type Tabler interface {
 	TableName() string
 }
@@ -12,11 +10,11 @@ type BaseModel struct {
 }
 
 type BaseEntity struct {
-	Id           int64      `gorm:"column:id" json:"id"`
-	CreatedDate  *time.Time `gorm:"column:created_date" json:"createdDate"`
-	CreatedUser  string     `gorm:"column:created_user" json:"createdUser"`
-	ModifiedDate *time.Time `gorm:"column:modified_date" json:"modifiedDate"`
-	ModifiedUser string     `gorm:"column:modified_user" json:"modifiedUser"`
+	Id           int64     `gorm:"column:id" json:"id"`
+	CreatedDate  *UnixTime `gorm:"column:created_date" json:"createdDate"`
+	CreatedUser  string    `gorm:"column:created_user" json:"createdUser"`
+	ModifiedDate *UnixTime `gorm:"column:modified_date" json:"modifiedDate"`
+	ModifiedUser string    `gorm:"column:modified_user" json:"modifiedUser"`
 }
 
 type PageModel struct {
