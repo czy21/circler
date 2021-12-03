@@ -18,8 +18,7 @@ func ListMeta(c *gin.Context) {
 
 func InstanceList(c *gin.Context) {
 	list := service.InstanceFindAll()
-	//fmt.Println(list)
-	entity.Response{Context: c,Data: list}.
+	entity.Response{Context: c, Data: list}.
 		Build()
 }
 
@@ -28,6 +27,6 @@ func InstanceAdd(c *gin.Context) {
 	err := c.Bind(&input)
 	core.CheckError(err)
 	service.InstanceAdd(input)
-	entity.Response{Context: c, Data: map[string]interface{}{"state": "s"}}.
+	entity.Response{Context: c, Data: map[string]interface{}{"status": "success"}}.
 		Build()
 }

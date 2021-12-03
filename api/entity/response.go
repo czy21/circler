@@ -15,10 +15,10 @@ func (t UnixTime) MarshalJSON() ([]byte, error) {
 
 type Response struct {
 	Context   *gin.Context `json:"-"`
-	Timestamp UnixTime     `json:"timestamp"`
 	Data      interface{}  `json:"data"`
 	Page      *PageModel   `json:"page,omitempty"`
 	Error     *interface{} `json:"error,omitempty"`
+	Timestamp UnixTime     `json:"timestamp"`
 }
 
 func (r Response) Build() {

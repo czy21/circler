@@ -3,8 +3,8 @@ import React from "react";
 
 
 interface TableFormProp {
-    visible?: boolean
-    onCancel: () => void
+    visible: boolean
+    onChange: () => void
 }
 
 const InstanceAdd: React.FC<TableFormProp> = (props: TableFormProp) => {
@@ -29,15 +29,11 @@ const InstanceAdd: React.FC<TableFormProp> = (props: TableFormProp) => {
 
     const [queryInstanceForm] = stub.ref.antd.Form.useForm();
 
-    const handleAddInstanceOk = async () => {
-        try {
-            const input = await queryInstanceForm.validateFields();
-            stub.api.post("db/instance/add", input).then((t: any) => {
-                setBackupVisible(false)
+    const handleAddInstanceOk = () => {
+        stub.util.basic.validateForm(queryInstanceForm.validateFields(),
+            (values) => {
+                stub.api.post("db/instance/add", values).then(props.onChange)
             })
-        } catch (errorInfo) {
-
-        }
     };
 
     const handleTestConnect = async () => {
@@ -61,7 +57,7 @@ const InstanceAdd: React.FC<TableFormProp> = (props: TableFormProp) => {
                 width={600}
                 visible={createVisible}
                 onOk={handleAddInstanceOk}
-                onCancel={() => props.onCancel()}>
+                onCancel={() => props.onChange()}>
                 <stub.ref.antd.Form form={queryInstanceForm}
                                     labelCol={{span: 8}}
                                     wrapperCol={{span: 10}}
@@ -72,6 +68,11 @@ const InstanceAdd: React.FC<TableFormProp> = (props: TableFormProp) => {
                                         "password": "Czy.190815"
                                     }}
                 >
+                    <stub.ref.antd.Form.Item label={"Name"} name={"name"}
+                                             rules={[{required: true}]}
+                    >
+                        <stub.ref.antd.Input/>
+                    </stub.ref.antd.Form.Item>
                     <stub.ref.antd.Form.Item label={"kind"} name={"kind"}
                                              rules={[{required: true}]}
                     >

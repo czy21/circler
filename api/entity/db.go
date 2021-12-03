@@ -1,7 +1,34 @@
 package entity
 
+import "github.com/ahmetb/go-linq/v3"
+
+type DbInstance struct {
+}
+
+func (DbInstance) MapToPO(dto DbInstanceMetaDTO) DbInstanceMetaPO {
+	return DbInstanceMetaPO{
+		BaseEntity:  dto.BaseEntity,
+		Name:        dto.Name,
+		Host:        dto.Host,
+		Port:        dto.Port,
+		Kind:        dto.Kind,
+		UserName:    dto.UserName,
+		Password:    dto.Password,
+		Description: dto.Description,
+	}
+}
+
+func (s DbInstance) MapToPOS(dtos []DbInstanceMetaDTO) []DbInstanceMetaPO {
+	var rets []DbInstanceMetaPO
+	linq.From(dtos).SelectT(func(t DbInstanceMetaDTO) DbInstanceMetaPO {
+		return s.MapToPO(t)
+	}).ToSlice(rets)
+	return rets
+}
+
 type DbInstanceMetaPO struct {
 	BaseEntity
+	Name        string `gorm:"column:name" json:"name"`
 	Host        string `gorm:"column:host" json:"host"`
 	Port        string `gorm:"column:port" json:"port"`
 	Kind        string `gorm:"column:kind" json:"kind"`
@@ -15,11 +42,13 @@ func (DbInstanceMetaPO) TableName() string {
 }
 
 type DbInstanceMetaDTO struct {
+	BaseEntity
+	Name        string      `json:"name"`
 	Host        string      `json:"host"`
 	Port        string      `json:"port"`
+	Kind        string      `json:"kind"`
 	UserName    string      `json:"username"`
 	Password    string      `json:"password"`
-	Kind        string      `json:"kind"`
 	Description string      `json:"description"`
 	Dbs         []DbMetaDTO `json:"dbs"`
 }

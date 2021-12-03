@@ -6,6 +6,7 @@ import (
 	"github.com/czyhome/circler/core"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 )
 
 var dbConnect *sql.DB
@@ -19,5 +20,7 @@ func init() {
 	core.CheckError(err)
 	dbClient, err = gorm.Open(mysql.New(mysql.Config{
 		Conn: dbConnect,
-	}), &gorm.Config{})
+	}), &gorm.Config{
+		Logger: logger.Default.LogMode(logger.Silent),
+	})
 }

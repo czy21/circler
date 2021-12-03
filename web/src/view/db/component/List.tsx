@@ -10,7 +10,6 @@ const List: React.FC<any> = (props: any) => {
     const {history, route} = props
 
     const [data, setData] = stub.ref.react.useState([])
-    const [query, setQuery] = stub.ref.react.useState<any>({})
     const [page, setPage] = stub.ref.react.useState<PageModel>({})
 
 
@@ -38,8 +37,25 @@ const List: React.FC<any> = (props: any) => {
             }
         },
         {
+            key: 'host',
+            header: 'Host',
+        },
+        {
+            key: 'port',
+            header: 'Port',
+        },
+        {
+            key: 'username',
+            header: 'UserName',
+        },
+        {
+            key: 'password',
+            header: 'Password',
+        },
+
+        {
             key: 'description',
-            header: '描述',
+            header: 'description',
         },
         {
             key: 'operation',
@@ -53,19 +69,17 @@ const List: React.FC<any> = (props: any) => {
     ];
 
     const handleSearch = (q?: any) => {
-        setQuery(q)
-        stub.api.post("database/backup/search", stub.ref.lodash.omit(q, "total"))
+        stub.api.post("db/instance/search", stub.ref.lodash.omit(q, "total"))
             .then((data: any) => {
                 setData(data.data)
                 setPage(data.page)
             })
     }
 
-    const [instanceAddVisible, setInstanceAddVisible] = stub.ref.react.useState<boolean>();
+    const [instanceAddVisible, setInstanceAddVisible] = stub.ref.react.useState<boolean>(false);
 
-    const [person, setPerson] = stub.ref.react.useState()
-    const InstanceTable = () => {
-        return (
+    return (
+        <div>
             <stub.component.Table title={"实例列表"}
                                   datasource={data}
                                   columns={columns}
@@ -74,17 +88,7 @@ const List: React.FC<any> = (props: any) => {
                                   onShowCreateModal={() => setInstanceAddVisible(true)}
                                   filters={filters}
             />
-        )
-    }
-
-    const A = memo(function Instance(props: any) {
-        return (<InstanceAdd {...props}/>)
-    })
-
-    return (
-        <div>
-            {InstanceTable()}
-            {<InstanceAdd visible={instanceAddVisible} onCancel={() => setInstanceAddVisible(false)}/>}
+            <InstanceAdd visible={instanceAddVisible} onChange={() => setInstanceAddVisible(false)}/>
         </div>
     )
 

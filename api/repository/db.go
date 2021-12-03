@@ -12,5 +12,5 @@ func (DbInstance) SelectAll() []entity.DbInstanceMetaPO {
 }
 
 func (DbInstance) InsertOne(po entity.DbInstanceMetaPO) {
-	//sql:="INSERT INTO `circler`.`db_instance` (`id`, `host`, `port`, `username`, `password`, `kind`, `created_date`, `created_user`, `modified_date`, `modified_user`)"
+	dbClient.Create(&po)
 }

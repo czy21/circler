@@ -1,10 +1,11 @@
 
 -- ----------------------------
--- Table structure for ent_sys_user
+-- Table structure for db_instance
 -- ----------------------------
 DROP TABLE IF EXISTS `db_instance`;
 CREATE TABLE `db_instance`  (
   `id` bigint NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
   `host` varchar(50) NOT NULL,
   `port` varchar(100) NOT NULL,
   `username` varchar(50) NOT NULL,

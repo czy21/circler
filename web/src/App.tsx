@@ -11,7 +11,7 @@ const store = createStore(rootReducer);
 
 function App() {
     return (
-        <ConfigProvider componentSize={"small"}>
+        <ConfigProvider componentSize={"middle"}>
             <Provider store={store}>
                 <BrowserRouter>
                     <Home/>

@@ -48,5 +48,6 @@ func InstanceFindAll() []entity.DbInstanceMetaPO {
 }
 
 func InstanceAdd(dto entity.DbInstanceMetaDTO) {
-
+	po := entity.DbInstance{}.MapToPO(dto)
+	repository.DbInstance{}.InsertOne(po)
 }
