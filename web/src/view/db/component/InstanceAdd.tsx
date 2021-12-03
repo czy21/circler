@@ -8,7 +8,7 @@ interface TableFormProp {
 }
 
 const InstanceAdd: React.FC<TableFormProp> = (props: TableFormProp) => {
-    stub.ref.react.useEffect(() => setBackupVisible(props.visible as boolean), [props.visible])
+    stub.ref.react.useEffect(() => setVisible(props.visible as boolean), [props.visible])
     const [option] = stub.ref.react.useState({
         "db": [
             {
@@ -22,29 +22,27 @@ const InstanceAdd: React.FC<TableFormProp> = (props: TableFormProp) => {
         ]
     })
 
-    const [createVisible, setBackupVisible] = stub.ref.react.useState<boolean>(false)
+    const [visible, setVisible] = stub.ref.react.useState<boolean>(false)
     const [dbOptions, setDbOptions] = stub.ref.react.useState<any>([])
     const [dbSelectOptions, setBbSelectOptions] = stub.ref.react.useState<any>([])
     const [connectState, setConnectState] = stub.ref.react.useState<boolean>()
 
-    const [queryInstanceForm] = stub.ref.antd.Form.useForm();
+    const [addForm] = stub.ref.antd.Form.useForm();
 
-    const handleAddInstanceOk = () => {
-        stub.util.basic.validateForm(queryInstanceForm.validateFields(),
+    const handleOk = () => {
+        stub.util.basic.validateForm(addForm.validateFields(),
             (values) => {
                 stub.api.post("db/instance/add", values).then(props.onChange)
             })
     };
 
-    const handleTestConnect = async () => {
-        try {
-            const input = await queryInstanceForm.validateFields();
-            stub.api.post("db/listMeta", input).then((t: any) => {
-                setConnectState(true)
+    const handleConnect = async () => {
+        stub.util.basic.validateForm(
+            addForm.validateFields(),
+            (values) => {
+                stub.api.post("db/instance/ping", values)
+                    .then((t: any) => setConnectState(stub.ref.lodash.isEmpty(t.error)))
             })
-        } catch (errorInfo) {
-
-        }
     }
     const onCheck = (checkedKeysValue: any) => {
         console.log('onCheck', checkedKeysValue);
@@ -55,10 +53,10 @@ const InstanceAdd: React.FC<TableFormProp> = (props: TableFormProp) => {
             <stub.component.Create
                 title={"添加实例"}
                 width={600}
-                visible={createVisible}
-                onOk={handleAddInstanceOk}
+                visible={visible}
+                onOk={handleOk}
                 onCancel={() => props.onChange()}>
-                <stub.ref.antd.Form form={queryInstanceForm}
+                <stub.ref.antd.Form form={addForm}
                                     labelCol={{span: 8}}
                                     wrapperCol={{span: 10}}
                                     initialValues={{
@@ -100,8 +98,9 @@ const InstanceAdd: React.FC<TableFormProp> = (props: TableFormProp) => {
                     </stub.ref.antd.Form.Item>
                     <stub.ref.antd.Form.Item {...{wrapperCol: {offset: 8}}}>
                         <stub.ref.antd.Space>
-                            <stub.ref.antd.Button onClick={handleTestConnect}>Test</stub.ref.antd.Button>
-                            {connectState && <stub.ref.icon.CheckCircleTwoTone twoToneColor={"#52c41a"}/>}
+                            <stub.ref.antd.Button onClick={handleConnect}>Test</stub.ref.antd.Button>
+                            {!stub.ref.lodash.isEmpty(connectState) ? connectState ? <stub.ref.icon.CheckCircleTwoTone twoToneColor={"#52c41a"}/> :
+                                <stub.ref.icon.CloseCircleTwoTone twoToneColor={"#ff4d4f"}/> : ""}
                         </stub.ref.antd.Space>
                     </stub.ref.antd.Form.Item>
                     <stub.ref.antd.Form.Item>

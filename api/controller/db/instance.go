@@ -16,6 +16,14 @@ func ListMeta(c *gin.Context) {
 		Build()
 }
 
+func Ping(c *gin.Context) {
+	m := entity.DbInstanceMetaDTO{}
+	err := c.Bind(&m)
+	core.CheckError(err)
+	ret := service.InstancePing(m)
+	entity.Response{Context: c, Data: ret}.Build()
+}
+
 func InstanceList(c *gin.Context) {
 	list := service.InstanceFindAll()
 	entity.Response{Context: c, Data: list}.

@@ -43,6 +43,16 @@ func GetDbList(model entity.DbInstanceMetaDTO) []entity.DbMetaDTO {
 	return ret
 }
 
+func InstancePing(model entity.DbInstanceMetaDTO) bool {
+	dbConnect, err := sql.Open("mysql", fmt.Sprintf("%s:%s@tcp(%s:%s)/", model.UserName, model.Password, model.Host, model.Port))
+	err = dbConnect.Ping()
+	if err == nil {
+		return true
+	}
+	core.NewException(err.Error())
+	return false
+}
+
 func InstanceFindAll() []entity.DbInstanceMetaPO {
 	return repository.DbInstance{}.SelectAll()
 }
