@@ -1,19 +1,18 @@
 package com.circler.api.entity;
 
 
-import com.circler.api.kind.DBInstanceKind;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class DBInstancePO extends BaseEntity {
+public class DBInstancePO extends BaseEntity<Long> {
 
     private String name;
     private String host;
     private String port;
     private String username;
     private String password;
-    private DBInstanceKind kind;
+    private String kind;
 
 }

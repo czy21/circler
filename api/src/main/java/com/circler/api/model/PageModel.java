@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class PageModel {
-    private Long pageIndex;
-    private Long pageSize;
-    private Long total;
+    private Integer pageIndex;
+    private Integer pageSize;
+    private Integer total;
 }

@@ -13,6 +13,7 @@ ext {
     lombokVersion = "1.18.16"
     lombokMapstructBindingVersion = "0.2.0"
     mybatisVersion = "2.2.0"
+    pagehelperVersion = "1.4.1"
     mysqlConnectorVersion = "8.0.21"
 }
 
@@ -36,6 +37,8 @@ dependencyManagement {
         dependency "org.projectlombok:lombok-mapstruct-binding:${lombokMapstructBindingVersion}"
         dependency "org.mybatis.spring.boot:mybatis-spring-boot-starter:${mybatisVersion}"
         dependency "mysql:mysql-connector-java:${mysqlConnectorVersion}"
+        dependency "com.github.pagehelper:pagehelper-spring-boot-starter:${pagehelperVersion}"
+
     }
 }
 
@@ -47,6 +50,7 @@ dependencies {
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter'
+    implementation "com.github.pagehelper:pagehelper-spring-boot-starter"
     implementation "mysql:mysql-connector-java"
 
     implementation "org.mapstruct:mapstruct", "org.projectlombok:lombok"

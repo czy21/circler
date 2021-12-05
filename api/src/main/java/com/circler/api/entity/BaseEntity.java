@@ -5,8 +5,8 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-public class BaseEntity {
-    private Long id;
+public class BaseEntity<TID> {
+    private TID id;
     private String createdUser;
     private LocalDateTime createdDate;
     private String modifiedUser;
