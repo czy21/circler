@@ -1,0 +1,62 @@
+plugins {
+    id 'org.springframework.boot'
+    id 'io.spring.dependency-management'
+    id 'java'
+}
+
+
+ext {
+    apacheCommonLang3Version = "3.11"
+    apacheCommonPool2Version = "2.8.1"
+    apacheCommonIOVersion = "2.7"
+    mapstructVersion = "1.4.2.Final"
+    lombokVersion = "1.18.16"
+    lombokMapstructBindingVersion = "0.2.0"
+    mybatisVersion = "2.2.0"
+    mysqlConnectorVersion = "8.0.21"
+}
+
+group = 'com.circler'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+targetCompatibility = '11'
+
+dependencyManagement {
+    imports {
+        mavenBom org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES
+    }
+
+    dependencies {
+        dependency "org.apache.commons:commons-pool2:${apacheCommonPool2Version}"
+        dependency "org.apache.commons:commons-lang3:${apacheCommonLang3Version}"
+        dependency "commons-io:commons-io:${apacheCommonIOVersion}"
+        dependency "org.mapstruct:mapstruct:${mapstructVersion}"
+        dependency "org.mapstruct:mapstruct-processor:${mapstructVersion}"
+        dependency "org.projectlombok:lombok:${lombokVersion}"
+        dependency "org.projectlombok:lombok-mapstruct-binding:${lombokMapstructBindingVersion}"
+        dependency "org.mybatis.spring.boot:mybatis-spring-boot-starter:${mybatisVersion}"
+        dependency "mysql:mysql-connector-java:${mysqlConnectorVersion}"
+    }
+}
+
+dependencies {
+
+    implementation "org.apache.commons:commons-pool2"
+    implementation "org.apache.commons:commons-lang3"
+    implementation 'commons-io:commons-io'
+
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter'
+    implementation "mysql:mysql-connector-java"
+
+    implementation "org.mapstruct:mapstruct", "org.projectlombok:lombok"
+    annotationProcessor "org.mapstruct:mapstruct-processor", "org.projectlombok:lombok", "org.projectlombok:lombok-mapstruct-binding"
+    testImplementation "org.mapstruct:mapstruct", "org.projectlombok:lombok"
+    testAnnotationProcessor "org.mapstruct:mapstruct-processor", "org.projectlombok:lombok", "org.projectlombok:lombok-mapstruct-binding"
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+test {
+    useJUnitPlatform()
+}
