@@ -2,6 +2,9 @@ db-host: 192.168.2.18
 db-user: admin
 db-pass: Czy.190815
 
+server:
+  port: 8080
+
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -12,3 +15,8 @@ spring:
       max-lifetime: 1800000
       connection-test-query: select 1
       connection-timeout: 30000
+
+mybatis:
+  mapper-locations: classpath*:mapper/**/**.xml
+  configuration:
+    map-underscore-to-camel-case: true

@@ -1,6 +1,6 @@
 package com.circler.api.kind;
 
-public enum DbInstanceKind {
+public enum DBInstanceKind {
     MYSQL,
     PostgreSQL
 }
