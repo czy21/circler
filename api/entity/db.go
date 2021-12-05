@@ -31,7 +31,7 @@ type DbInstanceMetaPO struct {
 	Name        string `gorm:"column:name" json:"name"`
 	Host        string `gorm:"column:host" json:"host"`
 	Port        string `gorm:"column:port" json:"port"`
-	Kind        string `gorm:"column:kind" json:"kind"`
+	Kind        string `gorm:"column:kind" json:"kind" option:"dbKind"`
 	UserName    string `gorm:"column:username" json:"username"`
 	Password    string `gorm:"column:password" json:"password"`
 	Description string `gorm:"column:description" json:"description"`
@@ -39,6 +39,11 @@ type DbInstanceMetaPO struct {
 
 func (DbInstanceMetaPO) TableName() string {
 	return "db_instance"
+}
+
+var DbInstanceKind = map[string]interface{}{
+	"MYSQL":      "MYSQL",
+	"PostgreSQL": "PostgreSQL",
 }
 
 type DbInstanceMetaDTO struct {

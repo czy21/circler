@@ -12,7 +12,7 @@ func ListMeta(c *gin.Context) {
 	err := c.Bind(&query)
 	core.CheckError(err)
 	list := service.GetDbList(query)
-	entity.Response{Context: c, Data: list}.
+	core.Response{Context: c, Data: list}.
 		Build()
 }
 
@@ -21,13 +21,16 @@ func Ping(c *gin.Context) {
 	err := c.Bind(&m)
 	core.CheckError(err)
 	ret := service.InstancePing(m)
-	entity.Response{Context: c, Data: ret}.Build()
+	core.Response{Context: c, Data: ret}.Build()
 }
 
 func InstanceList(c *gin.Context) {
 	list := service.InstanceFindAll()
-	entity.Response{Context: c, Data: list}.
-		Build()
+	options:=service.Option([]string{"dbInstanceKind"})
+	core.Response{Context: c,
+		Data:   list,
+		Option: &options,
+	}.Build()
 }
 
 func InstanceAdd(c *gin.Context) {
@@ -35,6 +38,7 @@ func InstanceAdd(c *gin.Context) {
 	err := c.Bind(&input)
 	core.CheckError(err)
 	service.InstanceAdd(input)
-	entity.Response{Context: c, Data: map[string]interface{}{"status": "success"}}.
-		Build()
+	core.Response{Context: c,
+		Data: map[string]interface{}{"status": "success"},
+	}.Build()
 }
