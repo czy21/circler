@@ -1,24 +1,24 @@
+import 'antd/dist/antd.less'
+import '@/assets/less/Home.less'
+import stub from "@/init";
 import React from 'react';
 import {BrowserRouter} from "react-router-dom";
-import {createStore} from "redux";
-import {Provider} from "react-redux";
-import rootReducer from "@/redux";
+import rootRedux from "@/redux";
 import Home from "@/layout/Home";
 import 'codemirror/mode/yaml/yaml.js';
-import {ConfigProvider} from "antd";
 
-const store = createStore(rootReducer);
+const store = stub.ref.redux.createStore(rootRedux);
 
-function App() {
+const App = () => {
 
     return (
-        <ConfigProvider componentSize={"middle"}>
-            <Provider store={store}>
+        <stub.ref.antd.ConfigProvider componentSize={"middle"}>
+            <stub.ref.reactRedux.Provider store={store}>
                 <BrowserRouter>
                     <Home/>
                 </BrowserRouter>
-            </Provider>
-        </ConfigProvider>
+            </stub.ref.reactRedux.Provider>
+        </stub.ref.antd.ConfigProvider>
     );
 }
 

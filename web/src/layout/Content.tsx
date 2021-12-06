@@ -3,12 +3,11 @@ import React from "react";
 import routes from "@/route";
 import {renderRoutes} from "react-router-config";
 
-export default class Content extends React.Component<any, any> {
-    render() {
-        return (
-            <stub.ref.antd.Layout.Content className="content">
-                {renderRoutes(routes)}
-            </stub.ref.antd.Layout.Content>
-        )
-    }
+const Content: React.FC<any> = (props: any) => {
+    return (
+        <stub.ref.antd.Layout.Content className="content">
+            {renderRoutes(routes)}
+        </stub.ref.antd.Layout.Content>
+    )
 }
+export default Content

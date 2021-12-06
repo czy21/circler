@@ -1,9 +1,8 @@
 import stub from "@/init";
 import React from "react";
-import {connect} from "react-redux";
-import {mapStateToProps} from '@/layout/Header'
 import menus from "@/menu";
 import {Link} from "react-router-dom";
+import {mapStateToProps} from "@/layout/Header"
 
 function recursiveMenu(routes: any) {
     return routes.map((item: any, index: any) => {
@@ -34,17 +33,15 @@ function recursiveMenu(routes: any) {
     })
 }
 
-class Sider extends React.Component<{ collapsed?: boolean }, any> {
+const Sider: React.FC<any> = (props: any) => {
+    return (
+        <stub.ref.antd.Layout.Sider theme="dark" trigger={null} collapsible collapsed={props.collapsed}>
+            <stub.ref.antd.Menu theme="dark" mode="inline" defaultSelectedKeys={["0"]}>
+                {recursiveMenu(menus)}
+            </stub.ref.antd.Menu>
+        </stub.ref.antd.Layout.Sider>
+    )
 
-    render() {
-        return (
-            <stub.ref.antd.Layout.Sider theme="dark" trigger={null} collapsible collapsed={this.props.collapsed}>
-                <stub.ref.antd.Menu theme="dark" mode="inline" defaultSelectedKeys={["0"]}>
-                    {recursiveMenu(menus)}
-                </stub.ref.antd.Menu>
-            </stub.ref.antd.Layout.Sider>
-        )
-    }
 }
 
-export default connect(mapStateToProps)(Sider)
+export default stub.ref.reactRedux.connect(mapStateToProps)(Sider)

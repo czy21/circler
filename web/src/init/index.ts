@@ -7,7 +7,6 @@ const stub = {
     component,
     api,
     ref,
-    util,
-    store: undefined
+    util
 }
 export default stub
