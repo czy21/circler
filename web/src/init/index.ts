@@ -5,13 +5,12 @@ import {default as api} from '@/init/request'
 import reducer from "@/reducer";
 import {configureStore} from '@reduxjs/toolkit'
 
-const store: ref.redux.Store = configureStore({reducer: reducer.reducer})
 const stub = {
     component,
     api,
     ref,
     util,
-    store,
+    store: configureStore({reducer: reducer.reducer}),
     reducer
 }
 export default stub

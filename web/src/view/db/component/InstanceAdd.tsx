@@ -61,7 +61,7 @@ const InstanceAdd: React.FC<TableFormProp> = (props: TableFormProp | any) => {
                     <stub.ref.antd.Form.Item label={"kind"} name={"kind"}
                                              rules={[{required: true}]}
                     >
-                        <stub.ref.antd.Select options={props.globalOption["dbInstanceKind"]}/>
+                        <stub.ref.antd.Select options={props.globalOption.dbInstanceKind}/>
                     </stub.ref.antd.Form.Item>
                     <stub.ref.antd.Form.Item label={"Host"} name={"host"}
                                              rules={[{required: true}]}
