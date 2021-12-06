@@ -8,6 +8,8 @@ public interface DBService {
 
     PageResult<DBInstanceDTO> pageInstance(DBInstanceQuery query);
 
-    Boolean instancePing();
+    void addInstance(DBInstanceDTO dto);
+
+    Boolean pingInstance(DBInstanceDTO dto) throws Exception;
 
 }

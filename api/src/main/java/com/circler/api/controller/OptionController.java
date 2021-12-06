@@ -1,6 +1,6 @@
 package com.circler.api.controller;
 
-import com.circler.api.model.SimpleItemModel;
+import com.circler.api.core.BaseController;
 import com.circler.api.model.query.OptionQuery;
 import com.circler.api.service.OptionService;
 import org.apache.commons.lang3.StringUtils;
@@ -18,14 +18,14 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(path = "option")
-public class OptionController {
+public class OptionController extends BaseController {
 
     @Autowired
     OptionService optionService;
 
     @PostMapping(path = "query")
-    public Map<String, List<SimpleItemModel<?>>> query(@RequestBody OptionQuery query) {
-        Map<String, List<SimpleItemModel<?>>> optionMap = new HashMap<>();
+    public Map<String, Object> query(@RequestBody OptionQuery query) {
+        Map<String, Object> optionMap = new HashMap<>();
         if (StringUtils.isNotEmpty(query.getKey())) {
             optionMap.putAll(optionService.get(query.getKey(), query.getParam()));
         }

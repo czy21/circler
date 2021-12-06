@@ -17,5 +17,9 @@ public interface DBAutoMap {
 
     List<DBInstanceDTO> mapToInstanceDTOs(List<DBInstancePO> po);
 
+    DBInstancePO mapToInstancePO(DBInstanceDTO po);
+
+    List<DBInstancePO> mapToInstancePOs(List<DBInstanceDTO> po);
+
     PageResult<DBInstanceDTO> mapToInstancePageDTO(PageResult<DBInstancePO> pagePO);
 }
