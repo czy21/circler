@@ -8,5 +8,6 @@ const stub = {
     api,
     ref,
     util,
+    store: undefined
 }
 export default stub

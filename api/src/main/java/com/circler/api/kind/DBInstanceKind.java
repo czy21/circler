@@ -1,8 +1,8 @@
 package com.circler.api.kind;
 
 public enum DBInstanceKind {
-    MYSQL("com.mysql.cj.jdbc.Driver"),
-    PGSQL("com.mysql.cj.jdbc.Driver");
+    MySQL("com.mysql.cj.jdbc.Driver"),
+    PostgreSQL("com.mysql.cj.jdbc.Driver");
 
     String driverClassName;
 

@@ -70,9 +70,9 @@ const List: React.FC<any> = (props: any) => {
 
     const handleSearch = (q?: any) => {
         stub.api.post("db/instance/search", stub.ref.lodash.omit(q, "total"))
-            .then((data: any) => {
-                setData(data.data)
-                setPage(data.page)
+            .then((t: any) => {
+                setData(t.data.list)
+                setPage(t.data.page)
             })
     }
 

@@ -1,5 +1,6 @@
 import stub from "@/init";
 import React from "react";
+import {connect} from "react-redux";
 
 
 interface TableFormProp {
@@ -7,20 +8,8 @@ interface TableFormProp {
     onChange: () => void
 }
 
-const InstanceAdd: React.FC<TableFormProp> = (props: TableFormProp) => {
+const InstanceAdd: React.FC<TableFormProp> = (props: TableFormProp | any) => {
     stub.ref.react.useEffect(() => setVisible(props.visible as boolean), [props.visible])
-    const [option] = stub.ref.react.useState({
-        "db": [
-            {
-                "label": "mysql",
-                "value": "mysql"
-            },
-            {
-                "label": "postgresql",
-                "value": "postgresql"
-            }
-        ]
-    })
 
     const [visible, setVisible] = stub.ref.react.useState<boolean>(false)
     const [dbOptions, setDbOptions] = stub.ref.react.useState<any>([])
@@ -74,7 +63,7 @@ const InstanceAdd: React.FC<TableFormProp> = (props: TableFormProp) => {
                     <stub.ref.antd.Form.Item label={"kind"} name={"kind"}
                                              rules={[{required: true}]}
                     >
-                        <stub.ref.antd.Select options={option["db"]}/>
+                        <stub.ref.antd.Select options={props.globalOption["dbInstanceKind"]}/>
                     </stub.ref.antd.Form.Item>
                     <stub.ref.antd.Form.Item label={"Host"} name={"host"}
                                              rules={[{required: true}]}
@@ -99,8 +88,8 @@ const InstanceAdd: React.FC<TableFormProp> = (props: TableFormProp) => {
                     <stub.ref.antd.Form.Item {...{wrapperCol: {offset: 8}}}>
                         <stub.ref.antd.Space>
                             <stub.ref.antd.Button onClick={handleConnect}>Test</stub.ref.antd.Button>
-                            {!stub.ref.lodash.isEmpty(connectState) ? connectState ? <stub.ref.icon.CheckCircleTwoTone twoToneColor={"#52c41a"}/> :
-                                <stub.ref.icon.CloseCircleTwoTone twoToneColor={"#ff4d4f"}/> : ""}
+                            {connectState != undefined ?
+                                (connectState ? <stub.ref.icon.CheckCircleTwoTone twoToneColor={"#52c41a"}/> : <stub.ref.icon.CloseCircleTwoTone twoToneColor={"#ff4d4f"}/>) : ""}
                         </stub.ref.antd.Space>
                     </stub.ref.antd.Form.Item>
                     <stub.ref.antd.Form.Item>
@@ -120,4 +109,10 @@ const InstanceAdd: React.FC<TableFormProp> = (props: TableFormProp) => {
     )
 }
 
-export default InstanceAdd
+const mapStateToProps = (state: any) => {
+    return {
+        globalOption: state.Option.option
+    }
+};
+
+export default connect(mapStateToProps)(InstanceAdd)

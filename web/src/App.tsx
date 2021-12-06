@@ -1,3 +1,4 @@
+import stub from "@/init";
 import React from 'react';
 import {BrowserRouter} from "react-router-dom";
 import {createStore} from "redux";
@@ -7,9 +8,11 @@ import Home from "@/layout/Home";
 import 'codemirror/mode/yaml/yaml.js';
 import {ConfigProvider} from "antd";
 
-const store = createStore(rootReducer);
+const store: any = createStore(rootReducer);
+stub.store = store
 
 function App() {
+
     return (
         <ConfigProvider componentSize={"middle"}>
             <Provider store={store}>

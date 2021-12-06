@@ -11,8 +11,9 @@ public class DBInstancePO extends BaseEntity<Long> {
     private String name;
     private String host;
     private String port;
+    private String kind;
     private String username;
     private String password;
-    private String kind;
+    private String description;
 
 }

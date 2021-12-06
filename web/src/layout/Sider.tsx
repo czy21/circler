@@ -1,20 +1,15 @@
+import stub from "@/init";
 import React from "react";
-import {Layout, Menu,} from "antd";
 import {connect} from "react-redux";
 import {mapStateToProps} from '@/layout/Header'
 import menus from "@/menu";
 import {Link} from "react-router-dom";
 
-const AntdSider = Layout.Sider;
-
-const {SubMenu} = Menu;
-
-
-function recuriveMenu(routes: any) {
-    return routes.map((item:any, index:any) => {
+function recursiveMenu(routes: any) {
+    return routes.map((item: any, index: any) => {
         if (item.children) {
             return (
-                <SubMenu
+                <stub.ref.antd.Menu.SubMenu
                     key={item.name}
                     title={
                         <span>
@@ -23,18 +18,18 @@ function recuriveMenu(routes: any) {
                         </span>
                     }
                 >
-                    {recuriveMenu(item.children)}
-                </SubMenu>
+                    {recursiveMenu(item.children)}
+                </stub.ref.antd.Menu.SubMenu>
             )
         }
         return (
-            <Menu.Item
+            <stub.ref.antd.Menu.Item
                 key={item.name}
             >
                 {item.icon}
                 <span>{item.name}</span>
                 <Link to={item.path}/>
-            </Menu.Item>
+            </stub.ref.antd.Menu.Item>
         )
     })
 }
@@ -43,11 +38,11 @@ class Sider extends React.Component<{ collapsed?: boolean }, any> {
 
     render() {
         return (
-            <AntdSider theme="dark" trigger={null} collapsible collapsed={this.props.collapsed}>
-                <Menu theme="dark" mode="inline" defaultSelectedKeys={["0"]} >
-                    {recuriveMenu(menus)}
-                </Menu>
-            </AntdSider>
+            <stub.ref.antd.Layout.Sider theme="dark" trigger={null} collapsible collapsed={this.props.collapsed}>
+                <stub.ref.antd.Menu theme="dark" mode="inline" defaultSelectedKeys={["0"]}>
+                    {recursiveMenu(menus)}
+                </stub.ref.antd.Menu>
+            </stub.ref.antd.Layout.Sider>
         )
     }
 }

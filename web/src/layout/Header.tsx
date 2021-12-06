@@ -1,12 +1,10 @@
+import stub from "@/init";
 import React from "react";
 import {MenuFoldOutlined, MenuUnfoldOutlined} from '@ant-design/icons';
-import {Layout} from "antd";
 import {connect} from "react-redux";
 import {Action as HomeAction} from '@/redux/reducer/Home'
 
-const AntdHeader = Layout.Header;
-
-export interface State {
+interface State {
     collapsed: boolean
 }
 
@@ -30,12 +28,12 @@ class Header extends React.Component<any, State> {
         const {toggle} = this.props;
 
         return (
-            <AntdHeader className={"header"}>
+            <stub.ref.antd.Layout.Header className={"header"}>
                 {React.createElement(this.props.collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
                     className: 'collapse',
                     onClick: toggle,
                 })}
-            </AntdHeader>
+            </stub.ref.antd.Layout.Header>
         )
     }
 }

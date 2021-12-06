@@ -1,10 +1,10 @@
-const Action = {
+export const Action = {
     Collapse: () => {
         return {type: Action.Collapse.name}
     }
 }
 
-const Home = (state: any = {collapsed: false}, action: any) => {
+export const Home = (state: any = {collapsed: false}, action: any) => {
     switch (action.type) {
         case Action.Collapse.name:
             return Object.assign({}, state, {collapsed: !state.collapsed});
@@ -12,6 +12,3 @@ const Home = (state: any = {collapsed: false}, action: any) => {
             return state
     }
 };
-
-
-export {Home, Action}

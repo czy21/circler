@@ -1,5 +1,6 @@
 package com.circler.api.controller;
 
+import com.circler.api.annotation.Option;
 import com.circler.api.core.BaseController;
 import com.circler.api.model.PageResult;
 import com.circler.api.model.dto.DBInstanceDTO;
@@ -18,6 +19,9 @@ public class DBController extends BaseController {
     @Autowired
     DBService dbService;
 
+    @Option(value = {
+            "dbInstanceKind"
+    })
     @PostMapping(path = "instance/search")
     public PageResult<DBInstanceDTO> instanceSearch(@RequestBody DBInstanceQuery query) {
         return dbService.pageInstance(query);

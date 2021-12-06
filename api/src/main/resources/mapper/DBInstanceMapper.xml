@@ -21,18 +21,18 @@
             <if test="modifiedUser != null">modified_user,</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="id != null">id = #{id},</if>
-            <if test="name != null">name = #{name},</if>
-            <if test="host != null">host = #{host},</if>
-            <if test="port != null">port = #{port},</if>
-            <if test="username != null">username = #{username},</if>
-            <if test="password != null">password = #{password},</if>
-            <if test="kind != null">kind = #{kind},</if>
-            <if test="description != null">description = #{description},</if>
-            <if test="createdDate != null">created_date = #{createdDate},</if>
-            <if test="createdUser != null">created_user = #{createdUser},</if>
-            <if test="modifiedDate != null">modified_date = #{modifiedDate},</if>
-            <if test="modifiedUser != null">modified_user = #{modifiedUser},</if>
+            <if test="id != null"> #{id},</if>
+            <if test="name != null"> #{name},</if>
+            <if test="host != null"> #{host},</if>
+            <if test="port != null"> #{port},</if>
+            <if test="username != null"> #{username},</if>
+            <if test="password != null"> #{password},</if>
+            <if test="kind != null"> #{kind},</if>
+            <if test="description != null"> #{description},</if>
+            <if test="createdDate != null"> #{createdDate},</if>
+            <if test="createdUser != null"> #{createdUser},</if>
+            <if test="modifiedDate != null"> #{modifiedDate},</if>
+            <if test="modifiedUser != null"> #{modifiedUser},</if>
         </trim>
     </insert>
     <update id="updateById">
