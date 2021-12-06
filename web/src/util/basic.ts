@@ -1,24 +1,17 @@
 import stub from "@/init";
-import {Action as OptionAction} from "@/redux/reducer/Option";
 
 export const validateForm = (form: Promise<any>, successCallback: (value: any) => void, errorCallback?: (err: any) => void) => {
     form.then(value => successCallback(value)).catch(err => errorCallback && errorCallback(err))
 }
 
-export const queryOption = (keys: string[]) => {
-    return stub.api.post("option/query", {keys: keys})
+export const dispatchOption = (keys: string[]) => {
+    stub.api.post("option/query", {keys: keys}).then((t: any) => {
+        stub.store.dispatch(stub.reducer.action.option.put(t.data))
+    })
 }
 
 export const mapGlobalOptionStateToProps = (state: any) => {
     return {
-        globalOption: state.Option.option
-    }
-};
-
-export const mapGlobalOptionDispatchToProps = (dispatch: any) => {
-    return {
-        putGlobalOption: (data: {}) => {
-            dispatch(OptionAction.Put(data))
-        }
+        globalOption: state.option.data
     }
 };

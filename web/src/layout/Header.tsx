@@ -1,11 +1,10 @@
 import stub from "@/init";
 import React from "react";
 import {MenuFoldOutlined, MenuUnfoldOutlined} from '@ant-design/icons';
-import {Action as HomeAction} from '@/redux/reducer/Home'
 
 export const mapStateToProps = (state: any) => {
     return {
-        collapsed: state.Home.collapsed
+        collapsed: state.home.collapsed
     }
 };
 const Header: React.FC<any> = (props: any) => {
@@ -15,7 +14,7 @@ const Header: React.FC<any> = (props: any) => {
             {React.createElement(props.collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
                 className: 'collapse',
                 onClick: () => {
-                    dispatch(HomeAction.Collapse())
+                    dispatch(stub.reducer.action.home.collapse())
                 },
             })}
         </stub.ref.antd.Layout.Header>

@@ -1,7 +1,5 @@
 import stub from "@/init";
 import React from "react";
-import {connect} from "react-redux";
-import {Action as OptionAction} from "@/redux/reducer/Option";
 
 
 interface TableFormProp {
@@ -11,9 +9,7 @@ interface TableFormProp {
 
 const InstanceAdd: React.FC<TableFormProp> = (props: TableFormProp | any) => {
     stub.ref.react.useEffect(() => setVisible(props.visible as boolean), [props.visible])
-    stub.ref.react.useEffect(() => {
-        stub.util.basic.queryOption(["dbInstanceKind"]).then((t: any) => props.putGlobalOption(t.data))
-    }, [])
+    stub.ref.react.useEffect(() => stub.util.basic.dispatchOption(["dbInstanceKind"]), [])
     const [visible, setVisible] = stub.ref.react.useState<boolean>(false)
     const [dbOptions, setDbOptions] = stub.ref.react.useState<any>([])
     const [dbSelectOptions, setBbSelectOptions] = stub.ref.react.useState<any>([])
@@ -111,4 +107,4 @@ const InstanceAdd: React.FC<TableFormProp> = (props: TableFormProp | any) => {
     )
 }
 
-export default connect(stub.util.basic.mapGlobalOptionStateToProps, stub.util.basic.mapGlobalOptionDispatchToProps)(InstanceAdd)
+export default stub.ref.reactRedux.connect(stub.util.basic.mapGlobalOptionStateToProps)(InstanceAdd)
