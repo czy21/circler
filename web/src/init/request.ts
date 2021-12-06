@@ -1,6 +1,5 @@
 import axios from 'axios'
 import stub from "@/init/index";
-import {Action as OptionAction} from '@/redux/reducer/Option'
 
 enum Method {
     GET = "GET",
@@ -21,11 +20,9 @@ service.interceptors.request.use(
 service.interceptors.response.use(
     response => {
         const error = response.data?.error
-        const option = response.data?.option
         if (error) {
             stub.ref.antd.Modal.error({content: error.message, centered: true})
         }
-        (stub.store as any).dispatch(OptionAction.Put(option))
         return response
     },
     error => Promise.reject(error)

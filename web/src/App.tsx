@@ -1,4 +1,3 @@
-import stub from "@/init";
 import React from 'react';
 import {BrowserRouter} from "react-router-dom";
 import {createStore} from "redux";
@@ -8,8 +7,7 @@ import Home from "@/layout/Home";
 import 'codemirror/mode/yaml/yaml.js';
 import {ConfigProvider} from "antd";
 
-const store: any = createStore(rootReducer);
-stub.store = store
+const store = createStore(rootReducer);
 
 function App() {
 

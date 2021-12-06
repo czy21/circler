@@ -3,7 +3,6 @@ import React from "react";
 import routes from "@/route";
 import {renderRoutes} from "react-router-config";
 
-
 export default class Content extends React.Component<any, any> {
     render() {
         return (

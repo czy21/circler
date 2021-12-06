@@ -1,8 +1,8 @@
 import stub from "@/init";
 
 export const Action = {
-    Put: (option: {}) => {
-        return {type: Action.Put.name, data: option}
+    Put: (data: {}) => {
+        return {type: Action.Put.name, data: data}
     }
 }
 

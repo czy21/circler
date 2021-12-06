@@ -1,6 +1,7 @@
 import stub from "@/init";
 import React from "react";
 import {connect} from "react-redux";
+import {Action as OptionAction} from "@/redux/reducer/Option";
 
 
 interface TableFormProp {
@@ -10,7 +11,9 @@ interface TableFormProp {
 
 const InstanceAdd: React.FC<TableFormProp> = (props: TableFormProp | any) => {
     stub.ref.react.useEffect(() => setVisible(props.visible as boolean), [props.visible])
-
+    stub.ref.react.useEffect(() => {
+        stub.util.basic.queryOption(["dbInstanceKind"]).then((t: any) => props.putGlobalOption(t.data))
+    }, [])
     const [visible, setVisible] = stub.ref.react.useState<boolean>(false)
     const [dbOptions, setDbOptions] = stub.ref.react.useState<any>([])
     const [dbSelectOptions, setBbSelectOptions] = stub.ref.react.useState<any>([])
@@ -21,13 +24,15 @@ const InstanceAdd: React.FC<TableFormProp> = (props: TableFormProp | any) => {
     const handleOk = () => {
         stub.util.basic.validateForm(addForm.validateFields(),
             (values) => {
-                stub.api.post("db/instance/add", values).then(props.onChange)
+                stub.api.post("db/instance/add", values).then(t => {
+                    addForm.resetFields()
+                    props.onChange()
+                })
             })
     };
 
-    const handleConnect = async () => {
-        stub.util.basic.validateForm(
-            addForm.validateFields(),
+    const handleConnect = () => {
+        stub.util.basic.validateForm(addForm.validateFields(),
             (values) => {
                 stub.api.post("db/instance/ping", values)
                     .then((t: any) => setConnectState(stub.ref.lodash.isEmpty(t.error)))
@@ -44,16 +49,13 @@ const InstanceAdd: React.FC<TableFormProp> = (props: TableFormProp | any) => {
                 width={600}
                 visible={visible}
                 onOk={handleOk}
-                onCancel={() => props.onChange()}>
+                onCancel={() => {
+                    addForm.resetFields()
+                    props.onChange()
+                }}>
                 <stub.ref.antd.Form form={addForm}
                                     labelCol={{span: 8}}
                                     wrapperCol={{span: 10}}
-                                    initialValues={{
-                                        "host": "192.168.2.18",
-                                        "port": "3306",
-                                        "username": "root",
-                                        "password": "Czy.190815"
-                                    }}
                 >
                     <stub.ref.antd.Form.Item label={"Name"} name={"name"}
                                              rules={[{required: true}]}
@@ -109,10 +111,4 @@ const InstanceAdd: React.FC<TableFormProp> = (props: TableFormProp | any) => {
     )
 }
 
-const mapStateToProps = (state: any) => {
-    return {
-        globalOption: state.Option.option
-    }
-};
-
-export default connect(mapStateToProps)(InstanceAdd)
+export default connect(stub.util.basic.mapGlobalOptionStateToProps, stub.util.basic.mapGlobalOptionDispatchToProps)(InstanceAdd)
