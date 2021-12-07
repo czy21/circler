@@ -25,7 +25,6 @@ const Index: React.FC<TableProp> = (props: TableProp) => {
                 {props.filter}
                 {props.extension}
                 <stub.ref.antd.Table
-                    style={{width: "100%"}}
                     size={"small"}
                     columns={props.columns?.map((t: any) => {
                         let p = {

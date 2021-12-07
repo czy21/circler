@@ -31,7 +31,8 @@ const Filter:React.FC<FilterProp>=(props:FilterProp)=>{
     const renderTag = () => {
         return ((Object.entries(tag) as any[]).map(([k, v]) => {
             return (<stub.ref.antd.Tag
-                style={{borderRadius: "20px", fontSize: "16px"}}
+                color={stub.ref.lodash.isEqual(k,currentFilter[0])  ? "#87d068" : undefined}
+                style={{borderRadius: "20px", fontSize: "14px"}}
                 closable={true}
                 onClick={() => setCurrentFilter([k, v.value])}
                 onClose={(e) => removeTag(k)} key={k}>{[v.label, v.value].join(": ")}

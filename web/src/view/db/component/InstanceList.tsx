@@ -51,7 +51,7 @@ const InstanceList: React.FC<any> = (props: any) => {
             key: 'operation',
             title: '操作',
             render: (text: any, record: any) => (
-                <stub.ref.antd.Button icon={<stub.ref.icon.DashOutlined/>} type={"text"} style={{borderRadius: "16px"}}/>
+                <stub.ref.antd.Button icon={<stub.ref.icon.DashOutlined/>} type={"text"} style={{borderRadius: "16px"}} size={"small"}/>
             ),
             fixed: "right",
             width: 100
