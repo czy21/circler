@@ -17,7 +17,7 @@ const Filter:React.FC<FilterProp>=(props:FilterProp)=>{
     const [tag, setTag] = stub.ref.react.useState({})
 
     const tagValueAny = () => {
-        return (Object.values(tag) as any[]).filter((t: any) => t.value === undefined).length === 0
+        return stub.ref.lodash.isEmpty(Object.values(tag))
     }
 
     const editTag = (value: {}) => {
@@ -35,7 +35,7 @@ const Filter:React.FC<FilterProp>=(props:FilterProp)=>{
                 style={{borderRadius: "20px", fontSize: "14px"}}
                 closable={true}
                 onClick={() => setCurrentFilter([k, v.value])}
-                onClose={(e) => removeTag(k)} key={k}>{[v.label, v.value].join(": ")}
+                onClose={(e) => removeTag(k)} key={k}>{[v.label, v.value].join(":")}
             </stub.ref.antd.Tag>)
         }))
     }
@@ -56,18 +56,19 @@ const Filter:React.FC<FilterProp>=(props:FilterProp)=>{
         return (
             <stub.ref.antd.Menu
                 onClick={({item, key, keyPath, domEvent}) => {
+                    console.log(tag)
                     let tagValue: any = (tag as any)[key]?.value;
                     if (stub.ref.lodash.isEmpty(tag) || tagValueAny()) {
                         setCurrentFilter([key, tagValue])
                         editTag({
                             [key]: {
-                                "label": ((props.filters as any).filter((t: any) => t.key === key)[0]).label,
+                                "label": ((props.filters as any[]).filter(t => t.key === key)[0]).label,
                                 "value": tagValue
                             }
                         })
                     }
                 }}>
-                {(props.filters as any).map((t: any) => {
+                {(props.filters as any[]).map(t => {
                     return (<stub.ref.antd.Menu.Item key={t.key}>{t.label}</stub.ref.antd.Menu.Item>)
                 })}
             </stub.ref.antd.Menu>
