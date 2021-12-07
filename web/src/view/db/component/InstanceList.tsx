@@ -57,17 +57,6 @@ const InstanceList: React.FC<any> = (props: any) => {
             width: 100
         },
     ];
-    const filters = [
-        {
-            "key": "name",
-            "label": "名称"
-        },
-    ]
-    const actions = [
-        <stub.ref.antd.Button type={"primary"} onClick={() => setInstanceAddVisible(true)}>
-            添加实例
-        </stub.ref.antd.Button>,
-    ]
 
     const handleSearch = (q?: any) => {
         setQuery(q)
@@ -76,15 +65,34 @@ const InstanceList: React.FC<any> = (props: any) => {
 
     const [instanceAddVisible, setInstanceAddVisible] = stub.ref.react.useState<boolean>(false);
 
+    const filter=(
+        <stub.component.Filter
+            filters={[
+                {
+                    "key": "name",
+                    "label": "名称"
+                },
+            ]}
+            onSearch={handleSearch}
+            page={data.page}/>
+    )
+
+    const action = (
+            <stub.ref.antd.Space>
+                <stub.ref.antd.Button type={"primary"} onClick={() => setInstanceAddVisible(true)}>
+                    添加实例
+                </stub.ref.antd.Button>
+            </stub.ref.antd.Space>
+        )
+
     return (
         <div>
             <stub.component.Table title={"实例列表"}
-                                  filters={filters}
-                                  actions={actions}
+                                  filter={filter}
+                                  action={action}
                                   columns={columns}
                                   list={data.list}
                                   page={data.page}
-                                  onSearch={handleSearch}
             />
             <InstanceAdd visible={instanceAddVisible} onChange={() => {
                 setInstanceAddVisible(false)
