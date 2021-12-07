@@ -1,5 +1,6 @@
 import stub from "@/init";
 import React from "react";
+import styles from '@/assets/less/Home.module.less'
 import {MenuFoldOutlined, MenuUnfoldOutlined} from '@ant-design/icons';
 
 export const mapStateToProps = (state: any) => {
@@ -9,9 +10,9 @@ export const mapStateToProps = (state: any) => {
 };
 const Header: React.FC<any> = (props: any) => {
     return (
-        <stub.ref.antd.Layout.Header className={"header"}>
+        <stub.ref.antd.Layout.Header className={styles.header}>
             {React.createElement(props.collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
-                className: 'collapse',
+                className: styles.collapse,
                 onClick: () => {
                     stub.store.dispatch(stub.reducer.action.home.collapse())
                 },

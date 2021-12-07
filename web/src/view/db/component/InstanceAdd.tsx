@@ -18,6 +18,7 @@ const InstanceAdd: React.FC<TableFormProp> = (props: TableFormProp | any) => {
             (values) => {
                 stub.api.post("db/instance/add", values).then(t => {
                     addForm.resetFields()
+                    setConnectState(undefined)
                     props.onChange()
                 })
             })
@@ -25,6 +26,7 @@ const InstanceAdd: React.FC<TableFormProp> = (props: TableFormProp | any) => {
 
     const handleCancel = () => {
         addForm.resetFields()
+        setConnectState(undefined)
         props.onChange()
     }
 

@@ -1,6 +1,7 @@
 import React from "react";
 import stub from '@/init'
 import {PageModel} from "@/model/data";
+import styles from "../assets/less/Filter.module.less";
 
 interface TableFormProp {
     title: string
@@ -37,7 +38,7 @@ const Table: React.FC<TableFormProp> = (props: TableFormProp) => {
     const renderTag = () => {
         return ((Object.entries(tag) as any[]).map(([k, v]) => {
             return (<stub.ref.antd.Tag
-                color={k === currentFilter[0] ? "green" : "default"}
+                style={{borderRadius: "20px", fontSize: "16px"}}
                 closable={true}
                 onClick={() => setCurrentFilter([k, v.value])}
                 onClose={(e) => removeTag(k)} key={k}>{[v.label, v.value].join(": ")}
@@ -78,33 +79,41 @@ const Table: React.FC<TableFormProp> = (props: TableFormProp) => {
             </stub.ref.antd.Menu>
         )
     }
+    const filterRef = stub.ref.react.useRef<any>();
 
     return (
         <div>
             <stub.ref.antd.Space direction={"vertical"} style={{width: "100%"}} size={"middle"}>
                 <stub.ref.antd.Row gutter={8}>
                     <stub.ref.antd.Col span={22}>
-                        <div hidden={stub.ref.lodash.size(props.filters) == 0}>
-                            {renderTag()}
-                            <stub.ref.antd.Dropdown overlay={renderFilter()} trigger={['click']}>
-                                <stub.ref.antd.Input value={(currentFilter as any[])[1]}
-                                                     autoComplete={"off"}
-                                                     onChange={(e) => {
-                                                         setCurrentFilter([(currentFilter as any[])[0], e.target.value])
-                                                     }}
-                                                     onPressEnter={(e: any) => {
-                                                         const cK: string = (currentFilter as any[])[0]
-                                                         if (cK) {
-                                                             editTag({
-                                                                 [cK]: Object.assign((tag as any)[cK], {value: (currentFilter as any[])[1]})
-                                                             })
-                                                         }
-                                                         if (tagValueAny()) {
-                                                             setCurrentFilter(["", undefined])
-                                                         }
-                                                     }
-                                                     }/>
-                            </stub.ref.antd.Dropdown>
+                        <div hidden={stub.ref.lodash.size(props.filters) == 0}
+                             className={styles.wrapper}
+                             ref={filterRef}
+                        >
+                            <div className={styles.content}>
+                                {renderTag()}
+                                <stub.ref.antd.Dropdown overlay={renderFilter()} trigger={['click']} overlayStyle={{minWidth: "180px"}}>
+                                    <stub.ref.antd.Input
+                                        type={"text"}
+                                        value={(currentFilter as any[])[1]}
+                                        autoComplete={"off"}
+                                        onChange={(e) => {
+                                            setCurrentFilter([(currentFilter as any[])[0], e.target.value])
+                                        }}
+                                        onPressEnter={(e: any) => {
+                                            const cK: string = (currentFilter as any[])[0]
+                                            if (cK) {
+                                                editTag({
+                                                    [cK]: Object.assign((tag as any)[cK], {value: (currentFilter as any[])[1]})
+                                                })
+                                            }
+                                            if (tagValueAny()) {
+                                                setCurrentFilter(["", undefined])
+                                            }
+                                        }}
+                                    />
+                                </stub.ref.antd.Dropdown>
+                            </div>
                         </div>
                     </stub.ref.antd.Col>
                     <stub.ref.antd.Col span={2}>
