@@ -5,6 +5,7 @@ import InstanceAdd from "./InstanceAdd"
 const InstanceList: React.FC<any> = (props: any) => {
 
     const [data, setData] = stub.ref.react.useState<any>({})
+    const [query, setQuery] = stub.ref.react.useState<any>()
 
     stub.ref.react.useEffect(() => {
         stub.store.dispatch(stub.reducer.action.option.fetch(["dbInstanceKind", "genderKind"]))
@@ -56,8 +57,20 @@ const InstanceList: React.FC<any> = (props: any) => {
             width: 100
         },
     ];
+    const filters = [
+        {
+            "key": "name",
+            "label": "名称"
+        },
+    ]
+    const actions = [
+        <stub.ref.antd.Button type={"primary"} onClick={() => setInstanceAddVisible(true)}>
+            添加实例
+        </stub.ref.antd.Button>,
+    ]
 
     const handleSearch = (q?: any) => {
+        setQuery(q)
         stub.api.post("db/instance/search", stub.ref.lodash.omit(q, "total")).then((t: any) => setData(t.data))
     }
 
@@ -66,23 +79,17 @@ const InstanceList: React.FC<any> = (props: any) => {
     return (
         <div>
             <stub.component.Table title={"实例列表"}
-                                  datasource={data.list}
+                                  filters={filters}
+                                  actions={actions}
                                   columns={columns}
+                                  list={data.list}
                                   page={data.page}
                                   onSearch={handleSearch}
-                                  filters={[
-                                      {
-                                          "key": "name",
-                                          "label": "名称"
-                                      },
-                                  ]}
-                                  actions={[
-                                      <stub.ref.antd.Button type={"primary"} onClick={() => setInstanceAddVisible(true)}>
-                                          添加实例
-                                      </stub.ref.antd.Button>,
-                                  ]}
             />
-            <InstanceAdd visible={instanceAddVisible} onChange={() => setInstanceAddVisible(false)}/>
+            <InstanceAdd visible={instanceAddVisible} onChange={() => {
+                setInstanceAddVisible(false)
+                handleSearch(query)
+            }}/>
         </div>
     )
 

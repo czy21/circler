@@ -85,7 +85,7 @@ const List: React.FC<any> = (props: any) => {
         <div>
             <stub.component.Table title={title}
                                   onSearch={handleSearch}
-                                  datasource={data}
+                                  list={data}
                                   columns={columns}
             />
             <stub.component.Create title={`创建${title}`} visible={createVisible} onOk={handleCreateOk} onCancel={handleCreateCancel}>

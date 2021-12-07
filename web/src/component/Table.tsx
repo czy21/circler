@@ -5,7 +5,7 @@ import {PageModel} from "@/model/data";
 interface TableFormProp {
     title: string
     onSearch: (query?: any) => void
-    datasource: any[]
+    list: any[]
     page?: {
         pageIndex?: number,
         pageSize?: number,
@@ -141,7 +141,7 @@ const Table: React.FC<TableFormProp> = (props: TableFormProp) => {
                         return params
                     })}
                     rowKey={(r: any) => r.id}
-                    dataSource={props.datasource}
+                    dataSource={props.list}
                     pagination={page && {
                         total: page?.total,
                         current: page?.pageIndex,

@@ -143,7 +143,7 @@ const List: React.FC<any> = (props: any) => {
         <div>
             <stub.component.Table title={title}
                                   onSearch={handleSearch}
-                                  datasource={data}
+                                  list={data}
                                   page={page}
                                   columns={columns}
                                   filters={[]}

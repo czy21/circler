@@ -72,7 +72,7 @@ const List: React.FC<any> = (props: any) => {
     return (
         <div>
             <stub.component.Table title={title}
-                                  datasource={data.list}
+                                  list={data.list}
                                   columns={columns}
                                   page={data.page}
                                   onSearch={handleSearch}
