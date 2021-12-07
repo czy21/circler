@@ -7,7 +7,7 @@ const slice = createSlice({
     },
     reducers: {
         collapse: (state) => {
-            state.collapsed = !state.collapsed;
+            return Object.assign({}, state, {collapsed: !state.collapsed});
         }
     }
 })

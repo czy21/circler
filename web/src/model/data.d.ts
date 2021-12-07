@@ -8,7 +8,7 @@ export interface Search {
 }
 
 export interface PageModel {
-    pageCurrent?: number
+    pageIndex?: number
     pageSize?: number
     total?: number
 }

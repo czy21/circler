@@ -7,23 +7,22 @@ interface TableFormProp {
     onSearch: (query?: any) => void
     datasource: any[]
     page?: {
-        pageCurrent?: number,
+        pageIndex?: number,
         pageSize?: number,
         total?: number
     }
     columns: any[]
-    onShowCreateModal?: () => void
     filters?: any[]
     actions?: any[]
 }
 
 const Table: React.FC<TableFormProp> = (props: TableFormProp) => {
-    const {datasource, columns, title, page, onSearch, onShowCreateModal, filters = [], actions} = props
+    const {datasource, columns, title, page, onSearch, filters = [], actions = []} = props
 
     const [filterOptions, seFilterOptions] = stub.ref.react.useState(filters)
     const [currentFilter, setCurrentFilter] = stub.ref.react.useState<[string, any]>(["", undefined])
     const [tag, setTag] = stub.ref.react.useState({})
-    const [pageState, setPageState] = stub.ref.react.useState<PageModel>({pageCurrent: 1, pageSize: 10, ...page})
+    const [pageState, setPageState] = stub.ref.react.useState<PageModel>({pageIndex: 1, pageSize: 10, ...page})
 
 
     const tagValueAny = () => {
@@ -44,7 +43,7 @@ const Table: React.FC<TableFormProp> = (props: TableFormProp) => {
                 color={k === currentFilter[0] ? "green" : "default"}
                 closable={true}
                 onClick={() => setCurrentFilter([k, v.value])}
-                onClose={(e) => removeTag(k)} key={k}>{[v.label, v.value].join(":")}
+                onClose={(e) => removeTag(k)} key={k}>{[v.label, v.value].join(": ")}
             </stub.ref.antd.Tag>)
         }))
     }
@@ -87,7 +86,7 @@ const Table: React.FC<TableFormProp> = (props: TableFormProp) => {
         <div>
             <stub.ref.antd.Space direction={"vertical"} style={{width: "100%"}} size={"middle"}>
                 <stub.ref.antd.Row gutter={8}>
-                    <stub.ref.antd.Col span={20}>
+                    <stub.ref.antd.Col span={22}>
                         <div hidden={stub.ref.lodash.size(filters) == 0}>
                             {renderTag()}
                             <stub.ref.antd.Dropdown overlay={renderFilter()} trigger={['click']}>
@@ -111,7 +110,7 @@ const Table: React.FC<TableFormProp> = (props: TableFormProp) => {
                             </stub.ref.antd.Dropdown>
                         </div>
                     </stub.ref.antd.Col>
-                    <stub.ref.antd.Col span={4}>
+                    <stub.ref.antd.Col span={2}>
                         <stub.ref.antd.Space>
                             <stub.ref.antd.Button type={"default"} onClick={() => {
                                 let empty: any = {}
@@ -125,10 +124,6 @@ const Table: React.FC<TableFormProp> = (props: TableFormProp) => {
                                     onSearch(getQuery((tag as any[])))
                                 }
                             }}>查询
-                            </stub.ref.antd.Button>
-                            <stub.ref.antd.Button type={"primary"} onClick={onShowCreateModal}>
-                                <stub.ref.icon.PlusOutlined/>
-                                创建
                             </stub.ref.antd.Button>
                         </stub.ref.antd.Space>
                     </stub.ref.antd.Col>
@@ -150,10 +145,10 @@ const Table: React.FC<TableFormProp> = (props: TableFormProp) => {
                     dataSource={datasource}
                     pagination={page && {
                         total: pageState?.total,
-                        current: pageState?.pageCurrent,
+                        current: pageState?.pageIndex,
                         pageSize: pageState?.pageSize,
                         showTotal: ((t: any, r: any) => `第 ${r[0]}-${r[1]} 条/总共 ${t} 条`),
-                        onChange: (pageCurrent, pageSize) => setPageState({pageCurrent, pageSize})
+                        onChange: (pageIndex, pageSize) => setPageState({pageIndex, pageSize})
                     }}
                 />
             </stub.ref.antd.Space>

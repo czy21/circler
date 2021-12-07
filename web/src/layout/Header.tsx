@@ -8,13 +8,12 @@ export const mapStateToProps = (state: any) => {
     }
 };
 const Header: React.FC<any> = (props: any) => {
-    const dispatch = stub.ref.reactRedux.useDispatch()
     return (
         <stub.ref.antd.Layout.Header className={"header"}>
             {React.createElement(props.collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
                 className: 'collapse',
                 onClick: () => {
-                    dispatch(stub.reducer.action.home.collapse())
+                    stub.store.dispatch(stub.reducer.action.home.collapse())
                 },
             })}
         </stub.ref.antd.Layout.Header>

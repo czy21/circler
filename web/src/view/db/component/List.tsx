@@ -12,6 +12,9 @@ const List: React.FC<any> = (props: any) => {
     const [data, setData] = stub.ref.react.useState([])
     const [page, setPage] = stub.ref.react.useState<PageModel>({})
 
+    stub.ref.react.useEffect(() => {
+        stub.store.dispatch(stub.reducer.action.option.fetch(["dbInstanceKind", "genderKind"]))
+    }, [])
 
     const [filters, setFilter] = stub.ref.react.useState([
         {
@@ -51,8 +54,10 @@ const List: React.FC<any> = (props: any) => {
         {
             key: 'password',
             header: 'Password',
+            render: (text: any, record: any) => (
+                <div>{text}</div>
+            )
         },
-
         {
             key: 'description',
             header: 'description',
@@ -85,8 +90,13 @@ const List: React.FC<any> = (props: any) => {
                                   columns={columns}
                                   page={page}
                                   onSearch={handleSearch}
-                                  onShowCreateModal={() => setInstanceAddVisible(true)}
                                   filters={filters}
+                                  actions={[
+                                      <stub.ref.antd.Button type={"primary"} onClick={() => setInstanceAddVisible(true)}>
+                                          <stub.ref.icon.PlusOutlined/>
+                                          创建
+                                      </stub.ref.antd.Button>
+                                  ]}
             />
             <InstanceAdd visible={instanceAddVisible} onChange={() => setInstanceAddVisible(false)}/>
         </div>

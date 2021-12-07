@@ -146,7 +146,6 @@ const List: React.FC<any> = (props: any) => {
                                   datasource={data}
                                   page={page}
                                   columns={columns}
-                                  onShowCreateModal={handleCreateShow}
                                   filters={[]}
             />
             <Modal title={`创建${title}`} visible={createVisible} onOk={handleCreateOk} onCancel={handleCreateCancel}>

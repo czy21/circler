@@ -1,6 +1,7 @@
 package com.circler.api.service;
 
 import com.circler.api.kind.DBInstanceKind;
+import com.circler.api.kind.GenderKind;
 import com.circler.api.model.SimpleItemModel;
 import org.apache.commons.lang3.EnumUtils;
 import org.springframework.beans.factory.InitializingBean;
@@ -30,5 +31,6 @@ public class OptionService implements InitializingBean {
     @Override
     public void afterPropertiesSet() {
         optionMapFn.put("dbInstanceKind", (param) -> EnumUtils.getEnumList(DBInstanceKind.class).stream().map(t -> SimpleItemModel.of(t.name(), t.name())).collect(Collectors.toList()));
+        optionMapFn.put("genderKind", (param) -> EnumUtils.getEnumList(GenderKind.class).stream().map(t -> SimpleItemModel.of(t.getLabel(), t.getValue())).collect(Collectors.toList()));
     }
 }

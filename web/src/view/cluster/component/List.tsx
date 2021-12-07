@@ -83,7 +83,6 @@ const List: React.FC<any> = (props: any) => {
                                   columns={columns}
                                   page={page}
                                   onSearch={handleSearch}
-                                  onShowCreateModal={handleShowCreateModal}
                                   filters={filters}
             />
             <stub.component.Create title={`添加${title}`}

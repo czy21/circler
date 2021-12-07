@@ -87,7 +87,6 @@ const List: React.FC<any> = (props: any) => {
                                   onSearch={handleSearch}
                                   datasource={data}
                                   columns={columns}
-                                  onShowCreateModal={handleCreateShow}
             />
             <stub.component.Create title={`创建${title}`} visible={createVisible} onOk={handleCreateOk} onCancel={handleCreateCancel}>
                 <stub.ref.antd.Form form={createForm}>
