@@ -1,13 +1,20 @@
 import Home from './Home'
 import Option from './Option'
+import {configureStore} from "@reduxjs/toolkit";
 
-export default {
+const reducer = {
     reducer: {
-        home: Home.reducer,
-        option: Option.reducer
+        home: Home.slice.reducer,
+        option: Option.slice.reducer
     },
     action: {
-        home: Home.actions,
-        option: Option.actions
+        home: Home.action,
+        option: Option.action
     }
+}
+const store = configureStore({reducer: reducer.reducer})
+
+export {
+    store,
+    reducer
 }

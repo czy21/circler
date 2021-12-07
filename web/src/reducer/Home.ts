@@ -1,6 +1,6 @@
 import {createSlice} from "@reduxjs/toolkit";
 
-const Home = createSlice({
+const slice = createSlice({
     name: "home",
     initialState: {
         collapsed: false
@@ -11,4 +11,8 @@ const Home = createSlice({
         }
     }
 })
-export default Home
+const action = {...slice.actions}
+export default {
+    slice,
+    action
+}

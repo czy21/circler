@@ -1,7 +1,6 @@
 import stub from "@/init";
 import React from "react";
 
-
 interface TableFormProp {
     visible: boolean
     onChange: () => void
@@ -9,7 +8,9 @@ interface TableFormProp {
 
 const InstanceAdd: React.FC<TableFormProp> = (props: TableFormProp | any) => {
     stub.ref.react.useEffect(() => setVisible(props.visible as boolean), [props.visible])
-    stub.ref.react.useEffect(() => stub.util.basic.dispatchOption(["dbInstanceKind"]), [])
+    stub.ref.react.useEffect(() => {
+        stub.store.dispatch(stub.reducer.action.option.fetch(["dbInstanceKind"]))
+    }, [])
     const [visible, setVisible] = stub.ref.react.useState<boolean>(false)
     const [dbOptions, setDbOptions] = stub.ref.react.useState<any>([])
     const [dbSelectOptions, setBbSelectOptions] = stub.ref.react.useState<any>([])

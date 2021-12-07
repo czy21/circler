@@ -1,14 +1,27 @@
-import {createSlice} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
+import stub from "@/init";
 
-export const Option = createSlice({
+const fetch: any = createAsyncThunk(
+    'option/fetch',
+    async (keys: []) => {
+        const res: any = await stub.api.post('option/query', {keys: keys})
+        return res.data
+    })
+
+const slice = createSlice({
     name: "option",
     initialState: {
         data: {}
     },
-    reducers: {
-        put: (state, action) => {
+    reducers: {},
+    extraReducers: {
+        [fetch.fulfilled]: (state: any, action: any) => {
             state.data = Object.assign({}, state.data, action.payload)
         }
     }
 })
-export default Option
+const action = {...slice.actions, fetch}
+export default {
+    slice,
+    action
+}
