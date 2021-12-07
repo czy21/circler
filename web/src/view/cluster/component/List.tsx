@@ -5,13 +5,11 @@ import {PageModel} from "@/model/data";
 
 const title = "集群"
 const List: React.FC<any> = (props: any) => {
-    const {history, route} = props
 
-    const [data, setData] = stub.ref.react.useState([])
+    const [data, setData] = stub.ref.react.useState<any>({})
     const [createVisible, setCreateVisible] = stub.ref.react.useState(false)
     const [content, setContent] = stub.ref.react.useState("")
     const [query, setQuery] = stub.ref.react.useState<any>({})
-    const [page, setPage] = stub.ref.react.useState<PageModel>({})
 
     const [filters, setFilter] = stub.ref.react.useState([
         {
@@ -31,7 +29,7 @@ const List: React.FC<any> = (props: any) => {
             render: (text: any, record: any) => {
                 return (
                     <a onClick={() => {
-                        history.push(`${route.path}/${record.name}`)
+                        props.history.push(`${props.route.path}/${record.name}`)
                     }}>{record.name}</a>
                 )
             }
@@ -54,12 +52,7 @@ const List: React.FC<any> = (props: any) => {
     const [createForm] = stub.ref.antd.Form.useForm();
 
     const handleSearch = (q?: any) => {
-        setQuery(q)
-        stub.api.post("k8s/cluster/search", stub.ref.lodash.omit(q, "total"))
-            .then((data: any) => {
-                setData(data.data)
-                setPage(data.page)
-            })
+        stub.api.post("k8s/cluster/search", stub.ref.lodash.omit(q, "total")).then((data: any) => setData(data.data))
     }
     const handleShowCreateModal = () => {
         createForm.resetFields()
@@ -79,9 +72,9 @@ const List: React.FC<any> = (props: any) => {
     return (
         <div>
             <stub.component.Table title={title}
-                                  datasource={data}
+                                  datasource={data.list}
                                   columns={columns}
-                                  page={page}
+                                  page={data.page}
                                   onSearch={handleSearch}
                                   filters={filters}
             />

@@ -17,13 +17,10 @@ interface TableFormProp {
 }
 
 const Table: React.FC<TableFormProp> = (props: TableFormProp) => {
-    const {datasource, columns, title, page, onSearch, filters = [], actions = []} = props
 
-    const [filterOptions, seFilterOptions] = stub.ref.react.useState(filters)
     const [currentFilter, setCurrentFilter] = stub.ref.react.useState<[string, any]>(["", undefined])
     const [tag, setTag] = stub.ref.react.useState({})
-    const [pageState, setPageState] = stub.ref.react.useState<PageModel>({pageIndex: 1, pageSize: 10, ...page})
-
+    const [page, setPage] = stub.ref.react.useState<PageModel>({pageIndex: 1, pageSize: 10, ...props.page})
 
     const tagValueAny = () => {
         return (Object.values(tag) as any[]).filter((t: any) => t.value === undefined).length === 0
@@ -57,7 +54,7 @@ const Table: React.FC<TableFormProp> = (props: TableFormProp) => {
     }
 
     const getQuery = (query: any[]) => {
-        return {...Object.fromEntries(Object.entries(query).map(([k, v]) => [k, v.value])), ...pageState}
+        return {...Object.fromEntries(Object.entries(query).map(([k, v]) => [k, v.value])), ...page}
     }
 
     const renderFilter = () => {
@@ -69,13 +66,13 @@ const Table: React.FC<TableFormProp> = (props: TableFormProp) => {
                         setCurrentFilter([key, tagValue])
                         editTag({
                             [key]: {
-                                "label": (filterOptions.filter(t => t.key === key)[0]).label,
+                                "label": ((props.filters as any).filter((t: any) => t.key === key)[0]).label,
                                 "value": tagValue
                             }
                         })
                     }
                 }}>
-                {filterOptions.map(t => {
+                {(props.filters as any).map((t: any) => {
                     return (<stub.ref.antd.Menu.Item key={t.key}>{t.label}</stub.ref.antd.Menu.Item>)
                 })}
             </stub.ref.antd.Menu>
@@ -87,7 +84,7 @@ const Table: React.FC<TableFormProp> = (props: TableFormProp) => {
             <stub.ref.antd.Space direction={"vertical"} style={{width: "100%"}} size={"middle"}>
                 <stub.ref.antd.Row gutter={8}>
                     <stub.ref.antd.Col span={22}>
-                        <div hidden={stub.ref.lodash.size(filters) == 0}>
+                        <div hidden={stub.ref.lodash.size(props.filters) == 0}>
                             {renderTag()}
                             <stub.ref.antd.Dropdown overlay={renderFilter()} trigger={['click']}>
                                 <stub.ref.antd.Input value={(currentFilter as any[])[1]}
@@ -116,23 +113,25 @@ const Table: React.FC<TableFormProp> = (props: TableFormProp) => {
                                 let empty: any = {}
                                 setTag(empty)
                                 setCurrentFilter(["", undefined])
-                                onSearch(getQuery(empty))
+                                props.onSearch(getQuery(empty))
                             }}>重置
                             </stub.ref.antd.Button>
                             <stub.ref.antd.Button type={"primary"} onClick={() => {
                                 if (validateTag()) {
-                                    onSearch(getQuery((tag as any[])))
+                                    props.onSearch(getQuery((tag as any[])))
                                 }
                             }}>查询
                             </stub.ref.antd.Button>
                         </stub.ref.antd.Space>
                     </stub.ref.antd.Col>
                 </stub.ref.antd.Row>
-                {props.actions}
+                <stub.ref.antd.Space>
+                    {props.actions}
+                </stub.ref.antd.Space>
                 <stub.ref.antd.Table
                     style={{width: "100%"}}
                     size={"small"}
-                    columns={columns?.map((t: any) => {
+                    columns={props.columns?.map((t: any) => {
                         let p = {
                             ...t,
                             title: t.header,
@@ -142,13 +141,13 @@ const Table: React.FC<TableFormProp> = (props: TableFormProp) => {
                         return params
                     })}
                     rowKey={(r: any) => r.id}
-                    dataSource={datasource}
+                    dataSource={props.datasource}
                     pagination={page && {
-                        total: pageState?.total,
-                        current: pageState?.pageIndex,
-                        pageSize: pageState?.pageSize,
+                        total: page?.total,
+                        current: page?.pageIndex,
+                        pageSize: page?.pageSize,
                         showTotal: ((t: any, r: any) => `第 ${r[0]}-${r[1]} 条/总共 ${t} 条`),
-                        onChange: (pageIndex, pageSize) => setPageState({pageIndex, pageSize})
+                        onChange: (pageIndex, pageSize) => setPage({pageIndex, pageSize})
                     }}
                 />
             </stub.ref.antd.Space>

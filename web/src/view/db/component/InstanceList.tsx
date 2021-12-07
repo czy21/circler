@@ -1,29 +1,13 @@
-import React, {Fragment, memo} from "react";
 import stub from "@/init"
+import React from "react";
 import InstanceAdd from "./InstanceAdd"
-import {PageModel} from "@/model/data";
 
+const InstanceList: React.FC<any> = (props: any) => {
 
-const title = "集群"
-
-const List: React.FC<any> = (props: any) => {
-    const {history, route} = props
-
-    const [data, setData] = stub.ref.react.useState([])
-    const [page, setPage] = stub.ref.react.useState<PageModel>({})
+    const [data, setData] = stub.ref.react.useState<any>({})
 
     stub.ref.react.useEffect(() => {
         stub.store.dispatch(stub.reducer.action.option.fetch(["dbInstanceKind", "genderKind"]))
-    }, [])
-
-    const [filters, setFilter] = stub.ref.react.useState([
-        {
-            "key": "name",
-            "label": "名称"
-        },
-    ])
-
-    stub.ref.react.useEffect(() => {
         handleSearch()
     }, [])
 
@@ -34,7 +18,7 @@ const List: React.FC<any> = (props: any) => {
             render: (text: any, record: any) => {
                 return (
                     <a onClick={() => {
-                        history.push(`${route.path}/${record.name}`)
+                        props.history.push(`${props.route.path}/${record.name}`)
                     }}>{record.name}</a>
                 )
             }
@@ -74,11 +58,7 @@ const List: React.FC<any> = (props: any) => {
     ];
 
     const handleSearch = (q?: any) => {
-        stub.api.post("db/instance/search", stub.ref.lodash.omit(q, "total"))
-            .then((t: any) => {
-                setData(t.data.list)
-                setPage(t.data.page)
-            })
+        stub.api.post("db/instance/search", stub.ref.lodash.omit(q, "total")).then((t: any) => setData(t.data))
     }
 
     const [instanceAddVisible, setInstanceAddVisible] = stub.ref.react.useState<boolean>(false);
@@ -86,16 +66,20 @@ const List: React.FC<any> = (props: any) => {
     return (
         <div>
             <stub.component.Table title={"实例列表"}
-                                  datasource={data}
+                                  datasource={data.list}
                                   columns={columns}
-                                  page={page}
+                                  page={data.page}
                                   onSearch={handleSearch}
-                                  filters={filters}
+                                  filters={[
+                                      {
+                                          "key": "name",
+                                          "label": "名称"
+                                      },
+                                  ]}
                                   actions={[
                                       <stub.ref.antd.Button type={"primary"} onClick={() => setInstanceAddVisible(true)}>
-                                          <stub.ref.icon.PlusOutlined/>
-                                          创建
-                                      </stub.ref.antd.Button>
+                                          添加实例
+                                      </stub.ref.antd.Button>,
                                   ]}
             />
             <InstanceAdd visible={instanceAddVisible} onChange={() => setInstanceAddVisible(false)}/>
@@ -104,4 +88,4 @@ const List: React.FC<any> = (props: any) => {
 
 }
 
-export default List
+export default InstanceList

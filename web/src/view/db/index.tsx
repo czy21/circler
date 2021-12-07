@@ -1,5 +1,5 @@
 import Layout from '@/layout/Layout'
-import List from '@v/db/component/List'
+import InstanceList from '@v/db/component/InstanceList'
 import {renderRoutes, RouteConfig} from "react-router-config";
 
 const PATH = '/db'
@@ -11,7 +11,7 @@ let routes: RouteConfig[] = [
         routes: [
             {
                 path: PATH,
-                component: List,
+                component: InstanceList,
                 exact: true
             }
         ]
