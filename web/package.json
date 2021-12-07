@@ -43,7 +43,10 @@
     "build:env": "dotenv -e craco build"
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": "react-app",
+    "rules": {
+
+    }
   },
   "browserslist": {
     "production": [

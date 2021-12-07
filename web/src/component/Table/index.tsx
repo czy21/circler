@@ -12,7 +12,7 @@ interface TableProp {
     }
     columns: any[]
     filter?: any
-    action?: any
+    extension?:any
 }
 
 const Index: React.FC<TableProp> = (props: TableProp) => {
@@ -23,7 +23,7 @@ const Index: React.FC<TableProp> = (props: TableProp) => {
         <div>
             <stub.ref.antd.Space direction={"vertical"} style={{width: "100%"}} size={"middle"}>
                 {props.filter}
-                {props.action}
+                {props.extension}
                 <stub.ref.antd.Table
                     style={{width: "100%"}}
                     size={"small"}

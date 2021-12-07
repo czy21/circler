@@ -1,6 +1,6 @@
 import stub from "@/init";
 import React from "react";
-import styles from '@/assets/less/Home.m.less'
+import styles from './index.m.less'
 import {MenuFoldOutlined, MenuUnfoldOutlined} from '@ant-design/icons';
 
 export const mapStateToProps = (state: any) => {

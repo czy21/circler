@@ -1,4 +1,4 @@
-import styles from '@/assets/less/Home.m.less'
+import styles from './index.m.less'
 import stub from "@/init";
 import React from "react";
 import routes from "@/route";
