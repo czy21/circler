@@ -112,9 +112,11 @@ const Filter: React.FC<FilterProp> = (props: FilterProp) => {
                             onVisibleChange={setMenuVisible}
                         >
                             <stub.ref.antd.Input
+                                ref={inputRef}
                                 type={"text"}
                                 value={current[1]}
                                 autoComplete={"off"}
+                                onClick={() => setMenuVisible(true)}
                                 onChange={(e) => {
                                     setCurrent([current[0], e.target.value])
                                     setMenuVisible(false)
@@ -127,8 +129,6 @@ const Filter: React.FC<FilterProp> = (props: FilterProp) => {
                                         })
                                     }
                                 }}
-                                ref={inputRef}
-                                onClick={() => setMenuVisible(true)}
                             />
                         </stub.ref.antd.Dropdown>
                     </div>
