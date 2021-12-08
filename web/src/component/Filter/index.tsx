@@ -9,100 +9,126 @@ interface FilterProp {
         pageSize?: number,
         total?: number
     }
-    filters?: any[]
+    filters: any[]
 }
 
-const Filter:React.FC<FilterProp>=(props:FilterProp)=>{
-    const [currentFilter, setCurrentFilter] = stub.ref.react.useState<[string, any]>(["", undefined])
-    const [tag, setTag] = stub.ref.react.useState({})
+interface TagValue {
+    label: string,
+    value?: any
+}
 
-    const tagValueAny = () => {
-        return stub.ref.lodash.isEmpty(Object.values(tag))
-    }
+const DefaultCurrent: any = ["", undefined]
+const DefaultTag = {}
 
-    const editTag = (value: {}) => {
+const Filter: React.FC<FilterProp> = (props: FilterProp) => {
+    const [current, setCurrent] = stub.ref.react.useState<[string, any]>(DefaultCurrent)
+    const [tag, setTag] = stub.ref.react.useState<any>(DefaultTag)
+    const [menuVisible, setMenuVisible] = stub.ref.react.useState<boolean>()
+
+    const putTag = (value: {}) => {
         setTag({...tag, ...value})
     }
 
     const removeTag = (key: string) => {
+        if (current[0] === key) {
+            clearCurrent()
+        }
         setTag(stub.ref.lodash.omit(tag, [key]))
+        inputRef.current.focus()
     }
 
     const renderTag = () => {
-        return ((Object.entries(tag) as any[]).map(([k, v]) => {
-            return (<stub.ref.antd.Tag
-                color={stub.ref.lodash.isEqual(k,currentFilter[0])  ? "#87d068" : undefined}
-                style={{borderRadius: "20px", fontSize: "14px"}}
-                closable={true}
-                onClick={() => setCurrentFilter([k, v.value])}
-                onClose={(e) => removeTag(k)} key={k}>{[v.label, v.value].join(":")}
-            </stub.ref.antd.Tag>)
-        }))
+        return ((Object.entries(tag) as any[])
+            .map(([k, v]) => {
+                return (
+                    <stub.ref.antd.Tag
+                        key={k}
+                        color={k === current[0] ? "#87d068" : "default"}
+                        style={{borderRadius: "20px", fontSize: "14px"}}
+                        closable={true}
+                        onClick={() => {
+                            setCurrent([k, v.value])
+                            inputRef.current.focus()
+                        }}
+                        onClose={() => removeTag(k)}
+                    >
+                        {[v.label, v.value].join(":")}
+                    </stub.ref.antd.Tag>
+                )
+            }))
     }
 
-    const validateTag = () => {
-        let validateRules = (Object.entries(tag) as any[]).filter(([k, v]) => stub.ref.lodash.isEmpty(v.value)).map(([k, v]) => v.label).join(",")
+    const validateTag = (): boolean => {
+        let validateRules: string = stub.ref.lodash.filter(tag, (v: TagValue, k) => stub.ref.lodash.isEmpty(v?.value)).map(t => t.label).join(",")
         if (validateRules) {
             stub.ref.antd.message.warn([validateRules, "不能为空"].join(" "))
         }
-        return stub.ref.lodash.isEmpty(tag) || stub.ref.lodash.isEmpty(validateRules)
+        return stub.ref.lodash.isEmpty(validateRules)
     }
 
-    const getQuery = (query: any[]) => {
-        return {...Object.fromEntries(Object.entries(query).map(([k, v]) => [k, v.value])), ...props.page}
+    const transformTagToQuery = (query: any): {} => {
+        return {...Object.fromEntries(Object.entries(query).map(([k, v]) => [k, (v as TagValue)?.value])), ...props.page}
     }
 
     const renderFilter = () => {
         return (
             <stub.ref.antd.Menu
                 onClick={({item, key, keyPath, domEvent}) => {
-                    console.log(tag)
-                    let tagValue: any = (tag as any)[key]?.value;
-                    if (stub.ref.lodash.isEmpty(tag) || tagValueAny()) {
-                        setCurrentFilter([key, tagValue])
-                        editTag({
-                            [key]: {
-                                "label": ((props.filters as any[]).filter(t => t.key === key)[0]).label,
-                                "value": tagValue
-                            }
-                        })
-                    }
+                    let tagValue: any = tag[key]?.value;
+                    setCurrent([key, tagValue])
+                    putTag({
+                        [key]: {
+                            label: (props.filters.filter(t => t.key === key)[0]).label,
+                            value: tagValue
+                        } as TagValue
+                    })
+                    inputRef.current.focus()
+                    setMenuVisible(false)
                 }}>
-                {(props.filters as any[]).map(t => {
-                    return (<stub.ref.antd.Menu.Item key={t.key}>{t.label}</stub.ref.antd.Menu.Item>)
-                })}
+                {props.filters.map(t => (<stub.ref.antd.Menu.Item key={t.key}>{t.label}</stub.ref.antd.Menu.Item>))}
             </stub.ref.antd.Menu>
         )
     }
-    const filterRef = stub.ref.react.useRef<any>();
+
+    const clearCurrent = () => {
+        setCurrent(DefaultCurrent)
+    }
+    const clearTag = () => {
+        setTag(DefaultTag)
+    }
+    const inputRef = stub.ref.react.useRef<any>()
+
     return (
         <stub.ref.antd.Row gutter={8}>
             <stub.ref.antd.Col span={22}>
-                <div hidden={stub.ref.lodash.isEmpty(props.filters)}
-                     className={styles.wrapper}
-                     ref={filterRef}
-                >
+                <div className={styles.wrapper}>
                     <div className={styles.content}>
                         {renderTag()}
-                        <stub.ref.antd.Dropdown overlay={renderFilter()} trigger={['click']} overlayStyle={{minWidth: "180px"}}>
+                        <stub.ref.antd.Dropdown
+                            overlay={renderFilter()}
+                            overlayStyle={{minWidth: "180px"}}
+                            trigger={['click']}
+                            visible={menuVisible}
+                            onVisibleChange={setMenuVisible}
+                        >
                             <stub.ref.antd.Input
                                 type={"text"}
-                                value={(currentFilter as any[])[1]}
+                                value={current[1]}
                                 autoComplete={"off"}
                                 onChange={(e) => {
-                                    setCurrentFilter([(currentFilter as any[])[0], e.target.value])
+                                    setCurrent([current[0], e.target.value])
+                                    setMenuVisible(false)
                                 }}
                                 onPressEnter={(e: any) => {
-                                    const cK: string = (currentFilter as any[])[0]
-                                    if (cK) {
-                                        editTag({
-                                            [cK]: Object.assign((tag as any)[cK], {value: (currentFilter as any[])[1]})
+                                    const ck: string = current[0]
+                                    if (ck) {
+                                        putTag({
+                                            [ck]: {...tag[ck], value: current[1]} as TagValue
                                         })
                                     }
-                                    if (tagValueAny()) {
-                                        setCurrentFilter(["", undefined])
-                                    }
                                 }}
+                                ref={inputRef}
+                                onClick={() => setMenuVisible(true)}
                             />
                         </stub.ref.antd.Dropdown>
                     </div>
@@ -111,15 +137,15 @@ const Filter:React.FC<FilterProp>=(props:FilterProp)=>{
             <stub.ref.antd.Col span={2}>
                 <stub.ref.antd.Space>
                     <stub.ref.antd.Button type={"default"} onClick={() => {
-                        let empty: any = {}
-                        setTag(empty)
-                        setCurrentFilter(["", undefined])
-                        props.onSearch(getQuery(empty))
+                        clearTag()
+                        clearCurrent()
+                        props.onSearch(transformTagToQuery({}))
                     }}>重置
                     </stub.ref.antd.Button>
                     <stub.ref.antd.Button type={"primary"} onClick={() => {
                         if (validateTag()) {
-                            props.onSearch(getQuery((tag as any[])))
+                            clearCurrent()
+                            props.onSearch(transformTagToQuery(tag))
                         }
                     }}>查询
                     </stub.ref.antd.Button>

@@ -65,20 +65,24 @@ const InstanceList: React.FC<any> = (props: any) => {
 
     const [instanceAddVisible, setInstanceAddVisible] = stub.ref.react.useState<boolean>(false);
 
-    const filter=(
-            <stub.component.Filter
+    const filter = (
+        <stub.component.Filter
             filters={[
                 {
                     "key": "name",
                     "label": "名称"
                 },
+                {
+                    "key": "address",
+                    "label": "地址"
+                },
             ]}
             onSearch={handleSearch}
             page={data.page}
-            />
+        />
     )
 
-    const extension=(
+    const extension = (
         <stub.ref.antd.Space>
             <stub.ref.antd.Button type={"primary"} onClick={() => setInstanceAddVisible(true)}>
                 添加实例
