@@ -13,19 +13,31 @@ const Header: React.FC<any> = (props: any) => {
 
     return (
         <stub.ref.antd.Layout.Header className={styles.header}>
-            {React.createElement(props.collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
-                className: styles.collapse,
-                onClick: () => {
-                    stub.store.dispatch(stub.reducer.action.home.collapse())
-                },
-            })}
-            <stub.ref.antd.Select options={Object.entries(props.locale.message || []).map(([k, v]) => {
-                return {
-                    label: (v as any)["global.language.description"], value: k
-                }
-            })} defaultValue={props.locale.key} onSelect={(value, option) => {
-                stub.store.dispatch(stub.reducer.action.home.switchLocale({key: value}))
-            }}/>
+            <stub.ref.antd.Row justify="space-between">
+                <stub.ref.antd.Col>
+                    {React.createElement(props.collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
+                        className: styles.collapse,
+                        onClick: () => {
+                            stub.store.dispatch(stub.reducer.action.home.collapse())
+                        },
+                    })}
+                </stub.ref.antd.Col>
+                <stub.ref.antd.Col>
+                    <stub.ref.antd.Select
+                        options={Object.entries(props.locale.message || []).map(([k, v]) => {
+                            return {
+                                label: (v as any)["global.language.description"], value: k
+                            }
+                        })}
+                        defaultValue={props.locale.key}
+                        onSelect={(value, option) => {
+                            stub.store.dispatch(stub.reducer.action.home.switchLocale({key: value}))
+                        }}
+                        style={{margin: "0 24px"}}
+                    />
+                </stub.ref.antd.Col>
+            </stub.ref.antd.Row>
+
         </stub.ref.antd.Layout.Header>
     )
 
