@@ -19,9 +19,13 @@ const Header: React.FC<any> = (props: any) => {
                     stub.store.dispatch(stub.reducer.action.home.collapse())
                 },
             })}
-            <stub.ref.antd.Select options={[{label: "简体中文", value: "zh-CN"}]}>
-
-            </stub.ref.antd.Select>
+            <stub.ref.antd.Select options={Object.entries(props.locale.message || []).map(([k, v]) => {
+                return {
+                    label: (v as any)["global.language.description"], value: k
+                }
+            })} defaultValue={props.locale.key} onSelect={(value, option) => {
+                stub.store.dispatch(stub.reducer.action.home.switchLocale({key: value}))
+            }}/>
         </stub.ref.antd.Layout.Header>
     )
 

@@ -14,7 +14,7 @@ const InstanceList: React.FC<any> = (props: any) => {
     const operationMenus = [
         {
             key: "backup",
-            label: <stub.ref.intl.FormattedMessage id={"a.b"} defaultMessage={"备份"}/>,
+            label: <stub.ref.intl.FormattedMessage id={"db.instance.list.backup"} defaultMessage={""}/>,
             onClick: (text: any, record: any) => {
                 console.log(record)
             }
@@ -23,7 +23,7 @@ const InstanceList: React.FC<any> = (props: any) => {
     const columns = [
         {
             key: 'name',
-            header: '名称',
+            header: <stub.ref.intl.FormattedMessage id={"db.instance.list.name"} defaultMessage={""}/>,
             render: (text: any, record: any) => {
                 return (
                     <a onClick={() => {
@@ -34,30 +34,30 @@ const InstanceList: React.FC<any> = (props: any) => {
         },
         {
             key: 'host',
-            header: 'Host',
+            header: <stub.ref.intl.FormattedMessage id={"db.instance.list.host"} defaultMessage={""}/>,
         },
         {
             key: 'port',
-            header: 'Port',
+            header: <stub.ref.intl.FormattedMessage id={"db.instance.list.port"} defaultMessage={""}/>,
         },
         {
             key: 'username',
-            header: 'UserName',
+            header: <stub.ref.intl.FormattedMessage id={"db.instance.list.username"} defaultMessage={""}/>,
         },
         {
             key: 'password',
-            header: 'Password',
+            header: <stub.ref.intl.FormattedMessage id={"db.instance.list.password"} defaultMessage={""}/>,
             render: (text: any, record: any) => (
                 <div>{text}</div>
             )
         },
         {
             key: 'description',
-            header: 'description',
+            header: <stub.ref.intl.FormattedMessage id={"db.instance.list.description"} defaultMessage={""}/>,
         },
         {
             key: 'operation',
-            title: '操作',
+            title: <stub.ref.intl.FormattedMessage id={"db.instance.list.operation"} defaultMessage={""}/>,
             render: (text: any, record: any) => {
                 const operationMenu = (
                     <stub.ref.antd.Menu>
