@@ -31,6 +31,9 @@ module.exports = {
                 },
                 lessLoaderOptions: {
                     lessOptions: {
+                        modifyVars:{
+                            '@border-radius-base': '6px'
+                        },
                         javascriptEnabled: true,
                     },
                 },
