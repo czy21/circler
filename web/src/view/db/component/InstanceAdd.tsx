@@ -84,7 +84,7 @@ const InstanceAdd: React.FC<TableFormProp> = (props: TableFormProp | any) => {
                         <stub.ref.antd.Space>
                             <stub.ref.antd.Button onClick={handleConnect} size={"small"}>Test</stub.ref.antd.Button>
                             {connectState !== undefined ?
-                                (connectState ? <stub.ref.icon.CheckCircleTwoTone twoToneColor={"#52c41a"}/> : <stub.ref.icon.CloseCircleTwoTone twoToneColor={"#ff4d4f"}/>) : ""}
+                                (connectState ? <stub.ref.icon.ai.CheckCircleTwoTone twoToneColor={"#52c41a"}/> : <stub.ref.icon.ai.CloseCircleTwoTone twoToneColor={"#ff4d4f"}/>) : ""}
                         </stub.ref.antd.Space>
                     </stub.ref.antd.Form.Item>
                 </stub.ref.antd.Form>

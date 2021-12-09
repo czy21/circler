@@ -12,7 +12,7 @@ interface TableProp {
     }
     columns: any[]
     filter?: any
-    extension?:any
+    extension?: any
 }
 
 const Index: React.FC<TableProp> = (props: TableProp) => {
@@ -26,15 +26,7 @@ const Index: React.FC<TableProp> = (props: TableProp) => {
                 {props.extension}
                 <stub.ref.antd.Table
                     size={"small"}
-                    columns={props.columns?.map((t: any) => {
-                        let p = {
-                            ...t,
-                            title: t.header,
-                            dataIndex: t.key
-                        }
-                        let {header, key, ...params} = p
-                        return params
-                    })}
+                    columns={props.columns?.map((t: any) => stub.ref.lodash.omit({...t, title: t.header, dataIndex: t.key}, ["key", "header"]))}
                     rowKey={(r: any) => r.id}
                     dataSource={props.list}
                     pagination={page && {

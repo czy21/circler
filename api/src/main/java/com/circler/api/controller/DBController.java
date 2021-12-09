@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping(path = "db")
 public class DBController extends BaseController {
@@ -24,7 +26,7 @@ public class DBController extends BaseController {
     }
 
     @PostMapping(path = "instance/add")
-    public Boolean instanceAdd(@RequestBody DBInstanceDTO dto) {
+    public Boolean instanceAdd(@Valid @RequestBody DBInstanceDTO dto) {
         dbService.addInstance(dto);
         return true;
     }

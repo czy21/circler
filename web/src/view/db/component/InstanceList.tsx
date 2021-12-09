@@ -11,7 +11,15 @@ const InstanceList: React.FC<any> = (props: any) => {
         stub.store.dispatch(stub.reducer.action.option.fetch(["dbInstanceKind", "genderKind"]))
         handleSearch()
     }, [])
-
+    const operationMenus = [
+        {
+            key: "backup",
+            label: "备份",
+            onClick: (text: any, record: any) => {
+                console.log(record)
+            }
+        }
+    ]
     const columns = [
         {
             key: 'name',
@@ -50,9 +58,28 @@ const InstanceList: React.FC<any> = (props: any) => {
         {
             key: 'operation',
             title: '操作',
-            render: (text: any, record: any) => (
-                <stub.ref.antd.Button icon={<stub.ref.icon.DashOutlined/>} type={"text"} style={{borderRadius: "16px"}} size={"small"}/>
-            ),
+            render: (text: any, record: any) => {
+                const operationMenu = (
+                    <stub.ref.antd.Menu>
+                        {
+                            operationMenus.map(t =>
+                                <stub.ref.antd.Menu.Item
+                                    onClick={() => t.onClick(text, record)}
+                                    key={t.key}
+                                    icon={(t as any).icon}
+                                >
+                                    <span>{t.label}</span>
+                                </stub.ref.antd.Menu.Item>
+                            )
+                        }
+                    </stub.ref.antd.Menu>
+                )
+                return (
+                    <stub.ref.antd.Dropdown overlay={operationMenu}>
+                        <stub.ref.antd.Button icon={<stub.ref.icon.ai.DashOutlined/>} type={"text"} style={{borderRadius: "12px"}} size={"small"}/>
+                    </stub.ref.antd.Dropdown>
+                )
+            },
             fixed: "right",
             width: 100
         },

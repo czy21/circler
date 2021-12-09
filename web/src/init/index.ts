@@ -12,4 +12,5 @@ const stub = {
     store,
     reducer
 }
+
 export default stub
