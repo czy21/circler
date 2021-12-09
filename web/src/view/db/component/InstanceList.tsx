@@ -14,7 +14,7 @@ const InstanceList: React.FC<any> = (props: any) => {
     const operationMenus = [
         {
             key: "backup",
-            label: "备份",
+            label: <stub.ref.intl.FormattedMessage id={"a.b"} defaultMessage={"备份"}/>,
             onClick: (text: any, record: any) => {
                 console.log(record)
             }

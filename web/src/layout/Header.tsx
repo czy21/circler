@@ -5,10 +5,12 @@ import {MenuFoldOutlined, MenuUnfoldOutlined} from '@ant-design/icons';
 
 export const mapStateToProps = (state: any) => {
     return {
-        collapsed: state.home.collapsed
+        collapsed: state.home.collapsed,
+        locale: state.home.locale
     }
 };
 const Header: React.FC<any> = (props: any) => {
+
     return (
         <stub.ref.antd.Layout.Header className={styles.header}>
             {React.createElement(props.collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
@@ -17,6 +19,9 @@ const Header: React.FC<any> = (props: any) => {
                     stub.store.dispatch(stub.reducer.action.home.collapse())
                 },
             })}
+            <stub.ref.antd.Select options={[{label: "简体中文", value: "zh-CN"}]}>
+
+            </stub.ref.antd.Select>
         </stub.ref.antd.Layout.Header>
     )
 

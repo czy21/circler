@@ -1,13 +1,23 @@
 import {createSlice} from "@reduxjs/toolkit";
 
+
+interface Locale {
+    key: string
+    messages: any
+}
+
 const slice = createSlice({
     name: "home",
     initialState: {
-        collapsed: false
+        collapsed: false,
+        locale: {} as Locale
     },
     reducers: {
         collapse: (state) => {
             return Object.assign({}, state, {collapsed: !state.collapsed});
+        },
+        switchLocale: (state, action) => {
+            return Object.assign({}, state, {locale: action.payload});
         }
     }
 })
