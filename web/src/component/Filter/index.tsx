@@ -140,14 +140,14 @@ const Filter: React.FC<FilterProp> = (props: FilterProp) => {
                         clearTag()
                         clearCurrent()
                         props.onSearch(transformTagToQuery({}))
-                    }}>重置
+                    }}>{<stub.ref.intl.FormattedMessage id={"common.filter.reset"} defaultMessage={""}/>}
                     </stub.ref.antd.Button>
                     <stub.ref.antd.Button type={"primary"} onClick={() => {
                         if (validateTag()) {
                             clearCurrent()
                             props.onSearch(transformTagToQuery(tag))
                         }
-                    }}>查询
+                    }}>{<stub.ref.intl.FormattedMessage id={"common.filter.search"} defaultMessage={""}/>}
                     </stub.ref.antd.Button>
                 </stub.ref.antd.Space>
             </stub.ref.antd.Col>

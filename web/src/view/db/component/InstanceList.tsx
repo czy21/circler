@@ -112,7 +112,7 @@ const InstanceList: React.FC<any> = (props: any) => {
     const extension = (
         <stub.ref.antd.Space>
             <stub.ref.antd.Button type={"primary"} onClick={() => setInstanceAddVisible(true)}>
-                添加实例
+                {<stub.ref.intl.FormattedMessage id={"db.instance.add.btn"} defaultMessage={""}/>}
             </stub.ref.antd.Button>
         </stub.ref.antd.Space>
     )

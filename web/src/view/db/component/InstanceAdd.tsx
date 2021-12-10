@@ -50,32 +50,32 @@ const InstanceAdd: React.FC<TableFormProp> = (props: TableFormProp | any) => {
                                     labelCol={{span: 8}}
                                     wrapperCol={{span: 10}}
                 >
-                    <stub.ref.antd.Form.Item label={"Name"} name={"name"}
+                    <stub.ref.antd.Form.Item label={<stub.ref.intl.FormattedMessage id={"db.instance.add.host"} defaultMessage={""}/>} name={"name"}
                                              rules={[{required: true}]}
                     >
                         <stub.ref.antd.Input/>
                     </stub.ref.antd.Form.Item>
-                    <stub.ref.antd.Form.Item label={"kind"} name={"kind"}
+                    <stub.ref.antd.Form.Item label={<stub.ref.intl.FormattedMessage id={"db.instance.add.kind"} defaultMessage={""}/>} name={"kind"}
                                              rules={[{required: true}]}
                     >
                         <stub.ref.antd.Select options={props.globalOption.dbInstanceKind}/>
                     </stub.ref.antd.Form.Item>
-                    <stub.ref.antd.Form.Item label={"Host"} name={"host"}
+                    <stub.ref.antd.Form.Item label={<stub.ref.intl.FormattedMessage id={"db.instance.add.host"} defaultMessage={""}/>} name={"host"}
                                              rules={[{required: true}]}
                     >
                         <stub.ref.antd.Input/>
                     </stub.ref.antd.Form.Item>
-                    <stub.ref.antd.Form.Item label={"Port"} name={"port"}
+                    <stub.ref.antd.Form.Item label={<stub.ref.intl.FormattedMessage id={"db.instance.add.port"} defaultMessage={""}/>} name={"port"}
                                              rules={[{required: true}]}
                     >
                         <stub.ref.antd.Input/>
                     </stub.ref.antd.Form.Item>
-                    <stub.ref.antd.Form.Item label={"UserName"} name={"username"}
+                    <stub.ref.antd.Form.Item label={<stub.ref.intl.FormattedMessage id={"db.instance.add.username"} defaultMessage={""}/>} name={"username"}
                                              rules={[{required: true}]}
                     >
                         <stub.ref.antd.Input/>
                     </stub.ref.antd.Form.Item>
-                    <stub.ref.antd.Form.Item label={"Password"} name={"password"}
+                    <stub.ref.antd.Form.Item label={<stub.ref.intl.FormattedMessage id={"db.instance.add.password"} defaultMessage={""}/>} name={"password"}
                                              rules={[{required: true}]}
                     >
                         <stub.ref.antd.Input.Password/>
