@@ -50,7 +50,7 @@ const InstanceAdd: React.FC<TableFormProp> = (props: TableFormProp | any) => {
                                     labelCol={{span: 8}}
                                     wrapperCol={{span: 10}}
                 >
-                    <stub.ref.antd.Form.Item label={<stub.ref.intl.FormattedMessage id={"db.instance.add.host"} defaultMessage={""}/>} name={"name"}
+                    <stub.ref.antd.Form.Item label={<stub.ref.intl.FormattedMessage id={"db.instance.add.name"} defaultMessage={""}/>} name={"name"}
                                              rules={[{required: true}]}
                     >
                         <stub.ref.antd.Input/>

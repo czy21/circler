@@ -119,8 +119,7 @@ const InstanceList: React.FC<any> = (props: any) => {
 
     return (
         <div>
-            <stub.component.Table title={"实例列表"}
-                                  filter={filter}
+            <stub.component.Table filter={filter}
                                   extension={extension}
                                   columns={columns}
                                   list={data.list}

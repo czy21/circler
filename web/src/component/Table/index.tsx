@@ -3,7 +3,6 @@ import stub from '@/init'
 import {PageModel} from "@/model/data";
 
 interface TableProp {
-    title: string
     list: any[]
     page?: {
         pageIndex?: number,

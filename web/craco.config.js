@@ -5,7 +5,8 @@ const { loaderByName } = require("@craco/craco");
 
 module.exports = {
     eslint: {
-        enable: process.env.NODE_ENV === "development",
+        // enable: process.env.NODE_ENV === "development",
+        enable:false
     },
     plugins: [
         {
