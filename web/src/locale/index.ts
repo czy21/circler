@@ -1,6 +1,7 @@
 export default {
     "zh_CN": {
         "global.language.description": "简体中文",
+        "table.operation": "操作",
         "common.ok": "确认",
         "common.cancel": "取消",
         "common.filter.reset": "重置",
@@ -15,7 +16,7 @@ export default {
         "db.instance.list.operation": "操作",
         "db.instance.add.btn": "添加实例",
         "db.instance.add.name": "名称",
-        "db.instance.add.kind":"数据库",
+        "db.instance.add.kind": "数据库",
         "db.instance.add.host": "主机名",
         "db.instance.add.port": "端口",
         "db.instance.add.username": "用户名",
@@ -25,6 +26,7 @@ export default {
     },
     "en_US": {
         "global.language.description": "English",
+        "table.operation": "Operation",
         "common.ok": "OK",
         "common.cancel": "Cancel",
         "common.filter.reset": "Reset",
@@ -39,7 +41,7 @@ export default {
         "db.instance.list.operation": "Operation",
         "db.instance.add.btn": "Add Instance",
         "db.instance.add.name": "Name",
-        "db.instance.add.kind":"database",
+        "db.instance.add.kind": "database",
         "db.instance.add.host": "Host",
         "db.instance.add.port": "Port",
         "db.instance.add.username": "UserName",

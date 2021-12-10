@@ -1,6 +1,7 @@
 import stub from "@/init"
 import React from "react";
 import InstanceAdd from "./InstanceAdd"
+import {OperationRender} from "@c/Table";
 
 const InstanceList: React.FC<any> = (props: any) => {
 
@@ -11,7 +12,7 @@ const InstanceList: React.FC<any> = (props: any) => {
         stub.store.dispatch(stub.reducer.action.option.fetch(["dbInstanceKind", "genderKind"]))
         handleSearch()
     }, [])
-    const operationMenus = [
+    const operationActions = [
         {
             key: "backup",
             label: <stub.ref.intl.FormattedMessage id={"db.instance.list.backup"} defaultMessage={""}/>,
@@ -57,32 +58,9 @@ const InstanceList: React.FC<any> = (props: any) => {
         },
         {
             key: 'operation',
-            title: <stub.ref.intl.FormattedMessage id={"db.instance.list.operation"} defaultMessage={""}/>,
-            render: (text: any, record: any) => {
-                const operationMenu = (
-                    <stub.ref.antd.Menu>
-                        {
-                            operationMenus.map(t =>
-                                <stub.ref.antd.Menu.Item
-                                    onClick={() => t.onClick(text, record)}
-                                    key={t.key}
-                                    icon={(t as any).icon}
-                                >
-                                    <span>{t.label}</span>
-                                </stub.ref.antd.Menu.Item>
-                            )
-                        }
-                    </stub.ref.antd.Menu>
-                )
-                return (
-                    <stub.ref.antd.Dropdown overlay={operationMenu}>
-                        <stub.ref.antd.Button icon={<stub.ref.icon.ai.DashOutlined/>} type={"text"} style={{borderRadius: "12px"}} size={"small"}/>
-                    </stub.ref.antd.Dropdown>
-                )
-            },
-            fixed: "right",
-            width: 100
-        },
+            header: <stub.ref.intl.FormattedMessage id={"table.operation"} defaultMessage={""}/>,
+            render: (text: any, record: any) => OperationRender(text, record, operationActions)
+        }
     ];
 
     const handleSearch = (q?: any) => {

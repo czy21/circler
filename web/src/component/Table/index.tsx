@@ -41,4 +41,21 @@ const Index: React.FC<TableProp> = (props: TableProp) => {
     )
 }
 
-export default Index;
+export default Index
+
+export const OperationRender = (text: any, record: any, actions: any[]) => (
+    <stub.ref.antd.Dropdown
+        overlay={
+            <stub.ref.antd.Menu>
+                {
+                    actions.map((t: any) =>
+                        <stub.ref.antd.Menu.Item onClick={() => t.onClick(text, record)} key={t.key} icon={(t as any).icon}><span>{t.label}</span></stub.ref.antd.Menu.Item>
+                    )
+                }
+            </stub.ref.antd.Menu>
+        }
+    >
+        <stub.ref.antd.Button icon={<stub.ref.icon.ai.DashOutlined/>} type={"text"} size={"small"}/>
+    </stub.ref.antd.Dropdown>
+
+)
