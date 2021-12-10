@@ -87,6 +87,9 @@ const InstanceAdd: React.FC<TableFormProp> = (props: TableFormProp | any) => {
                                 (connectState ? <stub.ref.icon.ai.CheckCircleTwoTone twoToneColor={"#52c41a"}/> : <stub.ref.icon.ai.CloseCircleTwoTone twoToneColor={"#ff4d4f"}/>) : ""}
                         </stub.ref.antd.Space>
                     </stub.ref.antd.Form.Item>
+                    <stub.ref.antd.Form.Item label={<stub.ref.intl.FormattedMessage id={"db.instance.add.description"} defaultMessage={""}/>} name={"description"}>
+                        <stub.ref.antd.Input.TextArea/>
+                    </stub.ref.antd.Form.Item>
                 </stub.ref.antd.Form>
             </stub.component.Create>
         </div>

@@ -21,4 +21,5 @@ public class DBInstanceDTO extends BaseEntity<Long> {
     private String password;
     @NotBlank
     private String kind;
+    private String description;
 }

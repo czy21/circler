@@ -1,28 +1,20 @@
 import React from 'react';
 import stub from '@/init';
+import {ModalProps} from "antd"
 
-interface CreateFormProps {
-    visible: boolean;
-    title: string
-    width?: string | number
-    style?: React.CSSProperties
-    onOk: () => void
-    onCancel: () => void
-}
-
-const Modal: React.FC<CreateFormProps> = (props) => {
-    const {title, visible, onOk, onCancel, width, style} = props;
+const Modal: React.FC<ModalProps> = (props: ModalProps|any) => {
     return (
         <stub.ref.antd.Modal
-            width={width ?? 800}
-            style={style}
+            width={props.width ?? 800}
+            style={props.style}
             destroyOnClose
-            title={`${title}`}
-            visible={visible}
-            onOk={onOk}
-            okText={"确认"}
-            onCancel={onCancel}
-            cancelText={"取消"}
+            title={props.title}
+            visible={props.visible}
+            onOk={props.onOk}
+            okText={<stub.ref.intl.FormattedMessage id={"common.ok"} defaultMessage={""}/>}
+            onCancel={props.onCancel}
+            cancelText={<stub.ref.intl.FormattedMessage id={"common.cancel"} defaultMessage={""}/>}
+            {...props}
         >
             {props.children}
         </stub.ref.antd.Modal>
