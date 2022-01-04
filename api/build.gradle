@@ -30,7 +30,6 @@ dependencyManagement {
         dependency "org.projectlombok:lombok-mapstruct-binding:${lombokMapstructBindingVersion}"
         dependency "org.mybatis.spring.boot:mybatis-spring-boot-starter:${mybatisVersion}"
         dependency "com.github.pagehelper:pagehelper-spring-boot-starter:${pagehelperVersion}"
-
     }
 }
 
@@ -50,6 +49,9 @@ dependencies {
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter'
     implementation "com.github.pagehelper:pagehelper-spring-boot-starter"
     implementation "mysql:mysql-connector-java"
+
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'io.micrometer:micrometer-registry-prometheus:latest.release'
 
     implementation "org.mapstruct:mapstruct", "org.projectlombok:lombok"
     annotationProcessor "org.mapstruct:mapstruct-processor", "org.projectlombok:lombok", "org.projectlombok:lombok-mapstruct-binding"
