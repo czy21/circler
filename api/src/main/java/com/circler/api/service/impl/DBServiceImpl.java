@@ -35,7 +35,6 @@ public class DBServiceImpl implements DBService {
     @Transactional
     @Override
     public void addInstance(DBInstanceDTO dto) {
-
         DBInstancePO po = dbAutoMap.mapToInstancePO(dto);
         dbInstanceMapper.insertOne(po);
     }

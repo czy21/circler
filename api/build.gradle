@@ -6,15 +6,11 @@ plugins {
 
 
 ext {
-    apacheCommonLang3Version = "3.11"
-    apacheCommonPool2Version = "2.8.1"
-    apacheCommonIOVersion = "2.7"
+    apacheCommonIOVersion = "2.11.0"
     mapstructVersion = "1.4.2.Final"
-    lombokVersion = "1.18.16"
     lombokMapstructBindingVersion = "0.2.0"
     mybatisVersion = "2.2.0"
     pagehelperVersion = "1.4.1"
-    mysqlConnectorVersion = "8.0.21"
 }
 
 group = 'com.circler'
@@ -28,15 +24,11 @@ dependencyManagement {
     }
 
     dependencies {
-        dependency "org.apache.commons:commons-pool2:${apacheCommonPool2Version}"
-        dependency "org.apache.commons:commons-lang3:${apacheCommonLang3Version}"
         dependency "commons-io:commons-io:${apacheCommonIOVersion}"
         dependency "org.mapstruct:mapstruct:${mapstructVersion}"
         dependency "org.mapstruct:mapstruct-processor:${mapstructVersion}"
-        dependency "org.projectlombok:lombok:${lombokVersion}"
         dependency "org.projectlombok:lombok-mapstruct-binding:${lombokMapstructBindingVersion}"
         dependency "org.mybatis.spring.boot:mybatis-spring-boot-starter:${mybatisVersion}"
-        dependency "mysql:mysql-connector-java:${mysqlConnectorVersion}"
         dependency "com.github.pagehelper:pagehelper-spring-boot-starter:${pagehelperVersion}"
 
     }
