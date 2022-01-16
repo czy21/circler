@@ -4,6 +4,7 @@ import {RouteConfig} from "react-router-config";
 // import {App as Project} from '@v/project'
 // import {App as Cluster} from '@v/cluster'
 import {App as DB} from '@v/db'
+import {App as PROJECT} from '@v/project'
 
 const routes: RouteConfig[] = [
     // {
@@ -26,5 +27,9 @@ const routes: RouteConfig[] = [
         path: "/db",
         component: DB,
     },
+    {
+        path: "/project",
+        component: PROJECT
+    }
 ];
 export default routes

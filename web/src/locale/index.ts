@@ -22,7 +22,11 @@ export default {
         "db.instance.add.username": "用户名",
         "db.instance.add.password": "密码",
         "db.instance.add.description": "描述",
-        "db.instance.add.operation": "操作"
+        "db.instance.add.operation": "操作",
+        "project.list.name": "名称",
+        "project.list.description": "描述",
+        "project.list.operation.build": "构建",
+        "project.list.operation.deploy": "发布",
     },
     "en_US": {
         "global.language.description": "English",
@@ -47,6 +51,10 @@ export default {
         "db.instance.add.username": "UserName",
         "db.instance.add.password": "Password",
         "db.instance.add.description": "Description",
-        "db.instance.add.operation": "Operation"
+        "db.instance.add.operation": "Operation",
+        "project.list.name": "Name",
+        "project.list.description": "Description",
+        "project.list.operation.build": "Build",
+        "project.list.operation.deploy": "Deploy",
     }
 }
