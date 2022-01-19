@@ -23,6 +23,7 @@
     "codemirror": "^5.62.0",
     "craco-alias": "^3.0.1",
     "craco-less": "^1.18.0",
+    "dotenv-cli": "^4.1.1",
     "http-proxy-middleware": "^2.0.1",
     "js-yaml": "^4.1.0",
     "lodash": "^4.17.21",
@@ -41,8 +42,7 @@
   },
   "scripts": {
     "start": "craco start",
-    "build": "craco build",
-    "build:env": "dotenv -e craco build"
+    "build": "dotenv -e .env.prod craco build"
   },
   "eslintConfig": {
     "extends": "react-app",
