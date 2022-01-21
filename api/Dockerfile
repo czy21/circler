@@ -1,7 +1,7 @@
 FROM python:3.10-slim
 WORKDIR /home/app
 COPY . /home/app/
-RUN cp source.list /etc/apt/
+COPY sources.list /etc/apt/
 
 RUN apt-get update && apt-get install gcc -y && apt-get clean
 RUN pip install --trusted-host nexus.cluster.com --index-url http://nexus.cluster.com/repository/pypi-proxy/simple/ --requirement requirements.txt --no-cache-dir
