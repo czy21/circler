@@ -1,8 +1,8 @@
-FROM python:3.9-alpine
+FROM python:3.10-slim
 WORKDIR /home/app
 COPY . /home/app/
 
-RUN apk add --no-cache gcc musl-dev linux-headers
+RUN apt-get update && apt-get install gcc -y && apt-get clean
 RUN pip install --trusted-host nexus.cluster.com --index-url http://nexus.cluster.com/repository/pypi-proxy/simple/ --requirement requirements.txt --no-cache-dir
 
 VOLUME ["/home/app/data/","home/app/config/"]
