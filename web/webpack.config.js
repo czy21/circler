@@ -5,6 +5,7 @@ module.exports = {
         }
         // console.log(JSON.stringify(webpackConfig, null, 4))
         // Always return the config object.
+        webpackConfig.output.publicPath = process.env.REACT_APP_BASE_URL
         return webpackConfig;
     }
 };

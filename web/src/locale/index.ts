@@ -25,8 +25,11 @@ export default {
         "db.instance.add.operation": "操作",
         "project.list.name": "名称",
         "project.list.description": "描述",
+        "project.list.group": "所属组",
         "project.list.operation.build": "构建",
         "project.list.operation.deploy": "发布",
+        "project.list.addGroup": "添加组",
+        "project.list.addProject": "添加项目"
     },
     "en_US": {
         "global.language.description": "English",
@@ -54,7 +57,10 @@ export default {
         "db.instance.add.operation": "Operation",
         "project.list.name": "Name",
         "project.list.description": "Description",
+        "project.list.group": "Own Group",
         "project.list.operation.build": "Build",
         "project.list.operation.deploy": "Deploy",
+        "project.list.addGroup": "Add Group",
+        "project.list.addProject": "Add Project"
     }
 }

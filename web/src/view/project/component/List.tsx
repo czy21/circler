@@ -44,6 +44,10 @@ const List: React.FC<any> = (props: any) => {
             header: <stub.ref.intl.FormattedMessage id={"project.list.description"} defaultMessage={""}/>,
         },
         {
+            key: 'group',
+            header: <stub.ref.intl.FormattedMessage id={"project.list.group"} defaultMessage={""}/>,
+        },
+        {
             key: 'operation',
             header: <stub.ref.intl.FormattedMessage id={"table.operation"} defaultMessage={""}/>,
             render: (text: any, record: any) => OperationRender(text, record, operationActions)
@@ -55,7 +59,8 @@ const List: React.FC<any> = (props: any) => {
         stub.api.post("project/search", stub.ref.lodash.omit(q, "total")).then((t: any) => setData(t.data))
     }
 
-    const [instanceAddVisible, setInstanceAddVisible] = stub.ref.react.useState<boolean>(false);
+    const [instanceAddGroupVisible, setInstanceAddGroupVisible] = stub.ref.react.useState<boolean>(false);
+    const [instanceAddProjectVisible, setInstanceAddProjectVisible] = stub.ref.react.useState<boolean>(false);
 
     const filter = (
         <stub.component.Filter
@@ -76,8 +81,11 @@ const List: React.FC<any> = (props: any) => {
 
     const extension = (
         <stub.ref.antd.Space>
-            <stub.ref.antd.Button type={"primary"} onClick={() => setInstanceAddVisible(true)}>
-                {<stub.ref.intl.FormattedMessage id={"db.instance.add.btn"} defaultMessage={""}/>}
+            <stub.ref.antd.Button type={"primary"} onClick={() => setInstanceAddGroupVisible(true)}>
+                {<stub.ref.intl.FormattedMessage id={"project.list.addGroup"} defaultMessage={""}/>}
+            </stub.ref.antd.Button>
+            <stub.ref.antd.Button type={"primary"} onClick={() => setInstanceAddProjectVisible(true)}>
+                {<stub.ref.intl.FormattedMessage id={"project.list.addProject"} defaultMessage={""}/>}
             </stub.ref.antd.Button>
         </stub.ref.antd.Space>
     )
