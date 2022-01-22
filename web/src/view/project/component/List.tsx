@@ -81,11 +81,11 @@ const List: React.FC<any> = (props: any) => {
 
     const extension = (
         <stub.ref.antd.Space>
-            <stub.ref.antd.Button type={"primary"} onClick={() => setInstanceAddGroupVisible(true)}>
-                {<stub.ref.intl.FormattedMessage id={"project.list.addGroup"} defaultMessage={""}/>}
-            </stub.ref.antd.Button>
             <stub.ref.antd.Button type={"primary"} onClick={() => setInstanceAddProjectVisible(true)}>
                 {<stub.ref.intl.FormattedMessage id={"project.list.addProject"} defaultMessage={""}/>}
+            </stub.ref.antd.Button>
+            <stub.ref.antd.Button type={"primary"} onClick={() => setInstanceAddGroupVisible(true)}>
+                {<stub.ref.intl.FormattedMessage id={"project.list.addGroup"} defaultMessage={""}/>}
             </stub.ref.antd.Button>
         </stub.ref.antd.Space>
     )
