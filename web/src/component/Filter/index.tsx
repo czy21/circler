@@ -106,7 +106,7 @@ const Filter: React.FC<FilterProp> = (props: FilterProp) => {
                         {renderTag()}
                         <stub.ref.antd.Dropdown
                             overlay={renderFilter()}
-                            overlayStyle={{minWidth: "180px"}}
+                            overlayStyle={{minWidth: "160px"}}
                             trigger={['click']}
                             visible={menuVisible}
                             onVisibleChange={setMenuVisible}

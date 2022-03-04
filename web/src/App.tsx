@@ -9,7 +9,7 @@ const App = () => {
     return (
         <stub.ref.antd.ConfigProvider componentSize={"middle"}>
             <stub.ref.reactRedux.Provider store={stub.store}>
-                <BrowserRouter basename={process.env.BASE_URL}>
+                <BrowserRouter basename={process.env.REACT_APP_BASE_URL}>
                     <Home/>
                 </BrowserRouter>
             </stub.ref.reactRedux.Provider>
