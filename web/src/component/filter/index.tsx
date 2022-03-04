@@ -1,7 +1,7 @@
 import React from "react";
 import lodash from 'lodash'
-import antd from 'antd'
-import intl from 'react-intl'
+import * as antd from 'antd'
+import * as intl from 'react-intl'
 import styles from "./index.m.less";
 
 interface FilterProp {

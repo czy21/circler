@@ -1,6 +1,6 @@
 import React from "react";
 import lodash from 'lodash'
-import antd from 'antd'
+import * as antd from 'antd'
 import * as icon from '@ant-design/icons'
 import {PageModel} from "./data";
 

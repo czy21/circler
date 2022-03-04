@@ -1,5 +1,5 @@
 import * as ref from '@/init/reference'
-import {default as component} from '@c/index'
+import * as component from '@c'
 import {default as util} from '@/util'
 import {default as api} from '@/init/request'
 import {store, reducer} from "@/reducer";

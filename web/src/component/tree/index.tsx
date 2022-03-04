@@ -1,5 +1,5 @@
 import React from "react";
-import antd from 'antd'
+import * as antd from 'antd'
 
 interface TreeProps {
     value?: any[];

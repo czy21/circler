@@ -40,7 +40,7 @@ const InstanceAdd: React.FC<TableFormProp> = (props: TableFormProp | any) => {
 
     return (
         <div>
-            <stub.component.Create
+            <stub.component.Modal
                 title={"添加实例"}
                 width={600}
                 visible={visible}
@@ -91,7 +91,7 @@ const InstanceAdd: React.FC<TableFormProp> = (props: TableFormProp | any) => {
                         <stub.ref.antd.Input.TextArea/>
                     </stub.ref.antd.Form.Item>
                 </stub.ref.antd.Form>
-            </stub.component.Create>
+            </stub.component.Modal>
         </div>
     )
 }

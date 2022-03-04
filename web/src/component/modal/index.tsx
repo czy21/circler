@@ -1,6 +1,7 @@
 import React from "react";
-import antd, {ModalProps} from 'antd'
-import intl from 'react-intl'
+import * as antd from 'antd'
+import {ModalProps} from 'antd'
+import * as intl from 'react-intl'
 
 const Index: React.FC<ModalProps> = (props: ModalProps | any) => {
     return (
