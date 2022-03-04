@@ -42,7 +42,8 @@
   },
   "scripts": {
     "start": "craco start",
-    "build": "dotenv -e .env.prod craco build"
+    "build": "dotenv -e .env.prod craco build",
+    "deploy": "node deploy.js"
   },
   "eslintConfig": {
     "extends": "react-app",

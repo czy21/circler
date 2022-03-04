@@ -1,6 +1,6 @@
 import stub from "@/init"
 import React from "react";
-import {OperationRender} from "@c/Table";
+import {OperationRender} from "@c/table";
 
 const List: React.FC<any> = (props: any) => {
 

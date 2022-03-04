@@ -1,22 +1,22 @@
 import React from "react";
-import stub from "@/init";
+import antd from 'antd'
 
 interface TreeProps {
     value?: any[];
     onChange?: (value: any) => void;
 }
 
-const Tree: React.FC<TreeProps> = ({value, onChange}) => {
+const Index: React.FC<TreeProps> = ({value, onChange}) => {
 
-    const [options, setOptions] = stub.ref.react.useState<any>(value);
+    const [options, setOptions] = React.useState<any>(value);
 
-    const onLoadChange = (node:any) => {
+    const onLoadChange = (node: any) => {
 
         return []
     }
 
     return (
-        <stub.ref.antd.Tree
+        <antd.Tree
             height={300}
             checkable
             fieldNames={{"title": "label", "key": "value"}}
@@ -26,4 +26,4 @@ const Tree: React.FC<TreeProps> = ({value, onChange}) => {
         />
     );
 };
-export default Tree
+export default Index

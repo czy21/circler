@@ -1,0 +1,24 @@
+import React from "react";
+import antd, {ModalProps} from 'antd'
+import intl from 'react-intl'
+
+const Index: React.FC<ModalProps> = (props: ModalProps | any) => {
+    return (
+        <antd.Modal
+            width={props.width ?? 800}
+            style={props.style}
+            destroyOnClose
+            title={props.title}
+            visible={props.visible}
+            onOk={props.onOk}
+            okText={<intl.FormattedMessage id={"common.ok"} defaultMessage={""}/>}
+            onCancel={props.onCancel}
+            cancelText={<intl.FormattedMessage id={"common.cancel"} defaultMessage={""}/>}
+            {...props}
+        >
+            {props.children}
+        </antd.Modal>
+    );
+};
+
+export default Index;

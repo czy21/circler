@@ -1,7 +1,7 @@
 import stub from "@/init"
 import React from "react";
 import InstanceAdd from "./InstanceAdd"
-import {OperationRender} from "@c/Table";
+import {OperationRender} from "@c/table";
 
 const InstanceList: React.FC<any> = (props: any) => {
 

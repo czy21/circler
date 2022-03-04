@@ -1,8 +1,10 @@
 import React from "react";
-import stub from '@/init'
-import {PageModel} from "@/model/data";
+import lodash from 'lodash'
+import antd from 'antd'
+import * as icon from '@ant-design/icons'
+import {PageModel} from "./data";
 
-interface TableProp {
+export interface TableProp {
     list: any[]
     page?: {
         pageIndex?: number,
@@ -16,16 +18,16 @@ interface TableProp {
 
 const Index: React.FC<TableProp> = (props: TableProp) => {
 
-    const [page, setPage] = stub.ref.react.useState<PageModel>({pageIndex: 1, pageSize: 10, ...props.page})
+    const [page, setPage] = React.useState<PageModel>({pageIndex: 1, pageSize: 10, ...props.page})
 
     return (
         <div>
-            <stub.ref.antd.Space direction={"vertical"} style={{width: "100%"}} size={"middle"}>
+            <antd.Space direction={"vertical"} style={{width: "100%"}} size={"middle"}>
                 {props.filter}
                 {props.extension}
-                <stub.ref.antd.Table
+                <antd.Table
                     size={"small"}
-                    columns={props.columns?.map((t: any) => stub.ref.lodash.omit({...t, title: t.header, dataIndex: t.key}, ["key", "header"]))}
+                    columns={props.columns?.map((t: any) => lodash.omit({...t, title: t.header, dataIndex: t.key}, ["key", "header"]))}
                     rowKey={(r: any) => r.id}
                     dataSource={props.list}
                     pagination={page && {
@@ -36,7 +38,7 @@ const Index: React.FC<TableProp> = (props: TableProp) => {
                         onChange: (pageIndex, pageSize) => setPage({pageIndex, pageSize})
                     }}
                 />
-            </stub.ref.antd.Space>
+            </antd.Space>
         </div>
     )
 }
@@ -44,18 +46,18 @@ const Index: React.FC<TableProp> = (props: TableProp) => {
 export default Index
 
 export const OperationRender = (text: any, record: any, actions: any[]) => (
-    <stub.ref.antd.Dropdown
+    <antd.Dropdown
         overlay={
-            <stub.ref.antd.Menu>
+            <antd.Menu>
                 {
                     actions.map((t: any) =>
-                        <stub.ref.antd.Menu.Item onClick={() => t.onClick(text, record)} key={t.key} icon={(t as any).icon}><span>{t.label}</span></stub.ref.antd.Menu.Item>
+                        <antd.Menu.Item onClick={() => t.onClick(text, record)} key={t.key} icon={(t as any).icon}><span>{t.label}</span></antd.Menu.Item>
                     )
                 }
-            </stub.ref.antd.Menu>
+            </antd.Menu>
         }
     >
-        <stub.ref.antd.Button icon={<stub.ref.icon.ai.DashOutlined/>} type={"text"} size={"small"}/>
-    </stub.ref.antd.Dropdown>
+        <antd.Button icon={<icon.DashOutlined/>} type={"text"} size={"small"}/>
+    </antd.Dropdown>
 
 )

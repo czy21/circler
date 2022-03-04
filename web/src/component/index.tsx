@@ -1,11 +1,4 @@
-import Table from './Table'
-import Filter from './Filter'
-import Tree from './Tree'
-import Modal from './Modal'
-
-export default {
-    Table,
-    Filter,
-    Tree,
-    Create: Modal
-}
+export {default as Tree} from './tree'
+export {default as Filter} from './filter'
+export {default as Table} from './table'
+export {default as Modal} from './modal'
