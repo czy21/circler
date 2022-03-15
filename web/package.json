@@ -43,7 +43,7 @@
   "scripts": {
     "start": "craco start",
     "build": "dotenv -e .env.prod craco build",
-    "build:tsc": "tsc -p tsconfig.build.json --target ES5 --outDir lib"
+    "build:esm": "tsc -p tsconfig.build.json --outDir build/lib"
   },
   "eslintConfig": {
     "extends": "react-app",

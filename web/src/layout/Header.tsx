@@ -30,7 +30,7 @@ const Header: React.FC<any> = (props: any) => {
                             }
                         })}
                         defaultValue={props.locale.key}
-                        onSelect={(value, option) => {
+                        onSelect={(value:any, option:any) => {
                             stub.store.dispatch(stub.reducer.action.home.switchLocale({key: value}))
                         }}
                         style={{margin: "0 24px"}}
