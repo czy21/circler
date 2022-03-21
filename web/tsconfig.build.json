@@ -1,15 +1,24 @@
 {
   "compilerOptions": {
-    "declaration": true,
-    "module": "esnext",
     "target": "es5",
-    "lib": ["es6", "dom"],
+    "module": "esnext",
     "jsx": "react",
+    "sourceMap": true,
+    "outDir": "dist",
+    "strict": true,
     "moduleResolution": "node",
-    "esModuleInterop": true
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "declaration": true,
+    "declarationDir": "types",
+    "emitDeclarationOnly": true
   },
-  "include": ["src/component/"],
+  "include": [
+    "src/component/"
+  ],
   "exclude": [
-    "node_modules",
+    "node_modules"
   ]
 }
