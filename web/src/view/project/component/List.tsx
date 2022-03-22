@@ -1,6 +1,6 @@
 import stub from "@/init"
 import React from "react";
-import {Table, Filter} from "share-react";
+import {Table, Filter} from "@c";
 
 const List: React.FC<any> = (props: any) => {
 

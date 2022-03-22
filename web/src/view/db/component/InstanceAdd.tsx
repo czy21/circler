@@ -1,6 +1,6 @@
 import stub from "@/init";
 import React from "react";
-import {Modal} from 'share-react'
+import {Modal} from '@c'
 
 interface TableFormProp {
     visible: boolean

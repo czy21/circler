@@ -13,6 +13,12 @@
       ],
       "@v/*": [
         "src/view/*"
+      ],
+      "@share-react": [
+        "../share/react/src/"
+      ],
+      "@share-react/*": [
+        "../share/react/src/*"
       ]
     }
   }

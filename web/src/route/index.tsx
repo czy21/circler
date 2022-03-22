@@ -27,9 +27,9 @@ const routes: RouteConfig[] = [
         path: "/db",
         component: DB,
     },
-    {
-        path: "/project",
-        component: PROJECT
-    }
+    // {
+    //     path: "/project",
+    //     component: PROJECT
+    // }
 ];
 export default routes

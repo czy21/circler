@@ -1,12 +1,12 @@
 const cracoLessPlugin = require('craco-less');
 const cracoAliasPlugin = require("craco-alias");
 const webpackConfigPlugin = require("./webpack.config")
-const { loaderByName } = require("@craco/craco");
+const {loaderByName} = require("@craco/craco");
 
 module.exports = {
     eslint: {
         // enable: process.env.NODE_ENV === "development",
-        enable:false
+        enable: false
     },
     plugins: [
         {
@@ -32,7 +32,7 @@ module.exports = {
                 },
                 lessLoaderOptions: {
                     lessOptions: {
-                        modifyVars:{
+                        modifyVars: {
                             '@border-radius-base': '4px'
                         },
                         javascriptEnabled: true,

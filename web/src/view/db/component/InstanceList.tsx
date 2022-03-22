@@ -1,14 +1,15 @@
 import stub from "@/init"
 import React from "react";
-import InstanceAdd from "./InstanceAdd"
-import {Table, Filter} from "share-react";
+import react from 'react'
+// import InstanceAdd from "./InstanceAdd"
+import {Table, Filter,Button} from "@c";
 
 const InstanceList: React.FC<any> = (props: any) => {
 
     const [data, setData] = stub.ref.react.useState<any>({})
     const [query, setQuery] = stub.ref.react.useState<any>()
 
-    stub.ref.react.useEffect(() => {
+    react.useEffect(() => {
         stub.store.dispatch(stub.reducer.action.option.fetch(["dbInstanceKind", "genderKind"]))
         handleSearch()
     }, [])
@@ -97,16 +98,17 @@ const InstanceList: React.FC<any> = (props: any) => {
 
     return (
         <div>
-            <Table filter={filter}
-                   extension={extension}
-                   columns={columns}
-                   list={data.list}
-                   page={data.page}
-            />
-            <InstanceAdd visible={instanceAddVisible} onChange={() => {
-                setInstanceAddVisible(false)
-                handleSearch(query)
-            }}/>
+            {/*<Table filter={filter}*/}
+            {/*       extension={extension}*/}
+            {/*       columns={columns}*/}
+            {/*       list={data.list}*/}
+            {/*       page={data.page}*/}
+            {/*/>*/}
+            {/*/!*<InstanceAdd visible={instanceAddVisible} onChange={() => {*!/*/}
+            {/*/!*    setInstanceAddVisible(false)*!/*/}
+            {/*/!*    handleSearch(query)*!/*/}
+            {/*/!*}}/>*!/*/}
+            <Button label={"aaa"}/>
         </div>
     )
 
