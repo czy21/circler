@@ -1,7 +1,6 @@
 const path = require("path")
 const ModuleScopePlugin = require("react-dev-utils/ModuleScopePlugin");
 const sharePath = path.resolve(__dirname, "../share/react/src/")
-const shareNodeModules = path.resolve(__dirname, "../share/react/node_modules/")
 module.exports = {
     overrideWebpackConfig: ({webpackConfig, cracoConfig, pluginOptions, context: {env, paths}}) => {
         if (pluginOptions.preText) {

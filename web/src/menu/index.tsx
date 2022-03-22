@@ -40,6 +40,10 @@ const menus: MenuModel[] = [
         path: "/db",
         icon: <stub.ref.icon.ai.ContactsOutlined/>,
     },
-
+    {
+        name: "用户",
+        path: "/user",
+        icon: <stub.ref.icon.ai.ContactsOutlined/>,
+    },
 ];
 export default menus
