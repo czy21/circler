@@ -1,6 +1,6 @@
 import stub from "@/init"
 import React from "react";
-import {OperationRender} from "@c/table";
+import {Table, Filter} from "share-react";
 
 const List: React.FC<any> = (props: any) => {
 
@@ -50,7 +50,7 @@ const List: React.FC<any> = (props: any) => {
         {
             key: 'operation',
             header: <stub.ref.intl.FormattedMessage id={"table.operation"} defaultMessage={""}/>,
-            render: (text: any, record: any) => OperationRender(text, record, operationActions)
+            render: (text: any, record: any) => (<div></div>)
         }
     ];
 
@@ -63,7 +63,7 @@ const List: React.FC<any> = (props: any) => {
     const [instanceAddProjectVisible, setInstanceAddProjectVisible] = stub.ref.react.useState<boolean>(false);
 
     const filter = (
-        <stub.component.Filter
+        <Filter
             filters={[
                 {
                     "key": "name",
@@ -92,12 +92,12 @@ const List: React.FC<any> = (props: any) => {
 
     return (
         <div>
-            <stub.component.Table filter={filter}
-                                  key={"projectList"}
-                                  extension={extension}
-                                  columns={columns}
-                                  list={data.list}
-                                  page={data.page}
+            <Table filter={filter}
+                   key={"projectList"}
+                   extension={extension}
+                   columns={columns}
+                   list={data.list}
+                   page={data.page}
             />
         </div>
     )

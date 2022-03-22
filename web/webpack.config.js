@@ -4,8 +4,6 @@ module.exports = {
         if (pluginOptions.preText) {
             console.log(pluginOptions.preText);
         }
-        // webpackConfig.entry = path.resolve(".", "src/component/index.ts")
-        // webpackConfig.output.libraryTarget = "umd"
         webpackConfig.output.publicPath = process.env.REACT_APP_BASE_URL
         return webpackConfig;
     }

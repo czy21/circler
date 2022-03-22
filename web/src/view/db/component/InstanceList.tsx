@@ -1,7 +1,7 @@
 import stub from "@/init"
 import React from "react";
 import InstanceAdd from "./InstanceAdd"
-import {OperationRender} from "@c/table";
+import {Table, Filter} from "share-react";
 
 const InstanceList: React.FC<any> = (props: any) => {
 
@@ -59,7 +59,7 @@ const InstanceList: React.FC<any> = (props: any) => {
         {
             key: 'operation',
             header: <stub.ref.intl.FormattedMessage id={"table.operation"} defaultMessage={""}/>,
-            render: (text: any, record: any) => OperationRender(text, record, operationActions)
+            render: (text: any, record: any) => (<div></div>)
         }
     ];
 
@@ -71,7 +71,7 @@ const InstanceList: React.FC<any> = (props: any) => {
     const [instanceAddVisible, setInstanceAddVisible] = stub.ref.react.useState<boolean>(false);
 
     const filter = (
-        <stub.component.Filter
+        <Filter
             filters={[
                 {
                     "key": "name",
@@ -97,11 +97,11 @@ const InstanceList: React.FC<any> = (props: any) => {
 
     return (
         <div>
-            <stub.component.Table filter={filter}
-                                  extension={extension}
-                                  columns={columns}
-                                  list={data.list}
-                                  page={data.page}
+            <Table filter={filter}
+                   extension={extension}
+                   columns={columns}
+                   list={data.list}
+                   page={data.page}
             />
             <InstanceAdd visible={instanceAddVisible} onChange={() => {
                 setInstanceAddVisible(false)
