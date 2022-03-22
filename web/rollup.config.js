@@ -4,6 +4,9 @@ import typescript from '@rollup/plugin-typescript';
 import {terser} from 'rollup-plugin-terser';
 import external from 'rollup-plugin-peer-deps-external';
 import postcss from 'rollup-plugin-postcss';
+import nested from "postcss-nested"; // 处理less
+import cssnext from "postcss-cssnext";
+import cssnano from "cssnano";
 import dts from 'rollup-plugin-dts';
 
 const packageJson = require('./package.json');
@@ -11,12 +14,12 @@ const packageJson = require('./package.json');
 export default [
     {
         input: 'src/component/index.ts',
+        external: ['react', 'antd'],
         output: [
             {
                 file: packageJson.main,
                 format: 'cjs',
-                sourcemap: true,
-                name: 'react-ts-lib'
+                sourcemap: true
             },
             {
                 file: packageJson.module,
@@ -34,7 +37,7 @@ export default [
         ],
     },
     {
-        input: 'dist/esm/index.d.ts',
+        input: 'dist/esm/types/index.d.ts',
         output: [{file: 'dist/index.d.ts', format: "esm"}],
         external: [/\.(css|less|scss)$/],
         plugins: [dts()],

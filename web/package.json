@@ -77,5 +77,8 @@
   "files": [
     "dist"
   ],
-  "types": "dist/index.d.ts"
+  "types": "dist/index.d.ts",
+  "publishConfig": {
+    "registry": "http://nexus.cluster.com/repository/npm-hosted/"
+  }
 }

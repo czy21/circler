@@ -4,7 +4,7 @@ import * as antd from 'antd'
 import * as intl from 'react-intl'
 import styles from "./index.m.less";
 
-interface FilterProp {
+export interface FilterProp {
     onSearch: (query?: any) => void
     page?: {
         pageIndex?: number,
@@ -14,7 +14,7 @@ interface FilterProp {
     filters: any[]
 }
 
-interface TagValue {
+export interface TagValue {
     label: string,
     value?: any
 }
