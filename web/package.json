@@ -18,7 +18,6 @@
     "@types/react-redux": "^7.1.18",
     "@types/react-router-config": "^5.0.3",
     "@types/react-router-dom": "^5.1.8",
-    "antd": "^4.16.6",
     "axios": "^0.21.1",
     "codemirror": "^5.62.0",
     "craco-alias": "^3.0.1",
@@ -38,10 +37,11 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
     "redux": "^4.1.0",
+    "share-react": "0.1.0",
     "typescript": "^4.3.5"
   },
   "scripts": {
-    "start": "craco start",
+    "start": "yarn link share-react && craco start",
     "build": "dotenv -e .env.prod craco build"
   },
   "eslintConfig": {

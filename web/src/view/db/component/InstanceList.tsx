@@ -98,17 +98,16 @@ const InstanceList: React.FC<any> = (props: any) => {
 
     return (
         <div>
-            {/*<Table filter={filter}*/}
-            {/*       extension={extension}*/}
-            {/*       columns={columns}*/}
-            {/*       list={data.list}*/}
-            {/*       page={data.page}*/}
-            {/*/>*/}
-            {/*/!*<InstanceAdd visible={instanceAddVisible} onChange={() => {*!/*/}
-            {/*/!*    setInstanceAddVisible(false)*!/*/}
-            {/*/!*    handleSearch(query)*!/*/}
-            {/*/!*}}/>*!/*/}
-            <Button label={"aaa"}/>
+            <Table filter={filter}
+                   extension={extension}
+                   columns={columns}
+                   list={data.list}
+                   page={data.page}
+            />
+            {/*<InstanceAdd visible={instanceAddVisible} onChange={() => {*/}
+            {/*    setInstanceAddVisible(false)*/}
+            {/*    handleSearch(query)*/}
+            {/*}}/>*/}
         </div>
     )
 
