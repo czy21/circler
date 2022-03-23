@@ -1,1 +1,1 @@
-export * from '@share-react'
+export * from 'share-react'

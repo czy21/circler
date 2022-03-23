@@ -6,7 +6,6 @@
     ],
     "scripts": {
         "start:web": "yarn workspace circler-web start",
-        "build:share": "yarn workspace share-react build",
         "watch:share": "yarn workspace share-react watch",
         "deploy:share": "yarn workspace share-react deploy"
     }
