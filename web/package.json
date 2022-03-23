@@ -42,7 +42,7 @@
   },
   "scripts": {
     "start": "craco start",
-    "link": "yarn link share-react",
+    "link": "yarn link --cwd ../share/react && yarn link share-react",
     "build": "dotenv -e .env.prod craco build"
   },
   "eslintConfig": {
