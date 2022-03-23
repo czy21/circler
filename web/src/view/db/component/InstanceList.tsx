@@ -1,8 +1,8 @@
 import stub from "@/init"
 import React from "react";
 import react from 'react'
-// import InstanceAdd from "./InstanceAdd"
-import {Table, Filter,Button} from "@c";
+import InstanceAdd from "./InstanceAdd"
+import {Table, Filter, OperationRender} from "@c";
 
 const InstanceList: React.FC<any> = (props: any) => {
 
@@ -60,7 +60,7 @@ const InstanceList: React.FC<any> = (props: any) => {
         {
             key: 'operation',
             header: <stub.ref.intl.FormattedMessage id={"table.operation"} defaultMessage={""}/>,
-            render: (text: any, record: any) => (<div></div>)
+            render: (text: any, record: any) => OperationRender(text, record, operationActions)
         }
     ];
 
@@ -104,10 +104,10 @@ const InstanceList: React.FC<any> = (props: any) => {
                    list={data.list}
                    page={data.page}
             />
-            {/*<InstanceAdd visible={instanceAddVisible} onChange={() => {*/}
-            {/*    setInstanceAddVisible(false)*/}
-            {/*    handleSearch(query)*/}
-            {/*}}/>*/}
+            <InstanceAdd visible={instanceAddVisible} onChange={() => {
+                setInstanceAddVisible(false)
+                handleSearch(query)
+            }}/>
         </div>
     )
 
