@@ -15,10 +15,15 @@ api/data/
 node_modules/
 dist/
 
+# yarn
+.yarn
+.yarnrc.yml
+/package.json
+/yarn.lock
+
 # Output #
 ___output/
 ___temp
 
 # Python #
 __pycache__/
-/package.json
