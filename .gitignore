@@ -17,8 +17,8 @@ dist/
 
 # yarn
 .pnp.*
-.yarn/*
-.yarnrc.yml
+.yarn/
+/.yarnrc.yml
 
 /package.json
 /yarn.lock
