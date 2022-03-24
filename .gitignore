@@ -16,7 +16,7 @@ node_modules/
 dist/
 
 # yarn workspace
-package.json
+!package.json
 
 # Output #
 ___output/
