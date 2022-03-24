@@ -15,11 +15,7 @@ api/data/
 node_modules/
 dist/
 
-# yarn
-.pnp.*
-.yarn/
-/.yarnrc.yml
-
+# yarn workspace
 /package.json
 /yarn.lock
 
