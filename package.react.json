@@ -5,9 +5,9 @@
     "share/react"
   ],
   "scripts": {
-    "start:web": "yarn workspace circler-web start",
+    "start:web": "yarn workspace web start",
+    "build:share": "yarn workspace share-react build",
     "watch:share": "yarn workspace share-react watch",
     "deploy:share": "yarn workspace share-react deploy"
-  },
-  "packageManager": "yarn@3.2.0"
+  }
 }
