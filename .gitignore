@@ -15,9 +15,6 @@ api/data/
 node_modules/
 dist/
 
-# yarn workspace
-!package.json
-
 # Output #
 ___output/
 ___temp
