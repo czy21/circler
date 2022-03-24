@@ -21,3 +21,4 @@ ___temp
 
 # Python #
 __pycache__/
+/package.json
