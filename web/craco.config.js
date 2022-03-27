@@ -33,7 +33,8 @@ module.exports = {
                 lessLoaderOptions: {
                     lessOptions: {
                         modifyVars: {
-                            '@border-radius-base': '4px'
+                            '@border-radius-base': '4px',
+                            "ctm-prefix": "ctm"
                         },
                         javascriptEnabled: true,
                     },
