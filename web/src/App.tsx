@@ -1,5 +1,5 @@
 import 'antd/dist/antd.less'
-import 'share-react/lib/index.m.less'
+import 'share-react/lib/index.less'
 import stub from "@/init";
 import React from 'react';
 import {BrowserRouter} from "react-router-dom";

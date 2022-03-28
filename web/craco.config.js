@@ -2,6 +2,7 @@ const cracoLessPlugin = require('craco-less');
 const cracoAliasPlugin = require("craco-alias");
 const webpackConfigPlugin = require("./webpack.config")
 const {loaderByName} = require("@craco/craco");
+const path = require("path");
 
 module.exports = {
     eslint: {
@@ -25,7 +26,7 @@ module.exports = {
                     // Configure the generated local ident name.
                     const cssLoader = lessModuleRule.use.find(loaderByName('css-loader'))
                     cssLoader.options.modules = {
-                        localIdentName: '[local]_[hash:base64:5]'
+                        localIdentName: '[local]'
                     }
 
                     return lessModuleRule
@@ -34,9 +35,9 @@ module.exports = {
                     lessOptions: {
                         modifyVars: {
                             '@border-radius-base': '4px',
-                            "ctm-prefix": "ctm"
+                            "@ctm-prefix": "ctm"
                         },
-                        javascriptEnabled: true,
+                        javascriptEnabled: true
                     },
                 },
             },
