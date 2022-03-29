@@ -1,6 +1,6 @@
-import stub from "@/init";
 import React from "react";
-import styles from './index.m.less'
+import stub from "@/init";
+import styles from './index.less'
 import {MenuFoldOutlined, MenuUnfoldOutlined} from '@ant-design/icons';
 
 export const mapStateToProps = (state: any) => {
@@ -30,7 +30,7 @@ const Header: React.FC<any> = (props: any) => {
                             }
                         })}
                         defaultValue={props.locale.key}
-                        onSelect={(value:any, option:any) => {
+                        onSelect={(value: any, option: any) => {
                             stub.store.dispatch(stub.reducer.action.home.switchLocale({key: value}))
                         }}
                         style={{margin: "0 24px"}}

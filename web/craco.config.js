@@ -14,21 +14,15 @@ module.exports = {
             plugin: cracoLessPlugin,
             options: {
                 modifyLessRule(lessRule, context) {
-                    // You have to exclude these file suffixes first,
-                    // if you want to modify the less module's suffix
-                    lessRule.exclude = /\.m\.less$/
+                    lessRule.exclude = /\.less$/
                     return lessRule
                 },
                 modifyLessModuleRule(lessModuleRule, context) {
-                    // Configure the file suffix
-                    lessModuleRule.test = /\.m\.less$/
-
-                    // Configure the generated local ident name.
+                    lessModuleRule.test = /\.less$/
                     const cssLoader = lessModuleRule.use.find(loaderByName('css-loader'))
                     cssLoader.options.modules = {
                         localIdentName: '[local]'
                     }
-
                     return lessModuleRule
                 },
                 lessLoaderOptions: {

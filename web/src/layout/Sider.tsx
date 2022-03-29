@@ -1,5 +1,5 @@
-import stub from "@/init";
 import React from "react";
+import stub from "@/init";
 import menus from "@/menu";
 import {Link} from "react-router-dom";
 import {mapStateToProps} from "@/layout/Header"
@@ -33,7 +33,7 @@ function recursiveMenu(routes: any) {
     })
 }
 
-const Sider: React.FC<any> = (props: any) => {
+const Index: React.FC<any> = (props: any) => {
     return (
         <stub.ref.antd.Layout.Sider theme="dark" trigger={null} collapsible collapsed={props.collapsed}>
             <stub.ref.antd.Menu theme="dark" mode="inline" defaultSelectedKeys={["0"]}>
@@ -44,4 +44,4 @@ const Sider: React.FC<any> = (props: any) => {
 
 }
 
-export default stub.ref.reactRedux.connect(mapStateToProps)(Sider)
+export default stub.ref.reactRedux.connect(mapStateToProps)(Index)

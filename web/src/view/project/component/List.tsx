@@ -4,10 +4,10 @@ import {Table, Filter} from "@c";
 
 const List: React.FC<any> = (props: any) => {
 
-    const [data, setData] = stub.ref.react.useState<any>({})
-    const [query, setQuery] = stub.ref.react.useState<any>()
+    const [data, setData] = React.useState<any>({})
+    const [query, setQuery] = React.useState<any>()
 
-    stub.ref.react.useEffect(() => {
+    React.useEffect(() => {
         // stub.store.dispatch(stub.reducer.action.option.fetch(["dbInstanceKind", "genderKind"]))
         handleSearch()
     }, [])
@@ -59,8 +59,8 @@ const List: React.FC<any> = (props: any) => {
         stub.api.post("project/search", stub.ref.lodash.omit(q, "total")).then((t: any) => setData(t.data))
     }
 
-    const [instanceAddGroupVisible, setInstanceAddGroupVisible] = stub.ref.react.useState<boolean>(false);
-    const [instanceAddProjectVisible, setInstanceAddProjectVisible] = stub.ref.react.useState<boolean>(false);
+    const [instanceAddGroupVisible, setInstanceAddGroupVisible] = React.useState<boolean>(false);
+    const [instanceAddProjectVisible, setInstanceAddProjectVisible] = React.useState<boolean>(false);
 
     const filter = (
         <Filter

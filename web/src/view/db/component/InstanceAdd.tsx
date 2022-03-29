@@ -1,5 +1,6 @@
 import stub from "@/init";
 import React from "react";
+
 import {Modal} from '@c'
 
 interface TableFormProp {
@@ -8,9 +9,9 @@ interface TableFormProp {
 }
 
 const InstanceAdd: React.FC<TableFormProp> = (props: TableFormProp | any) => {
-    const [visible, setVisible] = stub.ref.react.useState<boolean>(false)
-    const [connectState, setConnectState] = stub.ref.react.useState<boolean>()
-    stub.ref.react.useEffect(() => setVisible(props.visible as boolean), [props.visible])
+    const [visible, setVisible] = React.useState<boolean>(false)
+    const [connectState, setConnectState] = React.useState<boolean>()
+    React.useEffect(() => setVisible(props.visible as boolean), [props.visible])
 
     const [addForm] = stub.ref.antd.Form.useForm();
 

@@ -1,14 +1,14 @@
-import styles from './index.m.less'
+import styles from './index.less'
 import stub from "@/init";
 import React from "react";
 import routes from "@/route";
 import {renderRoutes} from "react-router-config";
 
-const Content: React.FC<any> = (props: any) => {
+const Index: React.FC<any> = (props: any) => {
     return (
         <stub.ref.antd.Layout.Content className={styles.content}>
             {renderRoutes(routes)}
         </stub.ref.antd.Layout.Content>
     )
 }
-export default Content
+export default Index

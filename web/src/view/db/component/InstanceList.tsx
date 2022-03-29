@@ -6,8 +6,8 @@ import {Table, Filter, OperationRender} from "@c";
 
 const InstanceList: React.FC<any> = (props: any) => {
 
-    const [data, setData] = stub.ref.react.useState<any>({})
-    const [query, setQuery] = stub.ref.react.useState<any>()
+    const [data, setData] = React.useState<any>({})
+    const [query, setQuery] = React.useState<any>()
 
     react.useEffect(() => {
         stub.store.dispatch(stub.reducer.action.option.fetch(["dbInstanceKind", "genderKind"]))
@@ -69,7 +69,7 @@ const InstanceList: React.FC<any> = (props: any) => {
         stub.api.post("db/instance/search", stub.ref.lodash.omit(q, "total")).then((t: any) => setData(t.data))
     }
 
-    const [instanceAddVisible, setInstanceAddVisible] = stub.ref.react.useState<boolean>(false);
+    const [instanceAddVisible, setInstanceAddVisible] = React.useState<boolean>(false);
 
     const filter = (
         <Filter
